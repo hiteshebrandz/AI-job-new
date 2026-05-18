@@ -1,0 +1,61 @@
+.gradient-border {
+    position: relative;
+    background: #fff;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+}
+.gradient-border::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: -1;
+    margin: -2px;
+    border-radius: inherit;
+    background: linear-gradient(to right, #4648d4, #6063ee, #bec6e0);
+}
+.glass-sidebar {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+}
+@keyframes resume-scan {
+    0% { transform: translateY(100%); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-100%); opacity: 0; }
+}
+.resume-scan-line {
+    animation: resume-scan 2s ease-in-out infinite;
+}
+@keyframes spin-slow {
+    to { transform: rotate(360deg); }
+}
+.resume-spinner {
+    animation: spin-slow 1s linear infinite;
+}
+.resume-toast {
+    padding: 0.875rem 1.25rem;
+    border-radius: 0.75rem;
+    color: #fff;
+    font-size: 0.875rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: all 0.3s ease;
+}
+.resume-toast--visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.resume-toast--success { background: #059669; }
+.resume-toast--error { background: #dc2626; }
+#toast-root {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.dark .gradient-border {
+    background: #1a1c2e;
+}

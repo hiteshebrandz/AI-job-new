@@ -1,0 +1,11 @@
+body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fcf8fa;
+        }
+        .glass-sidebar {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        .progress-gradient {
+            background: linear-gradient(90deg, #4648d4 0%, #9333ea 100%);
+        }

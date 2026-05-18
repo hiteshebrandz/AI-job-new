@@ -1,0 +1,5 @@
+.glass-sidebar { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); }
+        .glass-topbar { background: rgba(252, 248, 250, 0.8); backdrop-filter: blur(12px); }
+        .gradient-primary { background: linear-gradient(135deg, #4648d4 0%, #6063ee 100%); }
+        .step-active { border-color: #4648d4; color: #4648d4; }
+        .step-inactive { border-color: #c6c6cd; color: #76777d; }
