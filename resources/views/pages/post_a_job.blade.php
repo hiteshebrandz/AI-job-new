@@ -1,4 +1,4 @@
-@extends('layouts.employer', ['activeNav' => 'jobs'])
+﻿@extends('layouts.employer', ['activeNav' => 'jobs'])
 
 @section('title', isset($job) ? 'Edit Job' : 'Post a Job')
 
@@ -11,7 +11,7 @@
 @php
     $job = $job ?? null;
     $isEdit = $job !== null;
-    $inputClass = 'w-full px-4 py-3 bg-surface-container-low border border-outline-variant rounded-xl focus:ring-2 focus:ring-secondary/20 text-body-md';
+    $inputClass = 'input-dark';
     $jobDefault = function (string $field) use ($job, $isEdit): mixed {
         if (! $isEdit) {
             return match ($field) {
@@ -82,18 +82,23 @@ Post a Job
         <input type="hidden" name="status" id="job_status" value="{{ $fv('status') }}">
         <input type="hidden" name="_step" id="form_step" value="{{ old('_step', $initialStep) }}">
 
-        <div class="mb-10">
-            <div class="flex items-center justify-between mb-2">
-                <h2 class="font-headline-lg text-headline-lg">{{ $isEdit ? 'Edit Position' : 'Create New Position' }}</h2>
+        <div class="mb-8 animate-fade-in">
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-2">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="badge-violet text-[11px]">{{ $isEdit ? 'Edit' : 'Create' }}</span>
+                    </div>
+                    <h2 class="text-[28px] font-extrabold text-[#E2E8F0]">{{ $isEdit ? 'Edit Position' : 'Create New Position' }}</h2>
+                </div>
                 <div class="flex gap-3">
-                    <button type="submit" id="btn-save-draft-header" class="px-6 py-2.5 rounded-xl border border-outline-variant text-on-surface hover:bg-surface-container-high transition-all font-title-md text-[14px]">Save as Draft</button>
-                    <button type="submit" id="btn-publish-header" class="px-6 py-2.5 rounded-xl gradient-primary text-white shadow-md hover:shadow-xl transition-all font-title-md text-[14px]">{{ $isEdit ? 'Update Job' : 'Publish Job' }}</button>
+                    <button type="submit" id="btn-save-draft-header" class="btn-ghost py-2.5 px-5 text-[14px]">Save Draft</button>
+                    <button type="submit" id="btn-publish-header" class="btn-primary py-2.5 px-6 text-[14px]">{{ $isEdit ? 'Update Job' : 'Publish Job' }}</button>
                 </div>
             </div>
-            <p class="font-body-md text-on-surface-variant">Design your executive role and find the perfect match with AI-driven insights.</p>
+            <p class="text-[14px] text-[#64748B]">Design your executive role and find the perfect match with AI-driven insights.</p>
         </div>
 
-        <div id="job-stepper" class="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] mb-8">
+        <div id="job-stepper" class="glass-card p-6 mb-6 animate-fade-in-delay-1">
             <div class="flex justify-between items-center max-w-4xl mx-auto">
                 <div data-step-indicator="1" class="flex flex-col items-center gap-2">
                     <div class="step-circle w-10 h-10 rounded-full flex items-center justify-center font-bold">1</div>
@@ -120,7 +125,7 @@ Post a Job
         <div class="grid grid-cols-12 gap-gutter">
             <div class="col-span-8 space-y-8">
                 {{-- Step 1: Basic Info --}}
-                <section data-step="1" class="job-step bg-white rounded-2xl p-card-padding border border-outline-variant shadow-sm">
+                <section data-step="1" class="job-step glass-card p-6 rounded-2xl">
                     <h3 class="font-title-md text-title-md mb-6 flex items-center gap-2">
                         <span class="material-symbols-outlined text-secondary" data-icon="work">work</span>
                         Basic Information
@@ -141,7 +146,7 @@ Post a Job
                             <input type="text" name="location" id="location" value="{{ $fv('location') }}" class="{{ $inputClass }}" placeholder="City, Country or Remote" required/>
                             @error('location')<p class="mt-1 text-sm text-error">{{ $message }}</p>@enderror
                         </div>
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="font-label-caps text-on-surface-variant block mb-2" for="job_type">Job Type</label>
                                 <select name="job_type" id="job_type" class="{{ $inputClass }}" required>
@@ -168,7 +173,7 @@ Post a Job
                 </section>
 
                 {{-- Step 2: Description --}}
-                <section data-step="2" class="job-step hidden bg-white rounded-2xl p-card-padding border border-outline-variant shadow-sm">
+                <section data-step="2" class="job-step hidden glass-card p-6 rounded-2xl">
                     <h3 class="font-title-md text-title-md mb-6 flex items-center gap-2">
                         <span class="material-symbols-outlined text-secondary" data-icon="description">description</span>
                         Role Description &amp; Technical Skills
@@ -223,7 +228,7 @@ Post a Job
                 </section>
 
                 {{-- Step 3: Screening --}}
-                <section data-step="3" class="job-step hidden bg-white rounded-2xl p-card-padding border border-outline-variant shadow-sm">
+                <section data-step="3" class="job-step hidden glass-card p-6 rounded-2xl">
                     <h3 class="font-title-md text-title-md mb-6 flex items-center gap-2">
                         <span class="material-symbols-outlined text-secondary" data-icon="quiz">quiz</span>
                         Screening &amp; Qualifications
@@ -246,7 +251,7 @@ Post a Job
                             <textarea name="preferred_qualification" id="preferred_qualification" rows="3" class="{{ $inputClass }}" placeholder="Nice-to-have qualifications">{{ $fv('preferred_qualification') }}</textarea>
                             @error('preferred_qualification')<p class="mt-1 text-sm text-error">{{ $message }}</p>@enderror
                         </div>
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="font-label-caps text-on-surface-variant block mb-2" for="work_mode">Work Mode</label>
                                 <select name="work_mode" id="work_mode" class="{{ $inputClass }}">
@@ -277,7 +282,7 @@ Post a Job
                 </section>
 
                 {{-- Step 4: Budget --}}
-                <section data-step="4" class="job-step hidden bg-white rounded-2xl p-card-padding border border-outline-variant shadow-sm">
+                <section data-step="4" class="job-step hidden glass-card p-6 rounded-2xl">
                     <h3 class="font-title-md text-title-md mb-6 flex items-center gap-2">
                         <span class="material-symbols-outlined text-secondary" data-icon="payments">payments</span>
                         Budget &amp; Visibility
@@ -309,7 +314,7 @@ Post a Job
                                 @error('currency')<p class="mt-1 text-sm text-error">{{ $message }}</p>@enderror
                             </div>
                         </div>
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="font-label-caps text-on-surface-variant block mb-2" for="application_deadline">Application Deadline</label>
                                 <input type="date" name="application_deadline" id="application_deadline" value="{{ $fv('application_deadline') }}" class="{{ $inputClass }}"/>
@@ -365,8 +370,8 @@ Post a Job
                     </div>
                 </div>
 
-                <div class="bg-white rounded-2xl p-card-padding border border-outline-variant shadow-sm">
-                    <h4 class="font-title-md text-[16px] mb-4">Posting Checklist</h4>
+                <div class="glass-card p-6 rounded-2xl">
+                    <h4 class="font-title-md text-[16px] mb-4 text-[#E2E8F0]">Posting Checklist</h4>
                     <ul class="space-y-4">
                         <li id="checklist-basic" class="flex items-center gap-3">
                             <span class="checklist-icon material-symbols-outlined text-outline" data-icon="radio_button_unchecked">radio_button_unchecked</span>
@@ -492,7 +497,7 @@ Post a Job
             circle.innerHTML = '<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: \'FILL\' 1;">check</span>';
             label.classList.add('text-secondary');
         } else if (state === 'active') {
-            circle.classList.add('border-2', 'border-secondary', 'bg-white', 'text-secondary');
+            circle.classList.add('border-2', 'border-[#8B5CF6]', 'bg-[#1E1B4B]', 'text-[#8B5CF6]');
             circle.textContent = String(step);
             label.classList.add('text-secondary');
         } else {

@@ -1,14 +1,22 @@
 @php
     $defaultHeaderLeft = view('partials.nav.candidate-header-search-default')->render();
 @endphp
-<header class="fixed top-0 right-0 w-full md:w-[calc(100%-280px)] h-16 bg-surface/80 backdrop-blur-lg border-b border-outline-variant z-40">
-<div class="flex justify-between items-center h-full px-8 max-w-[1440px] mx-auto gap-4">
-<div class="flex items-center flex-1 min-w-0">
-{!! $__env->yieldPushContent('candidate-header-left', $defaultHeaderLeft) !!}
-</div>
-<div class="flex items-center gap-4 flex-shrink-0">
-@stack('candidate-header-actions')
-@include('partials.nav.profile-dropdown')
-</div>
-</div>
+<header class="fixed top-0 right-0 w-full lg:w-[calc(100%-280px)] h-[64px] glass-panel border-b border-[#1E293B] z-40">
+    <div class="flex justify-between items-center h-full px-4 lg:px-8 max-w-[1440px] mx-auto gap-4">
+        <!-- Mobile hamburger -->
+        <button type="button" class="lg:hidden p-2 rounded-xl text-[#64748B] hover:text-[#E2E8F0] hover:bg-[#263248] transition-all flex-shrink-0" onclick="openSidebar()" aria-label="Open menu">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+
+        <!-- Header left slot (search bar by default) -->
+        <div class="flex items-center flex-1 min-w-0">
+            {!! $__env->yieldPushContent('candidate-header-left', $defaultHeaderLeft) !!}
+        </div>
+
+        <!-- Right actions -->
+        <div class="flex items-center gap-2 lg:gap-4 flex-shrink-0">
+            @stack('candidate-header-actions')
+            @include('partials.nav.profile-dropdown')
+        </div>
+    </div>
 </header>

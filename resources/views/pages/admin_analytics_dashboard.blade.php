@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Admin Analytics Dashboard')
 
@@ -12,9 +12,9 @@
 <!-- Sidebar Navigation -->
 @include('partials.nav.employer-sidebar')
 <!-- Main Content Canvas -->
-<main class="ml-[280px] min-h-screen">
+<main class="lg:ml-[280px] min-h-screen">
 <!-- Top Navigation Bar -->
-<header class="fixed top-0 right-0 w-[calc(100%-280px)] h-16 z-40 bg-surface/80 dark:bg-inverse-surface/80 backdrop-blur-lg border-b border-outline-variant dark:border-outline flex justify-between items-center px-gutter max-w-[1440px] mx-auto">
+<header class="fixed top-0 right-0 lg:w-[calc(100%-280px)] w-full h-[64px] z-40 glass-panel border-b border-[#1E293B] flex justify-between items-center px-6 lg:px-8 max-w-[1440px] mx-auto">
 <div class="flex items-center gap-4 flex-1">
 <div class="relative w-full max-w-md group">
 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant opacity-60 group-focus-within:text-secondary transition-colors" data-icon="search">search</span>
@@ -83,10 +83,10 @@
 <div class="p-2 bg-secondary/10 rounded-lg text-secondary">
 <span class="material-symbols-outlined" data-icon="person_add">person_add</span>
 </div>
-<span class="text-secondary font-label-caps bg-secondary/10 px-2 py-1 rounded-full text-[10px]">+412 New</span>
+<span class="text-secondary font-label-caps bg-secondary/10 px-2 py-1 rounded-full text-[10px]">Live</span>
 </div>
-<p class="text-label-caps font-label-caps text-on-surface-variant mb-1">USER GROWTH</p>
-<h3 class="text-headline-lg font-headline-lg">4,812</h3>
+<p class="text-label-caps font-label-caps text-on-surface-variant mb-1">TOTAL USERS</p>
+<h3 class="text-headline-lg font-headline-lg">{{ number_format($totalUsers) }}</h3>
 </div>
 </div>
 <!-- Visualization Row -->
@@ -220,7 +220,7 @@
 <p class="text-label-caps font-label-caps text-white/60">PREDICTION</p>
 <p class="font-body-md font-bold text-white">Scale +22% by Q4</p>
 </div>
-<button class="flex-1 py-3 bg-white text-primary font-label-caps text-label-caps rounded-lg font-bold hover:bg-secondary-fixed transition-colors">
+<button class="flex-1 py-3 bg-[#8B5CF6] text-white font-semibold text-[12px] rounded-lg hover:bg-[#7C3AED] transition-colors">
                                 View Strategic Roadmap
                             </button>
 </div>
@@ -315,4 +315,17 @@
 <span class="material-symbols-outlined text-[28px]" data-icon="add_chart">add_chart</span>
 <span class="absolute right-full mr-4 px-4 py-2 bg-primary text-white text-label-caps font-label-caps rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Create Custom View</span>
 </button>
+@push('scripts')
+<script>
+// Inject real analytics data from API
+(async () => {
+    try {
+        const res  = await fetch('{{ route('admin.analytics.data') }}');
+        const data = await res.json();
+        // Expose for any inline Chart.js code in the page
+        window.analyticsData = data;
+    } catch (e) { /* silently fail if API unavailable */ }
+})();
+</script>
+@endpush
 @endsection

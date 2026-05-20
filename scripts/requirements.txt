@@ -1,2 +1,8 @@
+pdfplumber>=0.11.0
 pypdf>=4.0.0
 python-docx>=1.1.0
+
+# Optional (richer NER — install separately if needed):
+# spacy>=3.7.0
+# pyresparser>=1.0.6
+# Run: python -m spacy download en_core_web_sm

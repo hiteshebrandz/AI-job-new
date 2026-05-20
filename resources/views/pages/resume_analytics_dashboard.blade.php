@@ -1,8 +1,8 @@
-@extends('layouts.candidate', ['activeNav' => 'analytics'])
+﻿@extends('layouts.candidate', ['activeNav' => 'analytics'])
 
 @section('title', 'Resume Analytics')
 
-@section('body-class', 'bg-background text-on-surface font-body-md overflow-x-hidden')
+@section('body-class', 'bg-background text-on-surface font-body-md overflow-x-hidden min-h-screen')
 
 @section('page-css', 'resume_analytics_dashboard.css')
 
@@ -16,27 +16,49 @@
 <div class="relative">
 <img alt="Elena Rodriguez" class="w-32 h-32 rounded-2xl object-cover shadow-lg border-2 border-white" data-alt="A detailed portrait of a sophisticated female professional with a warm smile, wearing a designer charcoal blazer. The background is a bright, minimalist studio space with soft natural lighting coming from the side. The image exudes professional intelligence, confidence, and high-end corporate style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDURh9dGMyIHKGciLfSCCNfT7xUrt8fjGx7Lt75kxoxF3VVB9xmv2bxM0OHskNIxvAeF1U6L6J55kmBNbpuC-TRQvKcNIDtr3FcGR7Za7OCXkZaMzk6mvBK0U6CqZoKgYPxEEcDrkM_GzgM6iqSBDIy6xfDTiJ1jASSfwq1BLWOLxHG_EYMfWtI5Oe6RWEVF08apwH6TUwXb3xyDu7hOjTIYMV32CRGOBIhQR6LtRdAcfEKMzYAnKhi61dCWR2fWBHcizyyHeK7-b-l"/>
 <div class="absolute -bottom-3 -right-3 bg-secondary text-white p-2 rounded-xl shadow-lg flex items-center gap-1">
-<span class="font-headline-lg text-[18px]">94</span>
-<span class="font-label-caps text-[8px] leading-tight">MATCH<br/>INDEX</span>
+<span class="font-headline-lg text-[18px]">{{ $aiScore }}</span>
+<span class="font-label-caps text-[8px] leading-tight">AI<br/>SCORE</span>
 </div>
 </div>
 <div class="space-y-1">
 <div class="flex items-center gap-3">
-<h2 class="font-headline-lg text-headline-lg">Elena Rodriguez</h2>
+<h2 class="font-headline-lg text-headline-lg">{{ $candidate?->full_name ?? auth()->user()->name }}</h2>
+@if($aiScore >= 80)
 <span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full font-label-caps text-[10px]">PREMIUM TALENT</span>
+@endif
 </div>
-<p class="font-title-md text-title-md text-on-surface-variant">Senior Product Strategist • 8+ Years Exp.</p>
+<p class="font-title-md text-title-md text-on-surface-variant">
+    {{ $candidate?->current_title ?? 'Update your profile' }}
+    @if($candidate?->experience_years) • {{ $candidate->experience_years }}+ Years Exp.@endif
+</p>
 <div class="flex gap-4 pt-2">
+@if($candidate?->location)
 <div class="flex items-center gap-1 text-on-surface-variant">
 <span class="material-symbols-outlined text-[18px]" data-icon="location_on">location_on</span>
-<span class="font-body-sm text-body-sm">London, UK</span>
+<span class="font-body-sm text-body-sm">{{ $candidate->location }}</span>
 </div>
+@endif
 <div class="flex items-center gap-1 text-on-surface-variant">
 <span class="material-symbols-outlined text-[18px]" data-icon="mail">mail</span>
-<span class="font-body-sm text-body-sm">e.rodriguez@@domain.com</span>
+<span class="font-body-sm text-body-sm">{{ $candidate?->email ?? auth()->user()->email }}</span>
 </div>
 </div>
 </div>
+</div>
+<!-- Quick stats row -->
+<div class="flex flex-wrap gap-4 mt-4 md:mt-0">
+    <div class="glass-card px-4 py-2 text-center">
+        <p class="text-[22px] font-extrabold text-[#E2E8F0]">{{ $applicationCount }}</p>
+        <p class="text-[11px] text-[#64748B]">Applications</p>
+    </div>
+    <div class="glass-card px-4 py-2 text-center">
+        <p class="text-[22px] font-extrabold text-[#E2E8F0]">{{ $topMatchScore }}%</p>
+        <p class="text-[11px] text-[#64748B]">Top Match</p>
+    </div>
+    <div class="glass-card px-4 py-2 text-center">
+        <p class="text-[22px] font-extrabold text-[#E2E8F0]">{{ $skillCount }}</p>
+        <p class="text-[11px] text-[#64748B]">Skills</p>
+    </div>
 </div>
 <div class="flex gap-3">
 <button class="bg-surface border border-outline-variant px-6 py-2.5 rounded-xl font-title-md text-sm hover:bg-surface-container-high transition-all">Download PDF</button>
@@ -140,8 +162,8 @@
 <p class="font-label-caps text-label-caps text-on-surface-variant opacity-60">TOP-TIER ACADEMIC PROFILE</p>
 </div>
 <div class="space-y-4">
-<div class="flex items-center gap-4 bg-surface-container-low p-3 rounded-xl border border-secondary/10">
-<div class="w-12 h-12 flex-shrink-0 bg-white rounded-lg flex items-center justify-center shadow-sm">
+<div class="flex items-center gap-4 p-3 rounded-xl border border-[#334155] bg-[#162032]">
+<div class="w-12 h-12 flex-shrink-0 rounded-lg flex items-center justify-center bg-[#1E1B4B]">
 <span class="material-symbols-outlined text-secondary" data-icon="school">school</span>
 </div>
 <div>
@@ -150,8 +172,8 @@
 <p class="font-label-caps text-[10px] text-secondary mt-1">IVY LEAGUE EQUIVALENT</p>
 </div>
 </div>
-<div class="flex items-center gap-4 bg-surface-container-low p-3 rounded-xl border border-outline-variant/30">
-<div class="w-12 h-12 flex-shrink-0 bg-white rounded-lg flex items-center justify-center shadow-sm">
+<div class="flex items-center gap-4 p-3 rounded-xl border border-[#334155]/50 bg-[#162032]">
+<div class="w-12 h-12 flex-shrink-0 rounded-lg flex items-center justify-center bg-[#1E1B4B]">
 <span class="material-symbols-outlined text-on-surface-variant" data-icon="history_edu">history_edu</span>
 </div>
 <div>
@@ -205,20 +227,22 @@
 <div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/20">
 <h4 class="font-label-caps text-xs mb-4 text-secondary">TOP SOFT SKILL CLUSTERS</h4>
 <div class="flex flex-wrap gap-2">
-<span class="bg-white border border-outline-variant/50 px-3 py-1.5 rounded-lg text-xs font-medium shadow-sm">Emotional Intelligence</span>
-<span class="bg-white border border-outline-variant/50 px-3 py-1.5 rounded-lg text-xs font-medium shadow-sm">Critical Thinking</span>
-<span class="bg-white border border-outline-variant/50 px-3 py-1.5 rounded-lg text-xs font-medium shadow-sm">Conflict Resolution</span>
-<span class="bg-white border border-outline-variant/50 px-3 py-1.5 rounded-lg text-xs font-medium shadow-sm">Narrative Storytelling</span>
-<span class="bg-white border border-outline-variant/50 px-3 py-1.5 rounded-lg text-xs font-medium shadow-sm">Growth Mindset</span>
-<span class="bg-white border border-outline-variant/50 px-3 py-1.5 rounded-lg text-xs font-medium shadow-sm">Influencing</span>
+<span class="px-3 py-1.5 rounded-lg text-xs font-medium bg-[#1E1B4B] text-[#C4B5FD] border border-[#8B5CF6]/20">Emotional Intelligence</span>
+<span class="px-3 py-1.5 rounded-lg text-xs font-medium bg-[#1E1B4B] text-[#C4B5FD] border border-[#8B5CF6]/20">Critical Thinking</span>
+<span class="px-3 py-1.5 rounded-lg text-xs font-medium bg-[#1E1B4B] text-[#C4B5FD] border border-[#8B5CF6]/20">Conflict Resolution</span>
+<span class="px-3 py-1.5 rounded-lg text-xs font-medium bg-[#1E1B4B] text-[#C4B5FD] border border-[#8B5CF6]/20">Narrative Storytelling</span>
+<span class="px-3 py-1.5 rounded-lg text-xs font-medium bg-[#1E1B4B] text-[#C4B5FD] border border-[#8B5CF6]/20">Growth Mindset</span>
+<span class="px-3 py-1.5 rounded-lg text-xs font-medium bg-[#1E1B4B] text-[#C4B5FD] border border-[#8B5CF6]/20">Influencing</span>
 </div>
 </div>
 </div>
 <div class="mt-8 bg-primary-container text-on-primary-container p-4 rounded-xl flex items-start gap-4">
 <span class="material-symbols-outlined text-secondary" data-icon="psychology">psychology</span>
 <div>
-<p class="font-title-md text-sm text-on-primary font-bold">Executive Insight Summary</p>
-<p class="font-body-sm text-xs mt-1 leading-relaxed opacity-80">Elena demonstrates a rare combination of technical rigor and high emotional intelligence. Her career trajectory shows consistent upward movement with increasing complexity in stakeholder management. Recommended for High-Level Strategy roles.</p>
+<p class="font-title-md text-sm text-on-primary font-bold">AI Profile Summary</p>
+<p class="font-body-sm text-xs mt-1 leading-relaxed opacity-80">
+    {{ $candidate?->summary ?? $candidate?->ai_recommendation ?? 'Upload and parse your resume to generate an AI-powered profile summary.' }}
+</p>
 </div>
 </div>
 </div>

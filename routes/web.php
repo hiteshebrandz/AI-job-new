@@ -6,7 +6,9 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\Admin\JobApplicationController as AdminJobApplicationController;
+use App\Http\Controllers\Hr\ApplicantController as HrApplicantController;
 use App\Http\Controllers\AppliedJobsController;
+use App\Http\Controllers\NotificationSettingsController;
 use App\Http\Controllers\SavedJobsController;
 use App\Http\Controllers\UserJobController;
 use App\Http\Controllers\UserNotificationController;
@@ -37,6 +39,10 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
+    Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('password.email');
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 });
 
 /*
@@ -61,7 +67,9 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
     Route::get('/resume/preview/{log}', [ResumeController::class, 'preview'])->name('resume.preview');
     Route::post('/resume/profile', [ResumeController::class, 'storeProfile'])->name('resume.profile.store');
     Route::get('/resume/analytics', [PageController::class, 'resumeAnalytics'])->name('resume.analytics');
-    Route::get('/settings/notifications', [PageController::class, 'emailNotificationSettings'])->name('settings.notifications');
+    Route::get('/resume/analytics/data', [AnalyticsController::class, 'resumeData'])->name('resume.analytics.data');
+    Route::get('/settings/notifications', [NotificationSettingsController::class, 'showUser'])->name('settings.notifications');
+    Route::post('/settings/notifications', [NotificationSettingsController::class, 'saveUser'])->name('settings.notifications.save');
     Route::get('/saved-jobs', [SavedJobsController::class, 'index'])->name('saved-jobs');
     Route::delete('/saved-jobs/{job}', [SavedJobsController::class, 'destroy'])->name('saved-jobs.destroy');
     Route::get('/applied-jobs', [AppliedJobsController::class, 'index'])->name('applied-jobs');
@@ -77,18 +85,24 @@ Route::middleware(['auth', 'role:hr'])->prefix('hr')->name('hr.')->group(functio
     Route::put('/jobs/{job}', [JobController::class, 'update'])->name('jobs.update');
     Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
     Route::patch('/jobs/{job}/status', [JobController::class, 'toggleStatus'])->name('jobs.toggle-status');
-    Route::get('/applicants', [PageController::class, 'applicantManagement'])->name('applicants');
+    Route::get('/applicants', [HrApplicantController::class, 'index'])->name('applicants');
+    Route::post('/applications/{application}/status', [HrApplicantController::class, 'updateStatus'])->name('applications.updateStatus');
+    Route::get('/applications/{application}', [HrApplicantController::class, 'show'])->name('applications.show');
     Route::get('/resume/upload', [ResumeController::class, 'show'])->name('resume.upload');
     Route::post('/resume/upload', [ResumeController::class, 'upload'])->name('resume.upload.store');
     Route::get('/resume/parse/{log}', [ResumeController::class, 'status'])->name('resume.parse.status');
     Route::get('/resume/preview/{log}', [ResumeController::class, 'preview'])->name('resume.preview');
     Route::post('/resume/profile', [ResumeController::class, 'storeProfile'])->name('resume.profile.store');
-    Route::get('/settings/notifications', [PageController::class, 'emailNotificationSettings'])->name('settings.notifications');
+    Route::get('/settings/notifications', [NotificationSettingsController::class, 'showHr'])->name('settings.notifications');
+    Route::post('/settings/notifications', [NotificationSettingsController::class, 'saveHr'])->name('settings.notifications.save');
 });
+
+use App\Http\Controllers\Api\AnalyticsController;
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'admin'])->name('dashboard');
     Route::get('/analytics', [PageController::class, 'adminAnalytics'])->name('analytics');
+    Route::get('/analytics/data', [AnalyticsController::class, 'adminData'])->name('analytics.data');
     Route::get('/job-applications', [AdminJobApplicationController::class, 'index'])->name('job-applications.index');
     Route::get('/job-applications/{application}', [AdminJobApplicationController::class, 'show'])->name('job-applications.show');
     Route::post('/job-applications/{application}/status', [AdminJobApplicationController::class, 'updateStatus'])->name('job-applications.status');
