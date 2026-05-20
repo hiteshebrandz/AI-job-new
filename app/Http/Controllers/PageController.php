@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Job;
 use App\Models\JobApplication;
+use App\Models\Resume;
 use App\Models\User;
+use App\Services\JobRecommendationService;
 use Illuminate\View\View;
 
 class PageController extends Controller
@@ -14,27 +16,50 @@ class PageController extends Controller
         return view('pages.landing_page');
     }
 
-    public function resumeAnalytics(): View
+    public function resumeAnalytics(JobRecommendationService $jobRecommendations): View
     {
         $user      = auth()->user();
         $candidate = $user->candidate;
 
+        // Load latest resume from the AI analytics flow
+        $latestResume = Resume::where('user_id', $user->id)->latest()->first();
+        $analytics    = null;
+        $resumeStatus = 'none';
+
+        if ($latestResume) {
+            if ($latestResume->isCompleted()) {
+                $analytics    = $latestResume->analytics;
+                $resumeStatus = $analytics ? 'completed' : 'failed';
+            } elseif ($latestResume->isFailed()) {
+                $resumeStatus = 'failed';
+            } else {
+                $resumeStatus = 'processing';
+            }
+        }
+
+        // Legacy application data (still used for application_count fallback)
         $applications = $user->jobApplications()->with('job')->latest('applied_at')->get();
-        $statusBreakdown = $applications->groupBy('status')->map->count();
+
+        $recommendedJobs = $resumeStatus === 'completed'
+            ? $jobRecommendations->topMatchesForUser($user, 6)
+            : collect();
+
+        $appliedJobIds = $user->jobApplications()->pluck('job_id')->all();
 
         return view('pages.resume_analytics_dashboard', [
             'activeNav'        => 'analytics',
-            'aiScore'          => $candidate?->ai_score ?? 0,
-            'skillCount'       => count($candidate?->skills ?? []),
-            'skills'           => $candidate?->skills ?? [],
-            'applicationCount' => $applications->count(),
-            'topMatchScore'    => $applications->max('match_score') ?? 0,
-            'avgMatchScore'    => $applications->count()
-                ? (int) round($applications->avg('match_score'))
-                : 0,
-            'recentApps'       => $applications->take(5),
-            'statusBreakdown'  => $statusBreakdown,
             'candidate'        => $candidate,
+            'resumeStatus'     => $resumeStatus,
+            'latestResume'     => $latestResume,
+            'analytics'        => $analytics,
+            'recommendedJobs'  => $recommendedJobs,
+            'appliedJobIds'    => $appliedJobIds,
+            'aiScore'          => $analytics?->ai_score ?? ($candidate?->ai_score ?? 0),
+            'topMatchScore'    => $recommendedJobs->max('match_score')
+                ?? $analytics?->top_match_percentage
+                ?? ($applications->max('match_score') ?? 0),
+            'skillCount'       => $analytics?->skill_count ?? count($candidate?->skills ?? []),
+            'applicationCount' => $analytics?->application_count ?? $applications->count(),
         ]);
     }
 

@@ -24,6 +24,11 @@
             </div>
             <div>
                 <h1 class="text-[26px] font-extrabold text-[#E2E8F0] mb-2">{{ $job->title }}</h1>
+                @if(!empty($matchReason))
+                <p class="text-[13px] text-[#94A3B8] mb-2 max-w-2xl leading-relaxed">
+                    <span class="text-[#C4B5FD] font-semibold">{{ $matchScore }}% match</span> — {{ $matchReason }}
+                </p>
+                @endif
                 <div class="flex flex-wrap gap-3 items-center">
                     <span class="flex items-center gap-1.5 text-[13px] text-[#64748B]">
                         <span class="material-symbols-outlined text-[15px] text-[#8B5CF6]" data-icon="location_on">location_on</span>

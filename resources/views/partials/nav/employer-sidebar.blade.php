@@ -6,7 +6,8 @@
             : 'nav-link';
     };
 @endphp
-<aside id="app-sidebar" class="sidebar-mobile-hidden fixed left-0 top-0 h-screen w-[280px] glass-panel border-r border-[#1E293B] z-50 flex flex-col py-8 px-4 lg:translate-x-0 transition-transform duration-300">
+<aside id="app-sidebar"
+    class="sidebar-mobile-hidden fixed left-0 top-0 h-screen w-[280px] glass-panel border-r border-[#1E293B] z-50 flex flex-col py-8 px-4 lg:translate-x-0 transition-transform duration-300">
     <!-- Brand -->
     <div class="mb-8 px-4">
         <a href="{{ route('hr.dashboard') }}" class="block group">
@@ -51,19 +52,22 @@
         <div class="divider mb-4"></div>
         <div class="glass-card p-3 mb-3 flex items-center gap-3">
             <div class="w-9 h-9 rounded-full gradient-cyan-violet flex items-center justify-center flex-shrink-0">
-                <span class="text-white font-bold text-[13px]">{{ strtoupper(substr(auth()->user()->name, 0, 2)) }}</span>
+                <span
+                    class="text-white font-bold text-[13px]">{{ strtoupper(substr(auth()->user()->name, 0, 2)) }}</span>
             </div>
             <div class="min-w-0 flex-1">
                 <p class="text-[13px] font-semibold text-[#E2E8F0] truncate">{{ auth()->user()->name }}</p>
                 <p class="text-[11px] text-[#475569] truncate">Employer</p>
             </div>
-            <button onclick="toggleTheme()" class="p-1.5 rounded-lg hover:bg-[#263248] text-[#64748B] transition-colors" title="Toggle theme">
+            <button onclick="toggleTheme()" class="p-1.5 rounded-lg hover:bg-[#263248] text-[#64748B] transition-colors"
+                title="Toggle theme">
                 <span class="material-symbols-outlined text-[16px]" data-theme-icon>light_mode</span>
             </button>
         </div>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="w-full flex items-center gap-2 px-3 py-2 text-[13px] font-medium text-[#64748B] hover:text-[#F87171] hover:bg-[#1a1020] rounded-xl transition-all">
+            <button type="submit"
+                class="w-full flex items-center gap-2 px-3 py-2 text-[13px] font-medium text-[#64748B] hover:text-[#F87171] hover:bg-[#1a1020] rounded-xl transition-all">
                 <span class="material-symbols-outlined text-[16px]">logout</span>
                 Sign Out
             </button>

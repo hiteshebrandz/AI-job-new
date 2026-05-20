@@ -848,3 +848,6 @@ body {
     justify-content: center;
   }
 }
+
+/* [data-theme="light"] overrides now live in theme.css + components.css */
+

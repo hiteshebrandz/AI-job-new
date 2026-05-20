@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ResumeController;
+use App\Http\Controllers\UserResumeController;
 use App\Http\Controllers\Admin\JobApplicationController as AdminJobApplicationController;
 use App\Http\Controllers\Hr\ApplicantController as HrApplicantController;
 use App\Http\Controllers\AppliedJobsController;
@@ -58,6 +59,7 @@ Route::post('/logout', [AuthController::class, 'logout'])
 Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'user'])->name('dashboard');
     Route::get('/jobs/recommendations', [UserJobController::class, 'recommendations'])->name('jobs.recommendations');
+    Route::get('/jobs/recommendations/data', [UserJobController::class, 'recommendationsApi'])->name('jobs.recommendations.data');
     Route::get('/jobs/{job}', [UserJobController::class, 'show'])->name('jobs.show');
     Route::post('/jobs/{job}/apply', [UserJobController::class, 'apply'])->name('jobs.apply');
     Route::post('/jobs/{job}/save', [UserJobController::class, 'saveJob'])->name('jobs.save');
@@ -68,6 +70,8 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
     Route::post('/resume/profile', [ResumeController::class, 'storeProfile'])->name('resume.profile.store');
     Route::get('/resume/analytics', [PageController::class, 'resumeAnalytics'])->name('resume.analytics');
     Route::get('/resume/analytics/data', [AnalyticsController::class, 'resumeData'])->name('resume.analytics.data');
+    Route::post('/resume/analytics/upload', [UserResumeController::class, 'uploadResume'])->name('resume.analytics.upload');
+    Route::post('/resume/{resumeId}/reanalyze', [UserResumeController::class, 'reAnalyze'])->name('resume.analytics.reanalyze');
     Route::get('/settings/notifications', [NotificationSettingsController::class, 'showUser'])->name('settings.notifications');
     Route::post('/settings/notifications', [NotificationSettingsController::class, 'saveUser'])->name('settings.notifications.save');
     Route::get('/saved-jobs', [SavedJobsController::class, 'index'])->name('saved-jobs');
@@ -121,7 +125,7 @@ Route::redirect('/employer/dashboard', '/hr/dashboard');
 Route::redirect('/employer/jobs/create', '/hr/jobs/create');
 Route::redirect('/employer/applicants', '/hr/applicants');
 Route::redirect('/jobs/recommendations', '/user/jobs/recommendations');
-Route::get('/jobs/{id}', fn (string $id) => redirect("/user/jobs/{$id}"))->where('id', '[0-9]+');
+Route::get('/jobs/{id}', fn(string $id) => redirect("/user/jobs/{$id}"))->where('id', '[0-9]+');
 Route::redirect('/resume/upload', '/user/resume/upload');
 Route::redirect('/resume/analytics', '/user/resume/analytics');
 Route::redirect('/settings/notifications', '/login');

@@ -234,7 +234,11 @@ class Job extends Model
 
     public function matchPercentage(?\App\Models\Candidate $candidate = null): int
     {
-        return app(\App\Services\JobMatchService::class)->percentage($this, $candidate);
+        $profile = $candidate
+            ? app(\App\Services\CandidateProfileBuilder::class)->fromCandidate($candidate)
+            : null;
+
+        return app(\App\Services\JobMatchService::class)->percentage($this, $candidate, $profile);
     }
 
     public function matchRingOffset(): float

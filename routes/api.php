@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AnalyticsController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ResumeUploadController;
+use App\Http\Controllers\UserResumeController;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,5 +32,12 @@ Route::middleware('auth:sanctum')->group(function () {
     // Analytics — candidates only
     Route::middleware('role:user')->group(function () {
         Route::get('/analytics/resume', [AnalyticsController::class, 'resumeData']);
+
+        // Resume Analytics (AI-powered, separate from resume parsing flow)
+        Route::prefix('user/resume')->group(function () {
+            Route::post('/upload', [UserResumeController::class, 'uploadResume']);
+            Route::get('/analytics', [UserResumeController::class, 'analytics']);
+            Route::post('/{resumeId}/reanalyze', [UserResumeController::class, 'reAnalyze']);
+        });
     });
 });

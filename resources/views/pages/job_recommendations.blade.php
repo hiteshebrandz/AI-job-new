@@ -24,7 +24,7 @@
             <span class="badge-ai">AI Curated</span>
         </div>
         <h2 class="text-[28px] font-extrabold text-[#E2E8F0]">Job Recommendations</h2>
-        <p class="text-[14px] text-[#64748B] mt-1">Curated opportunities based on your profile and AI-driven skill matching.</p>
+        <p class="text-[14px] text-[#64748B] mt-1">Jobs from our platform matched to your skills, projects, experience, and profile.</p>
     </div>
 
     <div class="flex gap-6">
@@ -104,47 +104,52 @@
             </div>
 
             <!-- Job Cards -->
-            <div class="space-y-4">
+            <div id="job-results" class="space-y-4">
                 @forelse ($jobs as $job)
-                @php $matchPct = $job->matchPercentage(auth()->user()->candidate); @endphp
-                <div class="glass-card glass-card-lift p-6 group relative overflow-hidden animate-fade-in">
-                    <!-- Hover accent -->
+                @php
+                    $matchPct = $job->match_score ?? $job->matchPercentage(auth()->user()->candidate);
+                    $hasApplied = in_array($job->id, $appliedJobIds ?? [], true);
+                    $jobSkills = array_slice($job->skillsList(), 0, 5);
+                @endphp
+                <article class="glass-card glass-card-lift p-5 md:p-6 group relative overflow-hidden animate-fade-in">
                     <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#7C3AED] to-[#06B6D4] opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
-                    <div class="flex items-start justify-between gap-4">
+                    <div class="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
                         <div class="flex gap-4 flex-1 min-w-0">
                             <div class="w-14 h-14 rounded-xl glass-card border border-[#334155] flex items-center justify-center flex-shrink-0">
                                 <span class="font-bold text-[15px] gradient-text-violet">{{ $job->companyInitials() }}</span>
                             </div>
                             <div class="min-w-0 flex-1">
                                 <div class="flex items-center gap-2 flex-wrap mb-1">
-                                    <h3 class="text-[18px] font-bold text-[#E2E8F0] group-hover:text-[#C4B5FD] transition-colors truncate">{{ $job->title }}</h3>
+                                    <h3 class="text-[18px] font-bold text-[#E2E8F0]">
+                                        <a href="{{ route('user.jobs.show', $job) }}" class="hover:text-[#C4B5FD] transition-colors">{{ $job->title }}</a>
+                                    </h3>
                                     @if ($job->isNewPosting())
                                     <span class="badge-success text-[10px]">New</span>
                                     @endif
                                 </div>
-                                <p class="text-[13px] text-[#64748B] mb-3">{{ $job->company_name }}</p>
-                                <div class="flex flex-wrap gap-3">
-                                    <span class="flex items-center gap-1.5 text-[13px] text-[#64748B]">
-                                        <span class="material-symbols-outlined text-[15px] text-[#8B5CF6]" data-icon="payments">payments</span>
-                                        {{ $job->displaySalary() }}
-                                    </span>
-                                    <span class="flex items-center gap-1.5 text-[13px] text-[#64748B]">
-                                        <span class="material-symbols-outlined text-[15px] text-[#06B6D4]" data-icon="{{ $job->usesRemoteIcon() ? 'public' : 'location_on' }}">{{ $job->usesRemoteIcon() ? 'public' : 'location_on' }}</span>
-                                        {{ $job->displayLocation() }}
-                                    </span>
-                                    <span class="flex items-center gap-1.5 text-[13px] text-[#64748B]">
-                                        <span class="material-symbols-outlined text-[15px] text-[#475569]" data-icon="schedule">schedule</span>
-                                        {{ $job->created_at->diffForHumans(short: true) }}
-                                    </span>
+                                <p class="text-[13px] text-[#64748B] mb-2">{{ $job->company_name }}</p>
+                                <div class="flex flex-wrap gap-2 mb-3">
+                                    <span class="text-[11px] px-2 py-0.5 rounded-md bg-[#1E293B] text-[#94A3B8] border border-[#334155]">{{ $job->displayLocation() }}</span>
+                                    <span class="text-[11px] px-2 py-0.5 rounded-md bg-[#1E293B] text-[#94A3B8] border border-[#334155]">{{ $job->job_type ?: '—' }}</span>
+                                    <span class="text-[11px] px-2 py-0.5 rounded-md bg-[#1E293B] text-[#94A3B8] border border-[#334155]">{{ $job->displaySalary() }}</span>
                                 </div>
+                                @if(count($jobSkills) > 0)
+                                <div class="flex flex-wrap gap-1.5 mb-2">
+                                    @foreach($jobSkills as $skill)
+                                    <span class="text-[10px] px-2 py-0.5 rounded-md bg-[#8B5CF6]/15 text-[#C4B5FD] border border-[#8B5CF6]/25">{{ $skill }}</span>
+                                    @endforeach
+                                </div>
+                                @endif
+                                @if(!empty($job->match_reason))
+                                <p class="text-[12px] text-[#64748B] leading-relaxed">{{ $job->match_reason }}</p>
+                                @endif
                             </div>
                         </div>
 
-                        <!-- Match ring + actions -->
-                        <div class="flex flex-col items-end gap-3 flex-shrink-0">
+                        <div class="flex flex-row lg:flex-col items-center lg:items-end gap-3 flex-shrink-0">
                             <div class="relative w-[64px] h-[64px]">
-                                <svg class="w-full h-full -rotate-90 score-ring" viewBox="0 0 64 64">
+                                <svg class="w-full h-full -rotate-90 score-ring" viewBox="0 0 64 64" aria-hidden="true">
                                     <circle cx="32" cy="32" r="26" fill="transparent" stroke="#334155" stroke-width="5"/>
                                     <circle cx="32" cy="32" r="26" fill="transparent"
                                         stroke="url(#mg{{ $job->id }})"
@@ -165,21 +170,28 @@
                                     <span class="text-[8px] text-[#475569] uppercase tracking-wide">Match</span>
                                 </div>
                             </div>
-                            @if ($loop->first && $jobs->currentPage() === 1)
-                            <a href="{{ route('user.jobs.show', ['job' => $job, 'apply' => 1]) }}" class="btn-primary py-2 px-4 text-[13px]">Apply</a>
-                            @else
-                            <a href="{{ route('user.jobs.show', $job) }}" class="btn-secondary py-2 px-4 text-[13px]">Details</a>
-                            @endif
+                            <div class="flex gap-2">
+                                @if($hasApplied)
+                                <span class="px-4 py-2 rounded-xl bg-[#263248] text-[#64748B] text-[13px] border border-[#334155]">Applied</span>
+                                @else
+                                <a href="{{ route('user.jobs.show', ['job' => $job, 'apply' => 1]) }}" class="btn-primary py-2 px-4 text-[13px]">Apply Now</a>
+                                @endif
+                                <a href="{{ route('user.jobs.show', $job) }}" class="btn-secondary py-2 px-4 text-[13px]">Details</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </article>
                 @empty
                 <div class="glass-card text-center py-16 animate-fade-in">
                     <div class="empty-state-icon mx-auto mb-5">
                         <span class="material-symbols-outlined text-[36px] text-[#8B5CF6]">work_off</span>
                     </div>
-                    <h3 class="text-[16px] font-semibold text-[#94A3B8] mb-2">No jobs match your filters</h3>
-                    <p class="text-[13px] text-[#475569] mb-6">Try adjusting your filters or <a href="{{ route('user.jobs.recommendations') }}" class="text-[#8B5CF6] hover:underline font-semibold">clear all</a>.</p>
+                    <h3 class="text-[16px] font-semibold text-[#94A3B8] mb-2">No matching jobs found</h3>
+                    <p class="text-[13px] text-[#475569] mb-6 max-w-md mx-auto">
+                        We could not find active roles that match your profile yet. Complete your profile, upload a resume for analysis, or
+                        <a href="{{ route('user.jobs.recommendations') }}" class="text-[#8B5CF6] hover:underline font-semibold">clear filters</a>.
+                    </p>
+                    <a href="{{ route('user.resume.analytics') }}" class="btn-primary inline-flex py-2.5 px-5 text-[13px]">Improve Your Profile</a>
                 </div>
                 @endforelse
             </div>
@@ -198,7 +210,15 @@
 <script>
 (function () {
     var form = document.getElementById('job-filters');
+    var results = document.getElementById('job-results');
     if (!form) return;
+
+    form.addEventListener('submit', function () {
+        if (results) {
+            results.style.opacity = '0.5';
+            results.style.pointerEvents = 'none';
+        }
+    });
     var distanceInput = form.querySelector('input[name="distance"]');
     var distanceLabel = document.getElementById('distance-label');
     var updateLabel = function () {

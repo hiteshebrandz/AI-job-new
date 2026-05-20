@@ -27,6 +27,7 @@ class Candidate extends Model
         'university',
         'graduation_year',
         'skills',
+        'projects',
         'resume_path',
         'ai_recommendation',
         'summary',
@@ -35,6 +36,7 @@ class Candidate extends Model
 
     protected $casts = [
         'skills' => 'array',
+        'projects' => 'array',
         'experience_years' => 'integer',
         'graduation_year' => 'integer',
         'ai_score' => 'integer',

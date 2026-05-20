@@ -17,7 +17,7 @@
 
 @section('page-main')
 <!-- Welcome Banner -->
-<section class="relative overflow-hidden rounded-3xl p-8 lg:p-10 mb-8 animate-fade-in" style="background: radial-gradient(ellipse 80% 100% at 10% 50%, rgba(124,58,237,0.35) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 90% 20%, rgba(6,182,212,0.2) 0%, transparent 60%), linear-gradient(135deg, #1E293B 0%, #162032 100%); border: 1px solid rgba(139,92,246,0.2);">
+<section class="dashboard-hero relative overflow-hidden rounded-3xl p-8 lg:p-10 mb-8 animate-fade-in">
     <!-- Floating orbs -->
     <div class="blob blob-violet w-48 h-48 -top-10 -right-10 opacity-30 animate-blob"></div>
 
@@ -25,12 +25,12 @@
         <div>
             <div class="flex items-center gap-3 mb-3">
                 <span class="badge-ai">AI Powered</span>
-                <span class="text-[12px] text-[#475569]">Profile Active</span>
+                <span class="text-[12px]" style="color: var(--text-muted);">Profile Active</span>
             </div>
-            <h1 class="text-[32px] lg:text-[40px] font-extrabold text-white mb-3 tracking-tight">
+            <h1 class="text-[32px] lg:text-[40px] font-extrabold mb-3 tracking-tight" style="color: var(--text-hero);">
                 Welcome back, <span class="gradient-text-violet">{{ $user->name }}</span>
             </h1>
-            <p class="text-[15px] text-[#94A3B8] max-w-lg leading-relaxed">Your profile is active and being matched with opportunities. Upload your resume to boost your AI match score.</p>
+            <p class="text-[15px] max-w-lg leading-relaxed" style="color: var(--text-hero-muted);">Your profile is active and being matched with opportunities. Upload your resume to boost your AI match score.</p>
         </div>
 
         <!-- AI Score Ring -->
