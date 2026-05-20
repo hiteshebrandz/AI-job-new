@@ -143,6 +143,34 @@
             .filter(Boolean);
     }
 
+    async function pollParseStatus(logId, pollUrl) {
+        const url = pollUrl || config.statusUrlTemplate?.replace('__ID__', logId);
+        if (!url) throw new Error('Missing status URL');
+
+        const maxAttempts = 60;
+        const delayMs = 1500;
+
+        for (let i = 0; i < maxAttempts; i++) {
+            const res = await fetch(url, {
+                headers: { Accept: 'application/json', 'X-CSRF-TOKEN': csrf },
+                credentials: 'same-origin',
+            });
+            const body = await res.json().catch(() => ({}));
+
+            if (body.status === 'completed' && body.data) {
+                return body;
+            }
+            if (body.status === 'failed') {
+                throw new Error(body.message || body.error || 'Parsing failed');
+            }
+
+            setProgress(Math.min(90, 40 + i * 2), 'AI extracting fields...');
+            await new Promise((r) => setTimeout(r, delayMs));
+        }
+
+        throw new Error('Parsing timed out. Please try again.');
+    }
+
     function animateProgressWhileParsing() {
         let p = 10;
         setProgress(p, 'Uploading document...');
@@ -202,14 +230,20 @@
                 xhr.open('POST', config.uploadUrl);
                 xhr.setRequestHeader('X-CSRF-TOKEN', csrf);
                 xhr.setRequestHeader('Accept', 'application/json');
+                xhr.withCredentials = true;
                 xhr.send(formData);
             });
 
-            const result = await uploadPromise;
+            let result = await uploadPromise;
+
+            if (result.status === 'pending' || result.status === 'processing') {
+                result = await pollParseStatus(result.log_id, result.poll_url);
+            }
+
             clearInterval(timer);
             showParsing(false);
 
-            if (!result.success) {
+            if (!result.data && result.status !== 'completed') {
                 throw new Error(result.message || 'Parsing failed');
             }
 
@@ -219,6 +253,9 @@
             parsingLogId.value = result.log_id;
             fillForm(result.data);
             toast(result.message || 'Resume parsed successfully.');
+            if (result.parse_warning) {
+                toast(result.parse_warning, 'error');
+            }
             setTimeout(resetProgress, 1500);
         } catch (err) {
             clearInterval(timer);
@@ -329,6 +366,7 @@
                     'X-CSRF-TOKEN': csrf,
                     Accept: 'application/json',
                 },
+                credentials: 'same-origin',
                 body: JSON.stringify(payload),
             });
             const data = await res.json().catch(() => ({}));

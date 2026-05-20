@@ -9,90 +9,151 @@
 @section('tailwind-config', 'tailwind-config-admin.js')
 
 @section('content')
-<main class="min-h-screen p-container-margin max-w-[1440px] mx-auto">
-    <header class="flex justify-between items-center mb-10 py-8">
-        <div>
-            <h1 class="font-headline-lg text-headline-lg text-primary">Super Admin Dashboard</h1>
-            <p class="font-body-md text-on-surface-variant">Platform overview and account management</p>
+<!-- Sidebar -->
+@include('partials.nav.admin-sidebar', ['activeNav' => 'dashboard'])
+
+<main class="lg:ml-[280px] min-h-screen">
+    <!-- Topbar -->
+    <header class="glass-panel border-b border-[#1E293B] h-[64px] flex items-center justify-between px-6 lg:px-8 sticky top-0 z-40">
+        <div class="flex items-center gap-3">
+            <button type="button" class="lg:hidden p-2 rounded-xl text-[#64748B] hover:text-[#E2E8F0] hover:bg-[#263248] transition-all" onclick="document.getElementById('app-sidebar')?.classList.toggle('sidebar-mobile-open')">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div>
+                <h1 class="text-[18px] font-bold text-[#E2E8F0]">Admin Dashboard</h1>
+                <p class="text-[12px] text-[#475569] hidden sm:block">Platform overview</p>
+            </div>
         </div>
-        <div class="flex items-center gap-4">
-            <a href="{{ route('admin.analytics') }}" class="px-4 py-2 text-secondary font-label-caps hover:underline">Analytics UI</a>
-            <form method="POST" action="{{ route('logout') }}">
+        <div class="flex items-center gap-3">
+            <a href="{{ route('admin.analytics') }}" class="btn-secondary py-2 px-4 text-[13px]">Analytics</a>
+            <button onclick="toggleTheme()" class="p-2 rounded-xl text-[#64748B] hover:text-[#C4B5FD] hover:bg-[#1E293B] transition-all">
+                <span class="material-symbols-outlined text-[20px]" data-theme-icon>light_mode</span>
+            </button>
+            <form method="POST" action="{{ route('logout') }}" class="inline">
                 @csrf
-                <button type="submit" class="px-4 py-2 border border-outline-variant rounded-lg font-label-caps hover:bg-surface-container-high transition-colors">
-                    Logout
-                </button>
+                <button type="submit" class="btn-ghost py-2 px-4 text-[13px]">Sign Out</button>
             </form>
         </div>
     </header>
 
-    <div class="grid md:grid-cols-2 gap-6 mb-10">
-        <div class="bg-surface-container-lowest p-card-padding rounded-xl border border-outline-variant">
-            <p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-2">Total Users</p>
-            <p class="font-headline-lg text-headline-lg text-primary">{{ $totalUsers }}</p>
+    <div class="pt-6 pb-12 px-6 lg:px-8 max-w-[1440px] mx-auto page-content">
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 animate-fade-in">
+            <div class="glass-card kpi-card p-5">
+                <div class="w-10 h-10 rounded-xl bg-[#1E1B4B] flex items-center justify-center mb-4">
+                    <span class="material-symbols-outlined text-[#8B5CF6] text-[20px]">people</span>
+                </div>
+                <p class="text-[32px] font-extrabold text-[#E2E8F0]" data-counter="{{ $totalUsers }}">0</p>
+                <p class="text-[12px] text-[#64748B] mt-1">Total Users</p>
+            </div>
+            <div class="glass-card kpi-card-cyan p-5">
+                <div class="w-10 h-10 rounded-xl bg-[#164E63] flex items-center justify-center mb-4">
+                    <span class="material-symbols-outlined text-[#06B6D4] text-[20px]">business_center</span>
+                </div>
+                <p class="text-[32px] font-extrabold text-[#E2E8F0]" data-counter="{{ $totalHr }}">0</p>
+                <p class="text-[12px] text-[#64748B] mt-1">HR Accounts</p>
+            </div>
+            <div class="glass-card kpi-card-green p-5">
+                <div class="w-10 h-10 rounded-xl bg-[#14532D] flex items-center justify-center mb-4">
+                    <span class="material-symbols-outlined text-[#34D399] text-[20px]">work</span>
+                </div>
+                <p class="text-[32px] font-extrabold text-[#E2E8F0]" data-counter="{{ $activeJobs }}">0</p>
+                <p class="text-[12px] text-[#64748B] mt-1">Active Jobs</p>
+            </div>
+            <div class="glass-card kpi-card-amber p-5">
+                <div class="w-10 h-10 rounded-xl bg-[#451A03] flex items-center justify-center mb-4">
+                    <span class="material-symbols-outlined text-[#FBBF24] text-[20px]">assignment</span>
+                </div>
+                <p class="text-[32px] font-extrabold text-[#E2E8F0]" data-counter="{{ $totalApplications }}">0</p>
+                <p class="text-[12px] text-[#64748B] mt-1">Applications</p>
+            </div>
         </div>
-        <div class="bg-surface-container-lowest p-card-padding rounded-xl border border-outline-variant">
-            <p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-2">Total HR Accounts</p>
-            <p class="font-headline-lg text-headline-lg text-primary">{{ $totalHr }}</p>
+
+        <!-- Tables -->
+        <div class="grid lg:grid-cols-2 gap-6 animate-fade-in-delay-1">
+            <!-- Users table -->
+            <section class="glass-card overflow-hidden">
+                <div class="p-6 border-b border-[#334155] flex items-center justify-between">
+                    <div>
+                        <h2 class="text-[16px] font-bold text-[#E2E8F0]">All Users</h2>
+                        <p class="text-[12px] text-[#64748B] mt-0.5">{{ $users->count() }} registered</p>
+                    </div>
+                    <span class="badge-violet">Candidates</span>
+                </div>
+                <div class="overflow-x-auto max-h-[360px] overflow-y-auto no-scrollbar">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($users as $account)
+                            <tr>
+                                <td class="text-[13px] font-medium text-[#E2E8F0]">{{ $account->name }}</td>
+                                <td class="text-[13px] text-[#64748B]">{{ $account->email }}</td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="2" class="px-6 py-8 text-center text-[13px] text-[#475569]">No users registered yet.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- HR table -->
+            <section class="glass-card overflow-hidden">
+                <div class="p-6 border-b border-[#334155] flex items-center justify-between">
+                    <div>
+                        <h2 class="text-[16px] font-bold text-[#E2E8F0]">HR Accounts</h2>
+                        <p class="text-[12px] text-[#64748B] mt-0.5">{{ $hrs->count() }} registered</p>
+                    </div>
+                    <span class="badge-ai">Employers</span>
+                </div>
+                <div class="overflow-x-auto max-h-[360px] overflow-y-auto no-scrollbar">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($hrs as $account)
+                            <tr>
+                                <td class="text-[13px] font-medium text-[#E2E8F0]">{{ $account->name }}</td>
+                                <td class="text-[13px] text-[#64748B]">{{ $account->email }}</td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="2" class="px-6 py-8 text-center text-[13px] text-[#475569]">No HR accounts yet.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         </div>
-    </div>
 
-    <div class="grid lg:grid-cols-2 gap-8">
-        <section class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden">
-            <div class="p-card-padding border-b border-outline-variant">
-                <h2 class="font-title-md text-title-md text-primary">All Users</h2>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                    <thead class="bg-surface-container-low">
-                        <tr>
-                            <th class="px-6 py-3 font-label-caps text-label-caps text-on-surface-variant">Name</th>
-                            <th class="px-6 py-3 font-label-caps text-label-caps text-on-surface-variant">Email</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-outline-variant">
-                        @forelse ($users as $account)
-                            <tr class="hover:bg-surface-container-low/50">
-                                <td class="px-6 py-4 font-body-md">{{ $account->name }}</td>
-                                <td class="px-6 py-4 font-body-sm text-on-surface-variant">{{ $account->email }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="2" class="px-6 py-8 text-center font-body-sm text-on-surface-variant">No users registered yet.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden">
-            <div class="p-card-padding border-b border-outline-variant">
-                <h2 class="font-title-md text-title-md text-primary">All HR Accounts</h2>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                    <thead class="bg-surface-container-low">
-                        <tr>
-                            <th class="px-6 py-3 font-label-caps text-label-caps text-on-surface-variant">Name</th>
-                            <th class="px-6 py-3 font-label-caps text-label-caps text-on-surface-variant">Email</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-outline-variant">
-                        @forelse ($hrs as $account)
-                            <tr class="hover:bg-surface-container-low/50">
-                                <td class="px-6 py-4 font-body-md">{{ $account->name }}</td>
-                                <td class="px-6 py-4 font-body-sm text-on-surface-variant">{{ $account->email }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="2" class="px-6 py-8 text-center font-body-sm text-on-surface-variant">No HR accounts yet.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </section>
+        @include('partials.nav.dashboard-footer')
     </div>
 </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var counters = document.querySelectorAll('[data-counter]');
+    counters.forEach(function (el) {
+        var target = parseInt(el.getAttribute('data-counter'), 10) || 0;
+        var duration = 600, start = 0, step = Math.ceil(target / (duration / 16));
+        var timer = setInterval(function () {
+            start += step;
+            if (start >= target) { start = target; clearInterval(timer); }
+            el.textContent = start;
+        }, 16);
+    });
+});
+</script>
 @endsection

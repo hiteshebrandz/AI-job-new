@@ -1,5 +1,18 @@
+/* Candidate Dashboard — dark glass overrides */
 .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid #E2E8F0;
-        }
+    background: rgba(30, 41, 59, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(139, 92, 246, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.progress-gradient {
+    background: linear-gradient(90deg, #7C3AED 0%, #06B6D4 100%);
+}
+
+.score-ring-circle {
+    transition: stroke-dashoffset 1s ease;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}

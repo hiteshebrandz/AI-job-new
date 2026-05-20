@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Candidate extends Model
@@ -28,6 +29,7 @@ class Candidate extends Model
         'skills',
         'resume_path',
         'ai_recommendation',
+        'summary',
         'ai_score',
     ];
 
@@ -46,6 +48,12 @@ class Candidate extends Model
     public function parsingLogs(): HasMany
     {
         return $this->hasMany(ResumeParsingLog::class);
+    }
+
+    public function skillRecords(): BelongsToMany
+    {
+        return $this->belongsToMany(Skill::class, 'candidate_skills', 'user_id', 'skill_id', 'user_id')
+            ->withTimestamps();
     }
 
     public static function generateCode(): string

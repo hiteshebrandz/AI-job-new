@@ -1,20 +1,29 @@
+/* Resume Analytics Dashboard — dark overrides */
 .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid #E2E8F0;
-        }
-        .radar-grid {
-            background-image: radial-gradient(circle, #4648d4 1px, transparent 1px);
-            background-size: 24px 24px;
-        }
-        .gradient-text {
-            background: linear-gradient(135deg, #4648d4 0%, #9333ea 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .progress-ring {
-            transform: rotate(-90deg);
-        }
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    background: rgba(30, 41, 59, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(139, 92, 246, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.radar-grid {
+    background-image: radial-gradient(circle, rgba(139, 92, 246, 0.3) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.progress-ring {
+    transform: rotate(-90deg);
+}
+
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.3); border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.5); }

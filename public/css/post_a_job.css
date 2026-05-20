@@ -1,5 +1,22 @@
-.glass-sidebar { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); }
-        .glass-topbar { background: rgba(252, 248, 250, 0.8); backdrop-filter: blur(12px); }
-        .gradient-primary { background: linear-gradient(135deg, #4648d4 0%, #6063ee 100%); }
-        .step-active { border-color: #4648d4; color: #4648d4; }
-        .step-inactive { border-color: #c6c6cd; color: #76777d; }
+/* Post a Job — dark overrides */
+.glass-sidebar  { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-right: 1px solid rgba(139, 92, 246, 0.15); }
+.glass-topbar   { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(139, 92, 246, 0.15); }
+.gradient-primary { background: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 100%); }
+
+.step-active   { border-color: #8B5CF6 !important; color: #8B5CF6 !important; background: rgba(139, 92, 246, 0.12) !important; }
+.step-inactive { border-color: #334155 !important; color: #64748B !important; }
+.step-complete { border-color: #06B6D4 !important; background: rgba(6, 182, 212, 0.15) !important; color: #06B6D4 !important; }
+
+/* Rich-text editor dark theme */
+.ql-toolbar.ql-snow {
+    background: #1E293B;
+    border-color: #334155 !important;
+}
+.ql-container.ql-snow {
+    background: #0F172A;
+    border-color: #334155 !important;
+    color: #E2E8F0;
+}
+.ql-snow .ql-stroke { stroke: #94A3B8 !important; }
+.ql-snow .ql-fill  { fill:   #94A3B8 !important; }
+.ql-snow .ql-picker { color:  #94A3B8 !important; }

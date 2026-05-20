@@ -43,4 +43,23 @@ class ResumeParsingLog extends Model
     {
         return $this->belongsTo(Candidate::class);
     }
+
+    public function isFinished(): bool
+    {
+        return in_array($this->parsing_status, [self::STATUS_COMPLETED, self::STATUS_FAILED], true);
+    }
+
+    /**
+     * Stable API payload for frontend auto-fill (resume-upload.js).
+     */
+    public function toRegistrationPayload(): array
+    {
+        $data = $this->parsed_data ?? [];
+        unset($data['parser_source']);
+
+        return array_merge($data, [
+            'current_title' => $data['current_title'] ?? $data['title'] ?? '',
+            'summary' => $data['summary'] ?? $data['ai_recommendation'] ?? '',
+        ]);
+    }
 }

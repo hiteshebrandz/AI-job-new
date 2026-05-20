@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ApplicationNotification;
 use App\Models\Job;
 use App\Models\JobApplication;
 use App\Models\SavedJob;
@@ -84,12 +85,19 @@ class UserJobController extends Controller
             ], 422);
         }
 
-        JobApplication::create([
-            'user_id' => $user->id,
-            'job_id' => $job->id,
-            'status' => JobApplication::STATUS_APPLIED,
+        $application = JobApplication::create([
+            'user_id'     => $user->id,
+            'job_id'      => $job->id,
+            'status'      => JobApplication::STATUS_APPLIED,
             'match_score' => $this->jobMatchService->percentage($job, $user->candidate),
-            'applied_at' => now(),
+            'applied_at'  => now(),
+        ]);
+
+        // Notify candidate that their application was submitted
+        ApplicationNotification::create([
+            'user_id'            => $user->id,
+            'job_application_id' => $application->id,
+            'message'            => "Your application for {$job->title} at {$job->company_name} has been submitted successfully.",
         ]);
 
         return response()->json([
@@ -210,22 +218,48 @@ class UserJobController extends Controller
             });
         }
 
-        match ($sort) {
-            'salary' => $query->orderByDesc('max_salary')->orderByDesc('min_salary')->latest('id'),
-            'recent' => $query->latest(),
-            default => $query->orderByRaw('(70 + (id % 29)) DESC')->latest('id'),
-        };
+        $candidate = $request->user()->candidate;
 
-        $jobs = $query->paginate(6)->withQueryString();
+        if ($sort === 'match') {
+            // Fetch all matching jobs (without pagination first) to score+sort them
+            $allJobs = $query->latest('id')->get();
+            $allJobs = $allJobs->map(function ($job) use ($candidate) {
+                $job->match_score = $this->jobMatchService->percentage($job, $candidate);
+                return $job;
+            })->sortByDesc('match_score')->values();
+
+            // Manual pagination from the sorted collection
+            $page      = (int) $request->input('page', 1);
+            $perPage   = 6;
+            $slice     = $allJobs->slice(($page - 1) * $perPage, $perPage)->values();
+            $jobs      = new \Illuminate\Pagination\LengthAwarePaginator(
+                $slice,
+                $allJobs->count(),
+                $perPage,
+                $page,
+                ['path' => $request->url(), 'query' => $request->query()]
+            );
+        } else {
+            match ($sort) {
+                'salary' => $query->orderByDesc('max_salary')->orderByDesc('min_salary')->latest('id'),
+                default  => $query->latest(),
+            };
+
+            $jobs = $query->paginate(6)->withQueryString();
+            $jobs->getCollection()->transform(function ($job) use ($candidate) {
+                $job->match_score = $this->jobMatchService->percentage($job, $candidate);
+                return $job;
+            });
+        }
 
         return view('pages.job_recommendations', [
-            'activeNav' => 'jobs',
-            'jobs' => $jobs,
-            'search' => $search,
-            'salaryBands' => $salaryBands,
-            'jobTypes' => $jobTypes,
-            'distance' => $distance,
-            'sort' => $sort,
+            'activeNav'  => 'jobs',
+            'jobs'       => $jobs,
+            'search'     => $search,
+            'salaryBands'=> $salaryBands,
+            'jobTypes'   => $jobTypes,
+            'distance'   => $distance,
+            'sort'       => $sort,
         ]);
     }
 }

@@ -12,7 +12,7 @@ class AppliedJobsController extends Controller
     {
         $applications = JobApplication::query()
             ->where('user_id', $request->user()->id)
-            ->with(['job.hr'])
+            ->with(['job', 'job.hr'])
             ->latest('applied_at')
             ->paginate(10);
 

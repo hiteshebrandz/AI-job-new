@@ -25,6 +25,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'notification_settings',
     ];
 
     protected $hidden = [
@@ -33,7 +34,8 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verified_at'     => 'datetime',
+        'notification_settings' => 'array',
     ];
 
     public function isUser(): bool
@@ -91,5 +93,10 @@ class User extends Authenticatable
     public function applicationNotifications(): HasMany
     {
         return $this->hasMany(ApplicationNotification::class)->latest();
+    }
+
+    public function skills(): BelongsToMany
+    {
+        return $this->belongsToMany(Skill::class, 'candidate_skills')->withTimestamps();
     }
 }

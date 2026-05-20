@@ -2,116 +2,177 @@
 
 @section('title', 'HR Dashboard')
 
-@section('body-class', 'bg-surface text-on-surface min-h-screen')
+@section('body-class', 'bg-background text-on-surface min-h-screen')
 
 @section('page-css', 'employer_dashboard.css')
 
 @section('tailwind-config', 'tailwind-config-employer.js')
 
 @push('candidate-header-actions')
-<a href="{{ route('hr.jobs.create') }}" class="px-4 py-2 bg-secondary text-white rounded-lg font-label-caps hover:shadow-lg transition-all">
-Post a Job
+<a href="{{ route('hr.jobs.create') }}" class="btn-primary py-2 px-4 text-[13px]">
+    <span class="material-symbols-outlined text-[16px]">post_add</span>
+    Post a Job
 </a>
 @endpush
 
 @section('employer-main')
 @if (session('success'))
-<div class="mb-6 px-4 py-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 font-body-sm">{{ session('success') }}</div>
+<div class="mb-6 p-4 rounded-2xl bg-[#14532D]/40 border border-[#34D399]/30 text-[#6EE7B7] text-[14px] flex items-center gap-3 animate-fade-in">
+    <span class="material-symbols-outlined">check_circle</span>
+    {{ session('success') }}
+</div>
 @endif
 
-<div class="mb-10">
-<h1 class="font-headline-lg text-headline-lg text-primary">Welcome, {{ $user->name }}</h1>
-<p class="font-body-md text-on-surface-variant">HR hiring dashboard</p>
+<!-- Welcome -->
+<div class="mb-8 animate-fade-in">
+    <div class="flex items-center gap-3 mb-2">
+        <span class="badge-violet">Employer Portal</span>
+    </div>
+    <h1 class="text-[32px] font-extrabold text-[#E2E8F0] tracking-tight">Welcome, <span class="gradient-text-violet">{{ $user->name }}</span></h1>
+    <p class="text-[15px] text-[#64748B] mt-1">Manage your talent pipeline and job listings.</p>
 </div>
 
-<section class="grid md:grid-cols-2 gap-6 mb-10">
-<a href="{{ route('hr.jobs.create') }}" class="bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant hover:border-secondary hover:shadow-lg transition-all group">
-<span class="material-symbols-outlined text-secondary text-4xl mb-4 group-hover:scale-110 transition-transform">post_add</span>
-<h2 class="font-title-md text-title-md text-primary mb-2">Post a Job</h2>
-<p class="font-body-sm text-on-surface-variant">Create a new job listing for candidates.</p>
-</a>
-<a href="{{ route('hr.applicants') }}" class="bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant hover:border-secondary hover:shadow-lg transition-all group">
-<span class="material-symbols-outlined text-secondary text-4xl mb-4 group-hover:scale-110 transition-transform">group</span>
-<h2 class="font-title-md text-title-md text-primary mb-2">View Applicants</h2>
-<p class="font-body-sm text-on-surface-variant">Review and manage applicant pipeline.</p>
-</a>
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 animate-fade-in-delay-1">
+    <div class="glass-card kpi-card p-5">
+        <div class="w-10 h-10 rounded-xl bg-[#1E1B4B] flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-[#8B5CF6] text-[20px]">work</span>
+        </div>
+        <p class="text-[28px] font-extrabold text-[#E2E8F0]">{{ $activeJobs }}</p>
+        <p class="text-[12px] text-[#64748B] mt-1">Active Listings</p>
+    </div>
+    <div class="glass-card kpi-card-cyan p-5">
+        <div class="w-10 h-10 rounded-xl bg-[#164E63] flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-[#06B6D4] text-[20px]">group</span>
+        </div>
+        <p class="text-[28px] font-extrabold text-[#E2E8F0]">{{ $totalApplicants }}</p>
+        <p class="text-[12px] text-[#64748B] mt-1">Total Applicants</p>
+    </div>
+    <div class="glass-card kpi-card-green p-5">
+        <div class="w-10 h-10 rounded-xl bg-[#14532D] flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-[#34D399] text-[20px]">work_history</span>
+        </div>
+        <p class="text-[28px] font-extrabold text-[#E2E8F0]">{{ $draftJobs }}</p>
+        <p class="text-[12px] text-[#64748B] mt-1">Draft Jobs</p>
+    </div>
+    <div class="glass-card kpi-card-amber p-5">
+        <div class="w-10 h-10 rounded-xl bg-[#451A03] flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-[#FBBF24] text-[20px]">trending_up</span>
+        </div>
+        <p class="text-[28px] font-extrabold text-[#E2E8F0]">{{ $jobs->count() }}</p>
+        <p class="text-[12px] text-[#64748B] mt-1">Total Jobs Posted</p>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="grid md:grid-cols-2 gap-5 mb-8 animate-fade-in-delay-2">
+    <a href="{{ route('hr.jobs.create') }}" class="glass-card glass-card-lift p-7 group relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-[#7C3AED] to-[#06B6D4] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <div class="w-12 h-12 rounded-2xl gradient-violet flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+            <span class="material-symbols-outlined text-white text-[24px]">post_add</span>
+        </div>
+        <h2 class="text-[18px] font-bold text-[#E2E8F0] mb-2">Post a New Job</h2>
+        <p class="text-[14px] text-[#64748B]">Create a new job listing and let AI match the best candidates automatically.</p>
+        <div class="flex items-center gap-2 mt-5 text-[#8B5CF6] text-[13px] font-semibold">
+            <span>Create listing</span>
+            <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+        </div>
+    </a>
+    <a href="{{ route('hr.applicants') }}" class="glass-card glass-card-lift p-7 group relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-[#06B6D4] to-[#7C3AED] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <div class="w-12 h-12 rounded-2xl gradient-cyan-violet flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+            <span class="material-symbols-outlined text-white text-[24px]">group</span>
+        </div>
+        <h2 class="text-[18px] font-bold text-[#E2E8F0] mb-2">View Applicants</h2>
+        <p class="text-[14px] text-[#64748B]">Review your candidate pipeline and manage applications with AI insights.</p>
+        <div class="flex items-center gap-2 mt-5 text-[#06B6D4] text-[13px] font-semibold">
+            <span>View pipeline</span>
+            <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+        </div>
+    </a>
+</div>
+
+<!-- Job Listings Table -->
+<section class="glass-card overflow-hidden animate-fade-in-delay-3">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 border-b border-[#334155]">
+        <div>
+            <h2 class="text-[18px] font-bold text-[#E2E8F0]">Your Job Listings</h2>
+            <p class="text-[13px] text-[#64748B] mt-0.5">{{ $jobs->count() }} {{ $jobs->count() === 1 ? 'position' : 'positions' }} total</p>
+        </div>
+        <a href="{{ route('hr.jobs.create') }}" class="btn-primary py-2 px-4 text-[13px]">
+            <span class="material-symbols-outlined text-[16px]">add</span>
+            Add Job
+        </a>
+    </div>
+
+    @if ($jobs->isEmpty())
+    <div class="empty-state py-16">
+        <div class="empty-state-icon">
+            <span class="material-symbols-outlined">work_off</span>
+        </div>
+        <h3 class="text-[16px] font-semibold text-[#94A3B8] mb-2">No jobs posted yet</h3>
+        <p class="text-[14px] text-[#475569] mb-6">Create your first job listing to start receiving applications.</p>
+        <a href="{{ route('hr.jobs.create') }}" class="btn-primary py-2.5 px-6 text-[14px]">
+            <span class="material-symbols-outlined text-[16px]">add</span>
+            Post your first job
+        </a>
+    </div>
+    @else
+    <div class="overflow-x-auto">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Location</th>
+                    <th>Type</th>
+                    <th>Openings</th>
+                    <th>Status</th>
+                    <th>Posted</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($jobs as $job)
+                <tr>
+                    <td>
+                        <p class="text-[14px] font-semibold text-[#E2E8F0]">{{ $job->title }}</p>
+                        <p class="text-[12px] text-[#64748B]">{{ $job->company_name }}</p>
+                    </td>
+                    <td class="text-[13px]">{{ $job->location }}</td>
+                    <td class="text-[13px]">{{ $job->job_type }}</td>
+                    <td class="text-[13px]">{{ $job->number_of_openings ?? 1 }}</td>
+                    <td>
+                        @if ($job->status === \App\Models\Job::STATUS_ACTIVE)
+                        <span class="badge-success">Active</span>
+                        @else
+                        <span class="badge-warning">Inactive</span>
+                        @endif
+                    </td>
+                    <td class="text-[13px] text-[#64748B]">{{ $job->created_at->format('M j, Y') }}</td>
+                    <td>
+                        <div class="flex items-center justify-end gap-2 flex-wrap">
+                            <form method="POST" action="{{ route('hr.jobs.toggle-status', $job) }}">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="btn-ghost py-1.5 px-3 text-[12px]">
+                                    {{ $job->status === \App\Models\Job::STATUS_ACTIVE ? 'Deactivate' : 'Activate' }}
+                                </button>
+                            </form>
+                            <a href="{{ route('hr.jobs.edit', $job) }}" class="btn-secondary py-1.5 px-3 text-[12px]">Edit</a>
+                            <form method="POST" action="{{ route('hr.jobs.destroy', $job) }}" onsubmit="return confirm('Delete this job permanently?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-danger py-1.5 px-3 text-[12px]">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    @endif
 </section>
 
-<section class="bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-sm overflow-hidden">
-<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-6 border-b border-outline-variant">
-<div>
-<h2 class="font-title-md text-title-md text-primary">Your Job Listings</h2>
-<p class="font-body-sm text-on-surface-variant mt-1">{{ $jobs->count() }} {{ $jobs->count() === 1 ? 'position' : 'positions' }} total</p>
-</div>
-</div>
-
-@if ($jobs->isEmpty())
-<div class="p-12 text-center">
-<span class="material-symbols-outlined text-5xl text-on-surface-variant mb-4">work_off</span>
-<p class="font-body-md text-on-surface-variant mb-4">No jobs posted yet.</p>
-<a href="{{ route('hr.jobs.create') }}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-secondary text-white font-title-md text-[14px] hover:shadow-lg transition-all">
-<span class="material-symbols-outlined text-[18px]">add</span>
-Post your first job
-</a>
-</div>
-@else
-<div class="overflow-x-auto">
-<table class="w-full text-left">
-<thead class="bg-surface-container-low">
-<tr>
-<th class="px-6 py-4 font-label-caps text-on-surface-variant text-[12px]">Job</th>
-<th class="px-6 py-4 font-label-caps text-on-surface-variant text-[12px]">Location</th>
-<th class="px-6 py-4 font-label-caps text-on-surface-variant text-[12px]">Type</th>
-<th class="px-6 py-4 font-label-caps text-on-surface-variant text-[12px]">Openings</th>
-<th class="px-6 py-4 font-label-caps text-on-surface-variant text-[12px]">Status</th>
-<th class="px-6 py-4 font-label-caps text-on-surface-variant text-[12px]">Posted</th>
-<th class="px-6 py-4 font-label-caps text-on-surface-variant text-[12px] text-right">Actions</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-outline-variant">
-@foreach ($jobs as $job)
-<tr class="hover:bg-surface-container-low/50 transition-colors">
-<td class="px-6 py-4">
-<p class="font-title-md text-[14px] text-on-surface">{{ $job->title }}</p>
-<p class="font-body-sm text-on-surface-variant">{{ $job->company_name }}</p>
-</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">{{ $job->location }}</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">{{ $job->job_type }}</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">{{ $job->number_of_openings ?? 1 }}</td>
-<td class="px-6 py-4">
-@if ($job->status === \App\Models\Job::STATUS_ACTIVE)
-<span class="inline-flex px-3 py-1 rounded-full text-[12px] font-label-caps bg-emerald-100 text-emerald-800 border border-emerald-200">Active</span>
-@else
-<span class="inline-flex px-3 py-1 rounded-full text-[12px] font-label-caps bg-surface-container-high text-on-surface-variant border border-outline-variant">Inactive</span>
-@endif
-</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant whitespace-nowrap">{{ $job->created_at->format('M j, Y') }}</td>
-<td class="px-6 py-4">
-<div class="flex items-center justify-end gap-2 flex-wrap">
-<form method="POST" action="{{ route('hr.jobs.toggle-status', $job) }}">
-@csrf
-@method('PATCH')
-<button type="submit" class="px-3 py-1.5 rounded-lg text-[12px] font-label-caps border border-outline-variant hover:bg-surface-container-high transition-colors">
-{{ $job->status === \App\Models\Job::STATUS_ACTIVE ? 'Deactivate' : 'Activate' }}
-</button>
-</form>
-<a href="{{ route('hr.jobs.edit', $job) }}" class="px-3 py-1.5 rounded-lg text-[12px] font-label-caps text-secondary border border-secondary/30 hover:bg-secondary/10 transition-colors">
-Edit
-</a>
-<form method="POST" action="{{ route('hr.jobs.destroy', $job) }}" onsubmit="return confirm('Delete this job permanently?');">
-@csrf
-@method('DELETE')
-<button type="submit" class="px-3 py-1.5 rounded-lg text-[12px] font-label-caps text-error border border-error/30 hover:bg-error/10 transition-colors">
-Delete
-</button>
-</form>
-</div>
-</td>
-</tr>
-@endforeach
-</tbody>
-</table>
-</div>
-@endif
-</section>
+@include('partials.nav.dashboard-footer')
 @endsection

@@ -1,6 +1,7 @@
+/* Resume Upload Parsing — dark overrides */
 .gradient-border {
     position: relative;
-    background: #fff;
+    background: rgba(30, 41, 59, 0.8);
     background-clip: padding-box;
     border: 2px solid transparent;
 }
@@ -11,12 +12,16 @@
     z-index: -1;
     margin: -2px;
     border-radius: inherit;
-    background: linear-gradient(to right, #4648d4, #6063ee, #bec6e0);
+    background: linear-gradient(to right, #7C3AED, #8B5CF6, #06B6D4);
 }
+
 .glass-sidebar {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(15, 23, 42, 0.95);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(139, 92, 246, 0.15);
 }
+
 @keyframes resume-scan {
     0% { transform: translateY(100%); opacity: 0; }
     50% { opacity: 1; }
@@ -25,28 +30,32 @@
 .resume-scan-line {
     animation: resume-scan 2s ease-in-out infinite;
 }
+
 @keyframes spin-slow {
     to { transform: rotate(360deg); }
 }
 .resume-spinner {
     animation: spin-slow 1s linear infinite;
 }
+
 .resume-toast {
     padding: 0.875rem 1.25rem;
     border-radius: 0.75rem;
     color: #fff;
     font-size: 0.875rem;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     opacity: 0;
     transform: translateY(12px);
     transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 .resume-toast--visible {
     opacity: 1;
     transform: translateY(0);
 }
-.resume-toast--success { background: #059669; }
-.resume-toast--error { background: #dc2626; }
+.resume-toast--success { background: rgba(5, 150, 105, 0.9); }
+.resume-toast--error   { background: rgba(220, 38, 38, 0.9); }
+
 #toast-root {
     position: fixed;
     bottom: 1.5rem;
@@ -55,7 +64,4 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-}
-.dark .gradient-border {
-    background: #1a1c2e;
 }
