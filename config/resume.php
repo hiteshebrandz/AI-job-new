@@ -13,4 +13,10 @@ return [
     'disk' => env('RESUME_DISK', 'local'),
     'queue' => env('RESUME_QUEUE', false),
     'timeout' => (int) env('RESUME_PARSE_TIMEOUT', 120),
+
+    'optimizer_script' => base_path('scripts/resume_optimizer/optimizer.py'),
+    'optimizer_disk' => env('RESUME_OPTIMIZER_DISK', 'public'),
+    'optimizer_output_dir' => 'resumes/optimized',
+    'optimizer_max_upload_kb' => (int) env('RESUME_OPTIMIZER_MAX_UPLOAD_KB', env('RESUME_MAX_UPLOAD_KB', 10240)),
+    'optimizer_timeout' => (int) env('RESUME_OPTIMIZER_TIMEOUT', 180),
 ];

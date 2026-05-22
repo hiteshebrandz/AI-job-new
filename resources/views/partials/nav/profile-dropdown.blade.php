@@ -5,7 +5,9 @@
         ? $authUser->applicationNotifications()->where('is_read', false)->count()
         : 0;
     $candidate = $authUser->candidate;
-    $initials = $candidate?->initials() ?? strtoupper(substr($authUser->name, 0, 2));
+    $initials = $authUser->initials();
+    $photoUrl = $authUser->profilePhotoUrl();
+    $profileUrl = \App\Support\AuthRedirect::profileRouteFor($authUser);
 @endphp
 <div class="flex items-center gap-2 relative">
     @if ($isCandidate)
@@ -26,9 +28,13 @@
     <!-- Avatar / Profile dropdown trigger -->
     <div class="relative" id="profile-dropdown-wrap">
         <button type="button" id="profile-dropdown-btn"
-            class="w-9 h-9 rounded-full gradient-violet flex items-center justify-center hover:shadow-glow-violet transition-all text-white font-bold text-[13px] ring-2 ring-transparent hover:ring-[#8B5CF6]/40"
+            class="w-9 h-9 rounded-full overflow-hidden flex items-center justify-center hover:shadow-glow-violet transition-all text-white font-bold text-[13px] ring-2 ring-transparent hover:ring-[#8B5CF6]/40 {{ $photoUrl ? '' : 'gradient-violet' }}"
             aria-expanded="false">
-            {{ $initials }}
+            @if ($photoUrl)
+                <img src="{{ $photoUrl }}" alt="" class="w-full h-full object-cover">
+            @else
+                {{ $initials }}
+            @endif
         </button>
 
         <!-- Dropdown -->
@@ -39,11 +45,11 @@
                 <p class="text-[12px] text-[#64748B] truncate">{{ $authUser->email }}</p>
             </div>
 
+            <a href="{{ $profileUrl }}"
+                class="flex items-center gap-3 px-4 py-2.5 text-[13px] text-[#94A3B8] hover:bg-[#263248] hover:text-[#C4B5FD] transition-colors">
+                <span class="material-symbols-outlined text-[18px]">person</span> My Profile
+            </a>
             @if ($isCandidate)
-                <a href="{{ route('user.dashboard') }}"
-                    class="flex items-center gap-3 px-4 py-2.5 text-[13px] text-[#94A3B8] hover:bg-[#263248] hover:text-[#C4B5FD] transition-colors">
-                    <span class="material-symbols-outlined text-[18px]">person</span> My Profile
-                </a>
                 <a href="{{ route('user.saved-jobs') }}"
                     class="flex items-center gap-3 px-4 py-2.5 text-[13px] text-[#94A3B8] hover:bg-[#263248] hover:text-[#C4B5FD] transition-colors">
                     <span class="material-symbols-outlined text-[18px]">bookmark</span> Saved Jobs
@@ -54,7 +60,7 @@
                 </a>
                 <a href="{{ route('user.settings.notifications') }}"
                     class="flex items-center gap-3 px-4 py-2.5 text-[13px] text-[#94A3B8] hover:bg-[#263248] hover:text-[#C4B5FD] transition-colors">
-                    <span class="material-symbols-outlined text-[18px]">settings</span> Settings
+                    <span class="material-symbols-outlined text-[18px]">notifications</span> Notifications
                 </a>
             @elseif ($authUser->isHr())
                 <a href="{{ route('hr.dashboard') }}"
@@ -67,7 +73,7 @@
                 </a>
                 <a href="{{ route('hr.settings.notifications') }}"
                     class="flex items-center gap-3 px-4 py-2.5 text-[13px] text-[#94A3B8] hover:bg-[#263248] hover:text-[#C4B5FD] transition-colors">
-                    <span class="material-symbols-outlined text-[18px]">settings</span> Settings
+                    <span class="material-symbols-outlined text-[18px]">notifications</span> Notifications
                 </a>
             @elseif ($authUser->isAdmin())
                 <a href="{{ route('admin.dashboard') }}"

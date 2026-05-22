@@ -35,35 +35,43 @@
         </a>
         <a class="{{ $linkClass('candidates') }}" href="{{ route('hr.applicants') }}">
             <span class="material-symbols-outlined text-[20px]">group</span>
-            <span>Applicants</span>
+            <span>Job Seekers</span>
         </a>
         <a class="{{ $linkClass('resume') }}" href="{{ route('hr.resume.upload') }}">
             <span class="material-symbols-outlined text-[20px]">upload_file</span>
             <span>Resume Parsing</span>
             <span class="ml-auto badge-ai text-[10px] px-2 py-0.5">AI</span>
         </a>
+        <a class="{{ $linkClass('profile') }}" href="{{ route('hr.profile') }}">
+            <span class="material-symbols-outlined text-[20px]">person</span>
+            <span>My Profile</span>
+        </a>
         <a class="{{ $linkClass('settings') }}" href="{{ route('hr.settings.notifications') }}">
             <span class="material-symbols-outlined text-[20px]">settings</span>
-            <span>Settings</span>
+            <span>Notifications</span>
         </a>
     </nav>
 
     <div class="mt-auto px-2 pt-4">
         <div class="divider mb-4"></div>
-        <div class="glass-card p-3 mb-3 flex items-center gap-3">
-            <div class="w-9 h-9 rounded-full gradient-cyan-violet flex items-center justify-center flex-shrink-0">
-                <span
-                    class="text-white font-bold text-[13px]">{{ strtoupper(substr(auth()->user()->name, 0, 2)) }}</span>
+        <a href="{{ route('hr.profile') }}" class="glass-card p-3 mb-3 flex items-center gap-3 hover:opacity-90 transition-opacity block">
+            @php $u = auth()->user(); $photo = $u->profilePhotoUrl(); @endphp
+            <div class="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden {{ $photo ? '' : 'gradient-cyan-violet' }}">
+                @if ($photo)
+                    <img src="{{ $photo }}" alt="" class="w-full h-full object-cover">
+                @else
+                    <span class="text-white font-bold text-[13px]">{{ $u->initials() }}</span>
+                @endif
             </div>
             <div class="min-w-0 flex-1">
                 <p class="text-[13px] font-semibold text-[#E2E8F0] truncate">{{ auth()->user()->name }}</p>
                 <p class="text-[11px] text-[#475569] truncate">Employer</p>
             </div>
-            <button onclick="toggleTheme()" class="p-1.5 rounded-lg hover:bg-[#263248] text-[#64748B] transition-colors"
+            <button type="button" onclick="event.preventDefault(); event.stopPropagation(); toggleTheme();" class="p-1.5 rounded-lg hover:bg-[#263248] text-[#64748B] transition-colors"
                 title="Toggle theme">
                 <span class="material-symbols-outlined text-[16px]" data-theme-icon>light_mode</span>
             </button>
-        </div>
+        </a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit"

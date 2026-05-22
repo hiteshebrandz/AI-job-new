@@ -16,4 +16,13 @@ class AuthRedirect
             default => redirect()->route('login'),
         };
     }
+
+    public static function profileRouteFor(User $user): string
+    {
+        return match ($user->role) {
+            User::ROLE_HR    => route('hr.profile'),
+            User::ROLE_ADMIN => route('admin.profile'),
+            default          => route('user.profile'),
+        };
+    }
 }

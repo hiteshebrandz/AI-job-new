@@ -47,19 +47,36 @@ class HrApplicantTest extends TestCase
         $response->assertOk();
     }
 
-    public function test_hr_can_filter_applicants_by_status(): void
+    public function test_hr_can_view_job_seeker_profile(): void
+    {
+        $this->actingAs($this->hr)
+            ->get("/hr/applicants/{$this->candidate->id}")
+            ->assertOk()
+            ->assertSee($this->candidate->email);
+    }
+
+    public function test_hr_cannot_view_non_job_seeker_profile(): void
+    {
+        $this->actingAs($this->hr)
+            ->get("/hr/applicants/{$this->hr->id}")
+            ->assertNotFound();
+    }
+
+    public function test_hr_can_filter_applied_only(): void
     {
         JobApplication::factory()->create([
             'job_id'     => $this->job->id,
             'user_id'    => $this->candidate->id,
-            'status'     => JobApplication::STATUS_SHORTLISTED,
+            'status'     => JobApplication::STATUS_APPLIED,
             'applied_at' => now(),
         ]);
 
-        $response = $this->actingAs($this->hr)
-            ->get('/hr/applicants?status=' . JobApplication::STATUS_SHORTLISTED);
+        User::factory()->create(['role' => 'user']);
 
-        $response->assertOk();
+        $this->actingAs($this->hr)
+            ->get('/hr/applicants?applied_only=1')
+            ->assertOk()
+            ->assertSee($this->candidate->email);
     }
 
     public function test_hr_can_update_application_status(): void

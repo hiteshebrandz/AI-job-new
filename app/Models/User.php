@@ -23,6 +23,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
+        'profile_photo_path',
         'password',
         'role',
         'notification_settings',
@@ -51,6 +53,40 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function roleLabel(): string
+    {
+        return match ($this->role) {
+            self::ROLE_HR    => 'HR / Employer',
+            self::ROLE_ADMIN => 'Administrator',
+            default          => 'Candidate',
+        };
+    }
+
+    public function initials(): string
+    {
+        $candidate = $this->relationLoaded('candidate') ? $this->candidate : $this->candidate()->first();
+        if ($candidate && $candidate->full_name) {
+            return $candidate->initials();
+        }
+
+        $parts = preg_split('/\s+/', trim($this->name)) ?: [];
+
+        if (count($parts) >= 2) {
+            return strtoupper(substr($parts[0], 0, 1) . substr($parts[1], 0, 1));
+        }
+
+        return strtoupper(substr($this->name, 0, 2));
+    }
+
+    public function profilePhotoUrl(): ?string
+    {
+        if (! $this->profile_photo_path) {
+            return null;
+        }
+
+        return asset('storage/' . ltrim($this->profile_photo_path, '/'));
     }
 
     public function jobs(): HasMany

@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Hr;
 use App\Http\Controllers\Controller;
 use App\Models\Job;
 use App\Models\JobApplication;
+use App\Models\User;
 use App\Services\ApplicationNotificationService;
 use App\Services\JobMatchService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ApplicantController extends Controller
 {
@@ -19,55 +22,89 @@ class ApplicantController extends Controller
     ) {}
 
     /**
-     * Show the Kanban/list view of applicants for all of the HR's jobs,
-     * or a specific job when `job_id` is passed.
+     * List all job seekers (users with role candidate).
      */
     public function index(Request $request): View
     {
         $hrJobIds = Job::where('hr_id', auth()->id())->pluck('id');
 
-        $query = JobApplication::query()
-            ->whereIn('job_id', $hrJobIds)
-            ->with(['user.candidate', 'job']);
+        $query = User::query()
+            ->where('role', User::ROLE_USER)
+            ->with('candidate')
+            ->withCount([
+                'jobApplications as applications_count',
+                'jobApplications as hr_applications_count' => function ($q) use ($hrJobIds) {
+                    $q->whereIn('job_id', $hrJobIds);
+                },
+            ]);
 
-        // Filter by specific job
-        if ($jobId = $request->input('job_id')) {
-            abort_unless($hrJobIds->contains($jobId), 403);
-            $query->where('job_id', $jobId);
-        }
-
-        // Filter by status
-        if ($status = $request->input('status')) {
-            $query->where('status', $status);
-        }
-
-        // Filter by search (name / email / skill)
         if ($search = trim((string) $request->input('search'))) {
             $like = '%' . $search . '%';
             $query->where(function ($q) use ($like) {
-                $q->whereHas('user', fn ($u) => $u->where('name', 'like', $like)->orWhere('email', 'like', $like))
-                  ->orWhereHas('user.candidate', fn ($c) => $c->where('current_title', 'like', $like));
+                $q->where('name', 'like', $like)
+                    ->orWhere('email', 'like', $like)
+                    ->orWhereHas('candidate', function ($c) use ($like) {
+                        $c->where('full_name', 'like', $like)
+                            ->orWhere('current_title', 'like', $like)
+                            ->orWhere('location', 'like', $like);
+                    });
             });
         }
 
-        $applications = $query->latest('applied_at')->paginate(20)->withQueryString();
+        if ($request->boolean('applied_only')) {
+            $query->whereHas('jobApplications', fn ($q) => $q->whereIn('job_id', $hrJobIds));
+        }
 
-        // Group by status for Kanban view
-        $grouped = $applications->getCollection()->groupBy('status');
+        $jobSeekers = $query->orderBy('name')->paginate(15)->withQueryString();
 
-        // All HR jobs for the filter dropdown
-        $jobs = Job::where('hr_id', auth()->id())
-            ->orderBy('title')
-            ->get(['id', 'title', 'company_name']);
-
-        return view('pages.applicant_management', [
-            'activeNav'    => 'candidates',
-            'applications' => $applications,
-            'grouped'      => $grouped,
-            'statuses'     => JobApplication::statuses(),
-            'jobs'         => $jobs,
-            'filters'      => $request->only(['job_id', 'status', 'search']),
+        return view('pages.hr.job_seekers_index', [
+            'activeNav'  => 'candidates',
+            'jobSeekers' => $jobSeekers,
+            'filters'    => $request->only(['search', 'applied_only']),
+            'totalCount' => User::where('role', User::ROLE_USER)->count(),
         ]);
+    }
+
+    /**
+     * Full profile page for a job seeker.
+     */
+    public function showJobSeeker(Request $request, User $user): View
+    {
+        abort_unless($user->role === User::ROLE_USER, 404);
+
+        $hrJobIds = Job::where('hr_id', auth()->id())->pluck('id');
+
+        $user->load('candidate');
+
+        $applications = JobApplication::query()
+            ->where('user_id', $user->id)
+            ->whereIn('job_id', $hrJobIds)
+            ->with('job')
+            ->latest('applied_at')
+            ->get();
+
+        $candidate = $user->candidate;
+
+        return view('pages.hr.job_seeker_show', [
+            'activeNav'     => 'candidates',
+            'jobSeeker'     => $user,
+            'candidate'     => $candidate,
+            'applications'  => $applications,
+            'statuses'      => JobApplication::statuses(),
+        ]);
+    }
+
+    public function downloadResume(User $user): StreamedResponse
+    {
+        abort_unless($user->role === User::ROLE_USER, 404);
+
+        $candidate = $user->candidate;
+        abort_unless($candidate?->resume_path && Storage::disk('local')->exists($candidate->resume_path), 404);
+
+        return Storage::disk('local')->download(
+            $candidate->resume_path,
+            basename($candidate->resume_path)
+        );
     }
 
     /**
@@ -75,7 +112,6 @@ class ApplicantController extends Controller
      */
     public function updateStatus(Request $request, JobApplication $application): JsonResponse
     {
-        // Ensure this application belongs to an HR-owned job
         abort_unless(
             Job::where('id', $application->job_id)->where('hr_id', auth()->id())->exists(),
             403
@@ -97,9 +133,9 @@ class ApplicantController extends Controller
     }
 
     /**
-     * Return JSON details of a single applicant (for modal/drawer).
+     * Return JSON details of a single application (for modal/drawer).
      */
-    public function show(JobApplication $application): JsonResponse
+    public function showApplication(JobApplication $application): JsonResponse
     {
         abort_unless(
             Job::where('id', $application->job_id)->where('hr_id', auth()->id())->exists(),
@@ -118,15 +154,15 @@ class ApplicantController extends Controller
                 'match_score'  => $application->match_score ?? $this->jobMatchService->percentage($application->job, $candidate),
                 'applied_at'   => $application->applied_at?->format('M j, Y'),
                 'candidate'    => [
-                    'name'          => $candidate?->full_name ?? $application->user->name,
-                    'email'         => $application->user->email,
-                    'phone'         => $candidate?->phone,
-                    'title'         => $candidate?->current_title,
-                    'experience'    => $candidate?->experience_years,
-                    'skills'        => $candidate?->skills ?? [],
-                    'education'     => $candidate?->education,
-                    'university'    => $candidate?->university,
-                    'ai_score'      => $candidate?->ai_score,
+                    'name'       => $candidate?->full_name ?? $application->user->name,
+                    'email'      => $application->user->email,
+                    'phone'      => $candidate?->phone,
+                    'title'      => $candidate?->current_title,
+                    'experience' => $candidate?->experience_years,
+                    'skills'     => $candidate?->skills ?? [],
+                    'education'  => $candidate?->education,
+                    'university' => $candidate?->university,
+                    'ai_score'   => $candidate?->ai_score,
                 ],
                 'job' => [
                     'title'        => $application->job->title,

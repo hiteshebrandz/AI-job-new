@@ -36,10 +36,18 @@
             <span>Jobs</span>
             <span class="ml-auto badge-ai text-[10px] px-2 py-0.5">AI</span>
         </a>
-        <a class="{{ $linkClass('resume') }}" href="{{ route('user.resume.upload') }}">
-            <span class="material-symbols-outlined text-[20px]">upload_file</span>
-            <span>Resume</span>
-        </a>
+        <div class="space-y-1">
+            <p class="px-3 pt-2 pb-1 text-[10px] font-bold uppercase tracking-widest" style="color: var(--text-muted);">Resume</p>
+            <a class="{{ $linkClass('resume') }} pl-6" href="{{ route('user.resume.upload') }}">
+                <span class="material-symbols-outlined text-[20px]">upload_file</span>
+                <span>Upload</span>
+            </a>
+            <a class="{{ $linkClass('resume-optimizer') }} pl-6" href="{{ route('user.resume.ai-optimizer') }}">
+                <span class="material-symbols-outlined text-[20px]">auto_fix_high</span>
+                <span>AI Resume Optimizer</span>
+                <span class="ml-auto badge-ai text-[10px] px-2 py-0.5">AI</span>
+            </a>
+        </div>
         <a class="{{ $linkClass('analytics') }}" href="{{ route('user.resume.analytics') }}">
             <span class="material-symbols-outlined text-[20px]">analytics</span>
             <span>Analytics</span>
@@ -52,28 +60,36 @@
             <span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
             <span>Applications</span>
         </a>
+        <a class="{{ $linkClass('profile') }}" href="{{ route('user.profile') }}">
+            <span class="material-symbols-outlined text-[20px]">person</span>
+            <span>My Profile</span>
+        </a>
         <a class="{{ $linkClass('settings') }}" href="{{ route('user.settings.notifications') }}">
             <span class="material-symbols-outlined text-[20px]">settings</span>
-            <span>Settings</span>
+            <span>Notifications</span>
         </a>
     </nav>
 
     <!-- Footer -->
     <div class="mt-auto px-2 pt-4">
         <div class="divider mb-4"></div>
-        <div class="glass-card p-3 mb-3 flex items-center gap-3">
-            <div class="w-9 h-9 rounded-full gradient-violet flex items-center justify-center flex-shrink-0">
-                <span
-                    class="text-white font-bold text-[13px]">{{ strtoupper(substr(auth()->user()->name, 0, 2)) }}</span>
+        <a href="{{ route('user.profile') }}" class="glass-card p-3 mb-3 flex items-center gap-3 hover:opacity-90 transition-opacity block">
+            @php $u = auth()->user(); $photo = $u->profilePhotoUrl(); @endphp
+            <div class="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden {{ $photo ? '' : 'gradient-violet' }}">
+                @if ($photo)
+                    <img src="{{ $photo }}" alt="" class="w-full h-full object-cover">
+                @else
+                    <span class="text-white font-bold text-[13px]">{{ $u->initials() }}</span>
+                @endif
             </div>
             <div class="min-w-0 flex-1">
                 <p class="text-[13px] font-semibold truncate" style="color: var(--text-primary);">{{ auth()->user()->name }}</p>
                 <p class="text-[11px] truncate" style="color: var(--text-muted);">Candidate</p>
             </div>
-            <button onclick="toggleTheme()" class="theme-toggle-btn p-1.5 text-[16px]" title="Toggle theme">
+            <button type="button" onclick="event.preventDefault(); event.stopPropagation(); toggleTheme();" class="theme-toggle-btn p-1.5 text-[16px]" title="Toggle theme">
                 <span class="material-symbols-outlined text-[16px]" data-theme-icon>dark_mode</span>
             </button>
-        </div>
+        </a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit"

@@ -6,6 +6,7 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\UserResumeController;
+use App\Http\Controllers\ResumeOptimizerController;
 use App\Http\Controllers\Admin\JobApplicationController as AdminJobApplicationController;
 use App\Http\Controllers\Hr\ApplicantController as HrApplicantController;
 use App\Http\Controllers\AppliedJobsController;
@@ -13,6 +14,8 @@ use App\Http\Controllers\NotificationSettingsController;
 use App\Http\Controllers\SavedJobsController;
 use App\Http\Controllers\UserJobController;
 use App\Http\Controllers\UserNotificationController;
+use App\Http\Controllers\Api\AnalyticsController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,6 +75,16 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
     Route::get('/resume/analytics/data', [AnalyticsController::class, 'resumeData'])->name('resume.analytics.data');
     Route::post('/resume/analytics/upload', [UserResumeController::class, 'uploadResume'])->name('resume.analytics.upload');
     Route::post('/resume/{resumeId}/reanalyze', [UserResumeController::class, 'reAnalyze'])->name('resume.analytics.reanalyze');
+    Route::get('/resume/ai-optimizer', [ResumeOptimizerController::class, 'show'])->name('resume.ai-optimizer');
+    Route::post('/resume/ai-optimizer/upload', [ResumeOptimizerController::class, 'upload'])->name('resume.ai-optimizer.upload');
+    Route::get('/resume/ai-optimizer/status/{run}', [ResumeOptimizerController::class, 'status'])->name('resume.ai-optimizer.status');
+    Route::post('/resume/ai-optimizer/generate', [ResumeOptimizerController::class, 'generate'])->name('resume.ai-optimizer.generate');
+    Route::get('/resume/ai-optimizer/download/{run}', [ResumeOptimizerController::class, 'download'])->name('resume.ai-optimizer.download');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::post('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.photo');
+    Route::delete('/profile/photo', [ProfileController::class, 'removePhoto'])->name('profile.photo.remove');
     Route::get('/settings/notifications', [NotificationSettingsController::class, 'showUser'])->name('settings.notifications');
     Route::post('/settings/notifications', [NotificationSettingsController::class, 'saveUser'])->name('settings.notifications.save');
     Route::get('/saved-jobs', [SavedJobsController::class, 'index'])->name('saved-jobs');
@@ -90,18 +103,23 @@ Route::middleware(['auth', 'role:hr'])->prefix('hr')->name('hr.')->group(functio
     Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
     Route::patch('/jobs/{job}/status', [JobController::class, 'toggleStatus'])->name('jobs.toggle-status');
     Route::get('/applicants', [HrApplicantController::class, 'index'])->name('applicants');
+    Route::get('/applicants/{user}', [HrApplicantController::class, 'showJobSeeker'])->name('applicants.show')->where('user', '[0-9]+');
+    Route::get('/applicants/{user}/resume', [HrApplicantController::class, 'downloadResume'])->name('applicants.resume')->where('user', '[0-9]+');
     Route::post('/applications/{application}/status', [HrApplicantController::class, 'updateStatus'])->name('applications.updateStatus');
-    Route::get('/applications/{application}', [HrApplicantController::class, 'show'])->name('applications.show');
+    Route::get('/applications/{application}', [HrApplicantController::class, 'showApplication'])->name('applications.show');
     Route::get('/resume/upload', [ResumeController::class, 'show'])->name('resume.upload');
     Route::post('/resume/upload', [ResumeController::class, 'upload'])->name('resume.upload.store');
     Route::get('/resume/parse/{log}', [ResumeController::class, 'status'])->name('resume.parse.status');
     Route::get('/resume/preview/{log}', [ResumeController::class, 'preview'])->name('resume.preview');
     Route::post('/resume/profile', [ResumeController::class, 'storeProfile'])->name('resume.profile.store');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::post('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.photo');
+    Route::delete('/profile/photo', [ProfileController::class, 'removePhoto'])->name('profile.photo.remove');
     Route::get('/settings/notifications', [NotificationSettingsController::class, 'showHr'])->name('settings.notifications');
     Route::post('/settings/notifications', [NotificationSettingsController::class, 'saveHr'])->name('settings.notifications.save');
 });
-
-use App\Http\Controllers\Api\AnalyticsController;
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'admin'])->name('dashboard');
@@ -111,6 +129,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/job-applications/{application}', [AdminJobApplicationController::class, 'show'])->name('job-applications.show');
     Route::post('/job-applications/{application}/status', [AdminJobApplicationController::class, 'updateStatus'])->name('job-applications.status');
     Route::get('/job-applications/{application}/resume', [AdminJobApplicationController::class, 'downloadResume'])->name('job-applications.resume');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::post('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.photo');
+    Route::delete('/profile/photo', [ProfileController::class, 'removePhoto'])->name('profile.photo.remove');
 });
 
 /*
@@ -128,4 +151,5 @@ Route::redirect('/jobs/recommendations', '/user/jobs/recommendations');
 Route::get('/jobs/{id}', fn(string $id) => redirect("/user/jobs/{$id}"))->where('id', '[0-9]+');
 Route::redirect('/resume/upload', '/user/resume/upload');
 Route::redirect('/resume/analytics', '/user/resume/analytics');
+Route::redirect('/resume/ai-optimizer', '/user/resume/ai-optimizer');
 Route::redirect('/settings/notifications', '/login');

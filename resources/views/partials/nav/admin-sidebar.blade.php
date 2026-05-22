@@ -26,9 +26,13 @@
             <span class="material-symbols-outlined">analytics</span>
             <span class="font-title-md text-title-md">Analytics</span>
         </a>
+        <a class="{{ $linkClass('profile') }}" href="{{ route('admin.profile') }}">
+            <span class="material-symbols-outlined">person</span>
+            <span class="font-title-md text-title-md">My Profile</span>
+        </a>
     </nav>
     <div class="mt-auto px-4 pt-4 border-t border-outline-variant space-y-3">
-        <p class="font-body-sm text-on-surface-variant truncate">{{ auth()->user()->name }}</p>
+        <a href="{{ route('admin.profile') }}" class="font-body-sm text-on-surface-variant truncate hover:text-secondary block">{{ auth()->user()->name }}</a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="w-full px-4 py-2 text-sm font-label-caps border border-outline-variant rounded-lg hover:bg-surface-container-high transition-colors">Logout</button>
