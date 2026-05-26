@@ -25,6 +25,7 @@
 
 @push('scripts')
 <script src="{{ asset('js/candidate-topbar.js') }}"></script>
+<script src="{{ asset('js/hr-messages-badge.js') }}"></script>
 <script>
 function openSidebar() {
     document.getElementById('app-sidebar')?.classList.add('sidebar-mobile-open');

@@ -88,14 +88,14 @@ Post a Job
                     <div class="flex items-center gap-3 mb-2">
                         <span class="badge-violet text-[11px]">{{ $isEdit ? 'Edit' : 'Create' }}</span>
                     </div>
-                    <h2 class="text-[28px] font-extrabold text-[#E2E8F0]">{{ $isEdit ? 'Edit Position' : 'Create New Position' }}</h2>
+                    <h2 class="text-[28px] font-extrabold text-on-surface">{{ $isEdit ? 'Edit Position' : 'Create New Position' }}</h2>
                 </div>
                 <div class="flex gap-3">
                     <button type="submit" id="btn-save-draft-header" class="btn-ghost py-2.5 px-5 text-[14px]">Save Draft</button>
                     <button type="submit" id="btn-publish-header" class="btn-primary py-2.5 px-6 text-[14px]">{{ $isEdit ? 'Update Job' : 'Publish Job' }}</button>
                 </div>
             </div>
-            <p class="text-[14px] text-[#64748B]">Design your executive role and find the perfect match with AI-driven insights.</p>
+            <p class="text-[14px] text-on-surface-variant">Design your executive role and find the perfect match with AI-driven insights.</p>
         </div>
 
         <div id="job-stepper" class="glass-card p-6 mb-6 animate-fade-in-delay-1">
@@ -371,7 +371,7 @@ Post a Job
                 </div>
 
                 <div class="glass-card p-6 rounded-2xl">
-                    <h4 class="font-title-md text-[16px] mb-4 text-[#E2E8F0]">Posting Checklist</h4>
+                    <h4 class="font-title-md text-[16px] mb-4 text-on-surface">Posting Checklist</h4>
                     <ul class="space-y-4">
                         <li id="checklist-basic" class="flex items-center gap-3">
                             <span class="checklist-icon material-symbols-outlined text-outline" data-icon="radio_button_unchecked">radio_button_unchecked</span>
@@ -406,7 +406,7 @@ Post a Job
 <footer class="py-8 border-t border-outline-variant bg-surface mt-12 -mx-8 px-8">
     <div class="flex flex-col md:flex-row justify-between items-center px-container-margin max-w-7xl mx-auto">
         <div class="flex items-center gap-6 mb-4 md:mb-0">
-            <span class="font-title-md text-title-md font-bold text-primary dark:text-on-primary-fixed">Elements HR</span>
+            <span class="font-title-md text-title-md font-bold text-primary">Elements HR</span>
             <p class="font-body-sm text-body-sm text-on-surface-variant opacity-80">© 2024 Elements HR Services. All rights reserved.</p>
         </div>
         <div class="flex gap-8">
@@ -497,7 +497,7 @@ Post a Job
             circle.innerHTML = '<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: \'FILL\' 1;">check</span>';
             label.classList.add('text-secondary');
         } else if (state === 'active') {
-            circle.classList.add('border-2', 'border-[#8B5CF6]', 'bg-[#1E1B4B]', 'text-[#8B5CF6]');
+            circle.classList.add('border-2', 'border-secondary', 'bg-secondary-fixed', 'text-secondary');
             circle.textContent = String(step);
             label.classList.add('text-secondary');
         } else {

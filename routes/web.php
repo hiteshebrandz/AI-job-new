@@ -9,6 +9,9 @@ use App\Http\Controllers\UserResumeController;
 use App\Http\Controllers\ResumeOptimizerController;
 use App\Http\Controllers\Admin\JobApplicationController as AdminJobApplicationController;
 use App\Http\Controllers\Hr\ApplicantController as HrApplicantController;
+use App\Http\Controllers\Hr\AiHiringController;
+use App\Http\Controllers\Hr\HrMessageController;
+use App\Http\Controllers\UserMessageController;
 use App\Http\Controllers\AppliedJobsController;
 use App\Http\Controllers\NotificationSettingsController;
 use App\Http\Controllers\SavedJobsController;
@@ -92,6 +95,12 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
     Route::get('/applied-jobs', [AppliedJobsController::class, 'index'])->name('applied-jobs');
     Route::get('/notifications', [UserNotificationController::class, 'index'])->name('notifications.index');
     Route::post('/notifications/read', [UserNotificationController::class, 'markRead'])->name('notifications.read');
+    Route::get('/messages', [UserMessageController::class, 'index'])->name('messages.index');
+    Route::get('/messages/unread-count', [UserMessageController::class, 'unreadCount'])->name('messages.unread');
+    Route::get('/messages/{conversation}', [UserMessageController::class, 'show'])->name('messages.show')->where('conversation', '[0-9]+');
+    Route::get('/messages/{conversation}/list', [UserMessageController::class, 'messages'])->name('messages.list');
+    Route::post('/messages/{conversation}', [UserMessageController::class, 'store'])->name('messages.store')->middleware('throttle:30,1');
+    Route::post('/messages/{conversation}/read', [UserMessageController::class, 'markRead'])->name('messages.read');
 });
 
 Route::middleware(['auth', 'role:hr'])->prefix('hr')->name('hr.')->group(function () {
@@ -119,6 +128,20 @@ Route::middleware(['auth', 'role:hr'])->prefix('hr')->name('hr.')->group(functio
     Route::delete('/profile/photo', [ProfileController::class, 'removePhoto'])->name('profile.photo.remove');
     Route::get('/settings/notifications', [NotificationSettingsController::class, 'showHr'])->name('settings.notifications');
     Route::post('/settings/notifications', [NotificationSettingsController::class, 'saveHr'])->name('settings.notifications.save');
+    Route::get('/ai-hiring', [AiHiringController::class, 'index'])->name('ai-hiring.index');
+    Route::get('/ai-hiring/create', [AiHiringController::class, 'create'])->name('ai-hiring.create');
+    Route::post('/ai-hiring', [AiHiringController::class, 'store'])->name('ai-hiring.store');
+    Route::get('/ai-hiring/{jobDescription}/status', [AiHiringController::class, 'status'])->name('ai-hiring.status');
+    Route::get('/ai-hiring/{jobDescription}/matches', [AiHiringController::class, 'matches'])->name('ai-hiring.matches');
+    Route::get('/ai-hiring/{jobDescription}/matches.json', [AiHiringController::class, 'matchesJson'])->name('ai-hiring.matches.json');
+    Route::get('/ai-hiring/{jobDescription}/candidates/{user}', [AiHiringController::class, 'showCandidate'])->name('ai-hiring.candidate')->where('user', '[0-9]+');
+    Route::post('/ai-hiring/{jobDescription}/candidates/{user}/connect', [AiHiringController::class, 'connect'])->name('ai-hiring.connect')->where('user', '[0-9]+');
+    Route::get('/messages', [HrMessageController::class, 'index'])->name('messages.index');
+    Route::get('/messages/unread-count', [HrMessageController::class, 'unreadCount'])->name('messages.unread');
+    Route::get('/messages/{conversation}', [HrMessageController::class, 'show'])->name('messages.show')->where('conversation', '[0-9]+');
+    Route::get('/messages/{conversation}/list', [HrMessageController::class, 'messages'])->name('messages.list');
+    Route::post('/messages/{conversation}', [HrMessageController::class, 'store'])->name('messages.store')->middleware('throttle:30,1');
+    Route::post('/messages/{conversation}/read', [HrMessageController::class, 'markRead'])->name('messages.read');
 });
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {

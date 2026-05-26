@@ -1,17 +1,2 @@
-/* Employer Dashboard — dark glass overrides */
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #0F172A;
-    color: #E2E8F0;
-}
-
-.glass-sidebar {
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-right: 1px solid rgba(139, 92, 246, 0.15);
-}
-
-.progress-gradient {
-    background: linear-gradient(90deg, #7C3AED 0%, #06B6D4 100%);
-}
+/* Employer Dashboard — light theme */
+.progress-gradient { background: var(--brand-gradient); }

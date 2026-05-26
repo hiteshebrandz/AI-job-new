@@ -16,9 +16,6 @@
         <!-- Right actions -->
         <div class="flex items-center gap-2 lg:gap-4 flex-shrink-0">
             @stack('candidate-header-actions')
-            <button onclick="toggleTheme()" title="Toggle dark / light theme" class="theme-toggle-btn">
-                <span class="material-symbols-outlined text-[20px]" data-theme-icon>dark_mode</span>
-            </button>
             @include('partials.nav.profile-dropdown')
         </div>
     </div>

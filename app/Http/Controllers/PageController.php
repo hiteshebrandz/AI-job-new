@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Candidate;
+use App\Models\Company;
 use App\Models\Job;
 use App\Models\JobApplication;
 use App\Models\Resume;
@@ -13,7 +15,20 @@ class PageController extends Controller
 {
     public function landing(): View
     {
-        return view('pages.landing_page');
+        $stats = [
+            'candidates'   => Candidate::count(),
+            'activeJobs'   => Job::where('status', Job::STATUS_ACTIVE)->count(),
+            'companies'    => Company::count(),
+            'applications' => JobApplication::count(),
+        ];
+
+        $featuredJobs = Job::where('status', Job::STATUS_ACTIVE)
+            ->select(['id', 'title', 'company_name', 'location', 'job_type', 'work_mode', 'experience_required', 'created_at'])
+            ->latest()
+            ->limit(6)
+            ->get();
+
+        return view('pages.landing_page', compact('stats', 'featuredJobs'));
     }
 
     public function resumeAnalytics(JobRecommendationService $jobRecommendations): View

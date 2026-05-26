@@ -7,7 +7,7 @@
     };
 @endphp
 <aside id="app-sidebar"
-    class="sidebar-mobile-hidden fixed left-0 top-0 h-screen w-[280px] glass-panel border-r border-[#1E293B] z-50 flex flex-col py-8 px-4 lg:translate-x-0 transition-transform duration-300">
+    class="sidebar-mobile-hidden fixed left-0 top-0 h-screen w-[280px] glass-panel border-r z-50 flex flex-col py-8 px-4 lg:translate-x-0 transition-transform duration-300" style="border-color: var(--border-default);"
     <!-- Brand -->
     <div class="mb-8 px-4">
         <a href="{{ route('hr.dashboard') }}" class="block group">
@@ -18,7 +18,7 @@
                 <span class="font-bold text-xl tracking-tight gradient-text-violet">Elements HR</span>
                 <span class="ai-pulse-dot ml-auto"></span>
             </div>
-            <p class="font-body-sm text-[12px] text-[#475569] pl-11">Employer Portal</p>
+            <p class="font-body-sm text-[12px] text-on-surface-variant pl-11">Employer Portal</p>
         </a>
     </div>
 
@@ -36,6 +36,16 @@
         <a class="{{ $linkClass('candidates') }}" href="{{ route('hr.applicants') }}">
             <span class="material-symbols-outlined text-[20px]">group</span>
             <span>Job Seekers</span>
+        </a>
+        <a class="{{ $linkClass('ai-hiring') }}" href="{{ route('hr.ai-hiring.index') }}">
+            <span class="material-symbols-outlined text-[20px]">psychology</span>
+            <span>AI Hiring</span>
+            <span class="ml-auto badge-ai text-[10px] px-2 py-0.5">AI</span>
+        </a>
+        <a class="{{ $linkClass('messages') }}" href="{{ route('hr.messages.index') }}">
+            <span class="material-symbols-outlined text-[20px]">forum</span>
+            <span>Messages</span>
+            <span id="hr-messages-badge" class="ml-auto hidden text-[10px] px-2 py-0.5 rounded-full bg-secondary text-white font-bold"></span>
         </a>
         <a class="{{ $linkClass('resume') }}" href="{{ route('hr.resume.upload') }}">
             <span class="material-symbols-outlined text-[20px]">upload_file</span>
@@ -64,18 +74,14 @@
                 @endif
             </div>
             <div class="min-w-0 flex-1">
-                <p class="text-[13px] font-semibold text-[#E2E8F0] truncate">{{ auth()->user()->name }}</p>
-                <p class="text-[11px] text-[#475569] truncate">Employer</p>
+                <p class="text-[13px] font-semibold truncate" style="color:var(--text-primary);">{{ auth()->user()->name }}</p>
+                <p class="text-[11px] truncate" style="color:var(--text-muted);">Employer</p>
             </div>
-            <button type="button" onclick="event.preventDefault(); event.stopPropagation(); toggleTheme();" class="p-1.5 rounded-lg hover:bg-[#263248] text-[#64748B] transition-colors"
-                title="Toggle theme">
-                <span class="material-symbols-outlined text-[16px]" data-theme-icon>light_mode</span>
-            </button>
         </a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit"
-                class="w-full flex items-center gap-2 px-3 py-2 text-[13px] font-medium text-[#64748B] hover:text-[#F87171] hover:bg-[#1a1020] rounded-xl transition-all">
+                class="w-full flex items-center gap-2 px-3 py-2 text-[13px] font-medium rounded-xl transition-all hover:text-red-600" style="color:var(--text-muted);">
                 <span class="material-symbols-outlined text-[16px]">logout</span>
                 Sign Out
             </button>

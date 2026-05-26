@@ -1,20 +1,7 @@
-/* Auth pages — dark glass panel overrides */
-body {
-    background-color: #0F172A;
-    color: #E2E8F0;
-}
-
-.glass-panel {
-    background: rgba(30, 41, 59, 0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(139, 92, 246, 0.2);
-}
-
+/* Auth pages — light theme */
 .gradient-mesh {
-    background-color: #0F172A;
+    background-color: var(--bg-page);
     background-image:
-        radial-gradient(at 10% 20%, rgba(124, 58, 237, 0.4) 0, transparent 50%),
-        radial-gradient(at 80% 80%, rgba(6, 182, 212, 0.3) 0, transparent 50%),
-        radial-gradient(at 50% 50%, rgba(15, 23, 42, 1) 0, transparent 60%);
+        radial-gradient(at 10% 20%, rgba(70, 72, 212, 0.20) 0, transparent 50%),
+        radial-gradient(at 80% 80%, rgba(96, 99, 238, 0.15) 0, transparent 50%);
 }

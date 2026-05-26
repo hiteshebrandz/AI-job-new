@@ -1,47 +1,24 @@
-/* Job Details — dark overrides */
-.glass-sidebar {
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-right: 1px solid rgba(139, 92, 246, 0.15);
-}
-
+/* Job Details — light theme */
 .gradient-button {
-    background: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 100%);
+    background: var(--brand-gradient);
     color: #fff;
     transition: all 0.3s ease;
 }
 .gradient-button:hover {
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+    box-shadow: var(--shadow-btn);
     transform: translateY(-1px);
 }
-
-.match-indicator {
-    background: linear-gradient(90deg, #7C3AED 0%, #06B6D4 100%);
-}
-
+.match-indicator { background: var(--brand-gradient); }
 .resume-toast {
     padding: 0.875rem 1.25rem;
     border-radius: 0.75rem;
-    color: #fff;
     font-size: 0.875rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--shadow-card);
     opacity: 0;
     transform: translateY(12px);
     transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.08);
 }
-.resume-toast--visible { opacity: 1; transform: translateY(0); }
-.resume-toast--success { background: rgba(5, 150, 105, 0.9); }
-.resume-toast--error   { background: rgba(220, 38, 38, 0.9); }
-
-#toast-root {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
+.resume-toast--visible  { opacity: 1; transform: translateY(0); }
+.resume-toast--success  { background: #ecfdf5; color: #047857; border: 1px solid rgba(4,120,87,0.28); }
+.resume-toast--error    { background: #fef2f2; color: #b91c1c; border: 1px solid rgba(185,28,28,0.28); }
+#toast-root { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; display: flex; flex-direction: column; gap: 0.5rem; }

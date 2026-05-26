@@ -135,4 +135,19 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Skill::class, 'candidate_skills')->withTimestamps();
     }
+
+    public function jobDescriptions(): HasMany
+    {
+        return $this->hasMany(JobDescription::class, 'hr_id');
+    }
+
+    public function hrConversations(): HasMany
+    {
+        return $this->hasMany(Conversation::class, 'hr_id');
+    }
+
+    public function candidateConversations(): HasMany
+    {
+        return $this->hasMany(Conversation::class, 'candidate_id');
+    }
 }

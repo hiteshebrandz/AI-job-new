@@ -13,8 +13,8 @@
     <div class="flex items-center gap-3 mb-2">
         <span class="badge-warning text-[11px]">Bookmarked</span>
     </div>
-    <h2 class="text-[28px] font-extrabold text-[#E2E8F0]">Saved Jobs</h2>
-    <p class="text-[14px] text-[#64748B] mt-1">Jobs you have bookmarked for later review.</p>
+    <h2 class="text-[28px] font-extrabold text-on-surface">Saved Jobs</h2>
+    <p class="text-[14px] text-on-surface-variant mt-1">Jobs you have bookmarked for later review.</p>
 </div>
 
 <div class="space-y-4">
@@ -31,10 +31,10 @@
     @empty
     <div class="glass-card text-center py-16 animate-fade-in">
         <div class="empty-state-icon mx-auto mb-5">
-            <span class="material-symbols-outlined text-[36px] text-[#FBBF24]">bookmark_border</span>
+            <span class="material-symbols-outlined text-[36px] text-[var(--badge-warning-text)]">bookmark_border</span>
         </div>
-        <h3 class="text-[16px] font-semibold text-[#94A3B8] mb-2">No saved jobs yet</h3>
-        <p class="text-[13px] text-[#475569] mb-6">Browse recommendations and bookmark roles you like.</p>
+        <h3 class="text-[16px] font-semibold text-on-surface-variant mb-2">No saved jobs yet</h3>
+        <p class="text-[13px] text-on-surface-variant mb-6">Browse recommendations and bookmark roles you like.</p>
         <a href="{{ route('user.jobs.recommendations') }}" class="btn-primary py-2.5 px-7 text-[14px]">Browse Jobs</a>
     </div>
     @endforelse

@@ -15,24 +15,20 @@
     <main class="lg:ml-[280px] min-h-screen">
         <!-- Topbar -->
         <header
-            class="glass-panel border-b border-[#1E293B] h-[64px] flex items-center justify-between px-6 lg:px-8 sticky top-0 z-40">
+            class="glass-panel border-b border-outline-variant h-[64px] flex items-center justify-between px-6 lg:px-8 sticky top-0 z-40">
             <div class="flex items-center gap-3">
                 <button type="button"
-                    class="lg:hidden p-2 rounded-xl text-[#64748B] hover:text-[#E2E8F0] hover:bg-[#263248] transition-all"
+                    class="lg:hidden p-2 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all"
                     onclick="document.getElementById('app-sidebar')?.classList.toggle('sidebar-mobile-open')">
                     <span class="material-symbols-outlined">menu</span>
                 </button>
                 <div>
-                    <h1 class="text-[18px] font-bold text-[#E2E8F0]">Admin Dashboard</h1>
-                    <p class="text-[12px] text-[#475569] hidden sm:block">Platform overview</p>
+                    <h1 class="text-[18px] font-bold text-on-surface">Admin Dashboard</h1>
+                    <p class="text-[12px] text-on-surface-variant hidden sm:block">Platform overview</p>
                 </div>
             </div>
             <div class="flex items-center gap-3">
                 <a href="{{ route('admin.analytics') }}" class="btn-secondary py-2 px-4 text-[13px]">Analytics</a>
-                <button onclick="toggleTheme()"
-                    class="p-2 rounded-xl text-[#64748B] hover:text-[#C4B5FD] hover:bg-[#1E293B] transition-all">
-                    <span class="material-symbols-outlined text-[20px]" data-theme-icon>light_mode</span>
-                </button>
                 <form method="POST" action="{{ route('logout') }}" class="inline">
                     @csrf
                     <button type="submit" class="btn-ghost py-2 px-4 text-[13px]">Sign Out</button>
@@ -44,32 +40,32 @@
             <!-- KPI Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 animate-fade-in">
                 <div class="glass-card kpi-card p-5">
-                    <div class="w-10 h-10 rounded-xl bg-[#1E1B4B] flex items-center justify-center mb-4">
-                        <span class="material-symbols-outlined text-[#8B5CF6] text-[20px]">people</span>
+                    <div class="w-10 h-10 rounded-xl bg-secondary-fixed flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-secondary text-[20px]">people</span>
                     </div>
-                    <p class="text-[32px] font-extrabold text-[#E2E8F0]" data-counter="{{ $totalUsers }}">0</p>
-                    <p class="text-[12px] text-[#64748B] mt-1">Total Users</p>
+                    <p class="text-[32px] font-extrabold text-on-surface" data-counter="{{ $totalUsers }}">0</p>
+                    <p class="text-[12px] text-on-surface-variant mt-1">Total Users</p>
                 </div>
                 <div class="glass-card kpi-card-cyan p-5">
-                    <div class="w-10 h-10 rounded-xl bg-[#164E63] flex items-center justify-center mb-4">
-                        <span class="material-symbols-outlined text-[#06B6D4] text-[20px]">business_center</span>
+                    <div class="w-10 h-10 rounded-xl bg-secondary-fixed flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-secondary text-[20px]">business_center</span>
                     </div>
-                    <p class="text-[32px] font-extrabold text-[#E2E8F0]" data-counter="{{ $totalHr }}">0</p>
-                    <p class="text-[12px] text-[#64748B] mt-1">HR Accounts</p>
+                    <p class="text-[32px] font-extrabold text-on-surface" data-counter="{{ $totalHr }}">0</p>
+                    <p class="text-[12px] text-on-surface-variant mt-1">HR Accounts</p>
                 </div>
                 <div class="glass-card kpi-card-green p-5">
-                    <div class="w-10 h-10 rounded-xl bg-[#14532D] flex items-center justify-center mb-4">
-                        <span class="material-symbols-outlined text-[#34D399] text-[20px]">work</span>
+                    <div class="w-10 h-10 rounded-xl bg-[var(--badge-success-bg)] flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-[var(--badge-success-text)] text-[20px]">work</span>
                     </div>
-                    <p class="text-[32px] font-extrabold text-[#E2E8F0]" data-counter="{{ $activeJobs }}">0</p>
-                    <p class="text-[12px] text-[#64748B] mt-1">Active Jobs</p>
+                    <p class="text-[32px] font-extrabold text-on-surface" data-counter="{{ $activeJobs }}">0</p>
+                    <p class="text-[12px] text-on-surface-variant mt-1">Active Jobs</p>
                 </div>
                 <div class="glass-card kpi-card-amber p-5">
-                    <div class="w-10 h-10 rounded-xl bg-[#451A03] flex items-center justify-center mb-4">
-                        <span class="material-symbols-outlined text-[#FBBF24] text-[20px]">assignment</span>
+                    <div class="w-10 h-10 rounded-xl bg-[var(--badge-warning-bg)] flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-[var(--badge-warning-text)] text-[20px]">assignment</span>
                     </div>
-                    <p class="text-[32px] font-extrabold text-[#E2E8F0]" data-counter="{{ $totalApplications }}">0</p>
-                    <p class="text-[12px] text-[#64748B] mt-1">Applications</p>
+                    <p class="text-[32px] font-extrabold text-on-surface" data-counter="{{ $totalApplications }}">0</p>
+                    <p class="text-[12px] text-on-surface-variant mt-1">Applications</p>
                 </div>
             </div>
 
@@ -77,10 +73,10 @@
             <div class="grid lg:grid-cols-2 gap-6 animate-fade-in-delay-1">
                 <!-- Users table -->
                 <section class="glass-card overflow-hidden">
-                    <div class="p-6 border-b border-[#334155] flex items-center justify-between">
+                    <div class="p-6 border-b border-outline-variant flex items-center justify-between">
                         <div>
-                            <h2 class="text-[16px] font-bold text-[#E2E8F0]">All Users</h2>
-                            <p class="text-[12px] text-[#64748B] mt-0.5">{{ $users->count() }} registered</p>
+                            <h2 class="text-[16px] font-bold text-on-surface">All Users</h2>
+                            <p class="text-[12px] text-on-surface-variant mt-0.5">{{ $users->count() }} registered</p>
                         </div>
                         <span class="badge-violet">Candidates</span>
                     </div>
@@ -95,12 +91,12 @@
                             <tbody>
                                 @forelse ($users as $account)
                                     <tr>
-                                        <td class="text-[13px] font-medium text-[#E2E8F0]">{{ $account->name }}</td>
-                                        <td class="text-[13px] text-[#64748B]">{{ $account->email }}</td>
+                                        <td class="text-[13px] font-medium text-on-surface">{{ $account->name }}</td>
+                                        <td class="text-[13px] text-on-surface-variant">{{ $account->email }}</td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="2" class="px-6 py-8 text-center text-[13px] text-[#475569]">No users
+                                        <td colspan="2" class="px-6 py-8 text-center text-[13px] text-on-surface-variant">No users
                                             registered yet.</td>
                                     </tr>
                                 @endforelse
@@ -111,10 +107,10 @@
 
                 <!-- HR table -->
                 <section class="glass-card overflow-hidden">
-                    <div class="p-6 border-b border-[#334155] flex items-center justify-between">
+                    <div class="p-6 border-b border-outline-variant flex items-center justify-between">
                         <div>
-                            <h2 class="text-[16px] font-bold text-[#E2E8F0]">HR Accounts</h2>
-                            <p class="text-[12px] text-[#64748B] mt-0.5">{{ $hrs->count() }} registered</p>
+                            <h2 class="text-[16px] font-bold text-on-surface">HR Accounts</h2>
+                            <p class="text-[12px] text-on-surface-variant mt-0.5">{{ $hrs->count() }} registered</p>
                         </div>
                         <span class="badge-ai">Employers</span>
                     </div>
@@ -129,12 +125,12 @@
                             <tbody>
                                 @forelse ($hrs as $account)
                                     <tr>
-                                        <td class="text-[13px] font-medium text-[#E2E8F0]">{{ $account->name }}</td>
-                                        <td class="text-[13px] text-[#64748B]">{{ $account->email }}</td>
+                                        <td class="text-[13px] font-medium text-on-surface">{{ $account->name }}</td>
+                                        <td class="text-[13px] text-on-surface-variant">{{ $account->email }}</td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="2" class="px-6 py-8 text-center text-[13px] text-[#475569]">No HR accounts
+                                        <td colspan="2" class="px-6 py-8 text-center text-[13px] text-on-surface-variant">No HR accounts
                                             yet.</td>
                                     </tr>
                                 @endforelse

@@ -1,21 +1,251 @@
-/* Landing Page — dark glassmorphism overrides */
-.glass-card {
-    background: rgba(30, 41, 59, 0.7);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(139, 92, 246, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-}
+/* Landing Page — Light Corporate Modernism */
 
+/* =====================================================
+   Hero & page-level overrides
+   ===================================================== */
 .hero-gradient {
-    background: radial-gradient(ellipse at 60% 20%, rgba(124, 58, 237, 0.35) 0%, transparent 60%),
-                radial-gradient(ellipse at 10% 80%, rgba(6, 182, 212, 0.25) 0%, transparent 50%),
-                #0F172A;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 0%,  rgba(70, 72, 212, 0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 90% 100%, rgba(96, 99, 238, 0.07) 0%, transparent 55%),
+    linear-gradient(180deg, #fcf8fa 0%, #f6f3f5 100%);
 }
 
-.gradient-text {
-    background: linear-gradient(135deg, #8B5CF6, #06B6D4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+/* Section alternating backgrounds */
+.section-bg-base { background-color: var(--bg-page); }
+.section-bg-low  { background-color: var(--bg-surface-low); }
+
+/* =====================================================
+   Landing page glass-card override (higher contrast)
+   ===================================================== */
+.glass-card {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: 1px solid var(--border-card) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+/* =====================================================
+   Live Stats Bar
+   ===================================================== */
+.stats-bar {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.stat-divider {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, transparent, var(--border-default), transparent);
+}
+
+/* =====================================================
+   AI Tools Spotlight
+   ===================================================== */
+.ai-tool-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--border-card);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.ai-tool-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: rgba(70, 72, 212, 0.35);
+}
+.ai-tool-card-cyan:hover {
+  border-color: rgba(96, 99, 238, 0.35);
+}
+.ai-tool-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  opacity: 0.12;
+}
+
+.feature-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: 1px solid;
+}
+.feature-pill-violet {
+  background: rgba(70, 72, 212, 0.07);
+  border-color: rgba(70, 72, 212, 0.22);
+  color: #4648d4;
+}
+.feature-pill-cyan {
+  background: rgba(96, 99, 238, 0.07);
+  border-color: rgba(96, 99, 238, 0.22);
+  color: #6063ee;
+}
+.feature-pill-green {
+  background: rgba(4, 120, 87, 0.07);
+  border-color: rgba(4, 120, 87, 0.22);
+  color: #047857;
+}
+
+/* =====================================================
+   HR Modules Grid
+   ===================================================== */
+.module-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  padding: 1.75rem;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  overflow: hidden;
+}
+.module-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(70, 72, 212, 0.03) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+.module-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-hover);
+}
+.module-card:hover::before { opacity: 1; }
+.module-card:hover .module-icon { transform: scale(1.1); }
+.module-icon { transition: transform 0.2s ease; }
+
+.module-card-violet:hover  { border-color: rgba(70, 72, 212, 0.35); }
+.module-card-cyan:hover    { border-color: rgba(96, 99, 238, 0.35); }
+.module-card-green:hover   { border-color: rgba(4, 120, 87, 0.35); }
+.module-card-amber:hover   { border-color: rgba(180, 83, 9, 0.30); }
+.module-card-rose:hover    { border-color: rgba(186, 26, 26, 0.30); }
+.module-card-indigo:hover  { border-color: rgba(70, 72, 212, 0.35); }
+
+/* =====================================================
+   User Journey Steps
+   ===================================================== */
+.journey-connector {
+  position: absolute;
+  top: 28px;
+  left: calc(50% + 36px);
+  right: calc(-50% + 36px);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(70, 72, 212, 0.4), rgba(96, 99, 238, 0.4));
+}
+.journey-connector-cyan {
+  background: linear-gradient(90deg, rgba(96, 99, 238, 0.4), rgba(4, 120, 87, 0.4));
+}
+
+/* =====================================================
+   Featured Jobs Grid
+   ===================================================== */
+.job-card {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.job-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: rgba(70, 72, 212, 0.28);
+}
+.job-type-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.job-type-full-time  { background: #ecfdf5; color: #047857; border: 1px solid rgba(4,120,87,0.22); }
+.job-type-part-time  { background: #fffbeb; color: #b45309; border: 1px solid rgba(180,83,9,0.22); }
+.job-type-contract   { background: #eef0ff; color: #4648d4; border: 1px solid rgba(70,72,212,0.22); }
+.job-type-remote     { background: #f3eeff; color: #6063ee; border: 1px solid rgba(96,99,238,0.22); }
+.job-type-internship { background: #fef2f2; color: #b91c1c; border: 1px solid rgba(185,28,28,0.22); }
+.job-type-default    { background: var(--bg-surface-low); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+
+/* =====================================================
+   Features checklist
+   ===================================================== */
+.features-check-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.75rem 0;
+}
+.features-check-list li + li {
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* =====================================================
+   Section labels / pills
+   ===================================================== */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(70, 72, 212, 0.08);
+  border: 1px solid rgba(70, 72, 212, 0.22);
+  color: #4648d4;
+}
+.section-label-cyan {
+  background: rgba(96, 99, 238, 0.08);
+  border-color: rgba(96, 99, 238, 0.22);
+  color: #6063ee;
+}
+.section-label-green {
+  background: rgba(4, 120, 87, 0.07);
+  border-color: rgba(4, 120, 87, 0.22);
+  color: #047857;
+}
+
+/* Empty jobs CTA */
+.no-jobs-cta {
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px dashed var(--border-default);
+  border-radius: 1.25rem;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+/* =====================================================
+   Animations
+   ===================================================== */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fade-up 0.5s ease forwards; }
+.animate-fade-up-delay-1 { animation-delay: 0.1s; opacity: 0; }
+.animate-fade-up-delay-2 { animation-delay: 0.2s; opacity: 0; }
+.animate-fade-up-delay-3 { animation-delay: 0.3s; opacity: 0; }
+
+/* =====================================================
+   Responsive
+   ===================================================== */
+@media (max-width: 768px) {
+  .journey-connector { display: none; }
+  .stat-divider { display: none; }
 }

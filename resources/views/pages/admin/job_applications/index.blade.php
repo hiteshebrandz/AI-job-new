@@ -2,7 +2,7 @@
 
 @section('title', 'Job Applications')
 
-@section('body-class', 'bg-[#0F172A] text-[#E2E8F0] font-body-md min-h-screen')
+@section('body-class', 'bg-background text-on-surface font-body-md min-h-screen')
 
 @section('page-css', 'admin_analytics_dashboard.css')
 
@@ -15,10 +15,10 @@
 @section('content')
 @include('partials.nav.admin-sidebar')
 <main class="lg:ml-[280px] min-h-screen transition-all duration-300">
-<header class="fixed top-0 right-0 w-full lg:w-[calc(100%-280px)] h-16 z-40 glass-panel border-b border-[#1E293B] flex justify-between items-center px-6 lg:px-8">
+<header class="fixed top-0 right-0 w-full lg:w-[calc(100%-280px)] h-16 z-40 glass-panel border-b border-outline-variant flex justify-between items-center px-6 lg:px-8">
     <div class="flex items-center gap-3">
         <span class="badge-violet text-[10px]">Admin</span>
-        <h1 class="text-[16px] font-bold text-[#E2E8F0]">Job Applications</h1>
+        <h1 class="text-[16px] font-bold text-on-surface">Job Applications</h1>
     </div>
     <a href="{{ route('admin.dashboard') }}" class="btn-ghost py-1.5 px-4 text-[12px]">Dashboard</a>
 </header>
@@ -51,27 +51,27 @@
     <div class="glass-card overflow-x-auto">
         <table class="w-full text-left text-[13px]">
             <thead>
-                <tr class="border-b border-[#334155]">
+                <tr class="border-b border-outline-variant">
                     @foreach (['Candidate','Email','Phone','Job','Company','Match','Resume','Status','Applied','Actions'] as $col)
-                        <th class="px-4 py-3 text-[11px] font-semibold uppercase tracking-wider text-[#64748B] whitespace-nowrap">{{ $col }}</th>
+                        <th class="px-4 py-3 text-[11px] font-semibold uppercase tracking-wider text-on-surface-variant whitespace-nowrap">{{ $col }}</th>
                     @endforeach
                 </tr>
             </thead>
-            <tbody class="divide-y divide-[#1E293B]">
+            <tbody class="divide-y divide-outline-variant">
                 @forelse ($applications as $application)
                     @php $candidate = $application->user->candidate; @endphp
-                    <tr class="hover:bg-[#1E293B]/60 transition-colors">
-                        <td class="px-4 py-3 text-[#E2E8F0] font-medium">{{ $candidate?->full_name ?? $application->user->name }}</td>
-                        <td class="px-4 py-3 text-[#94A3B8]">{{ $application->user->email }}</td>
-                        <td class="px-4 py-3 text-[#94A3B8]">{{ $candidate?->phone ?? '—' }}</td>
-                        <td class="px-4 py-3 text-[#E2E8F0]">{{ $application->job->title }}</td>
-                        <td class="px-4 py-3 text-[#94A3B8]">{{ $application->job->company_name }}</td>
-                        <td class="px-4 py-3 font-bold text-[#8B5CF6]">{{ $application->match_score ?? '—' }}@if($application->match_score)%@endif</td>
+                    <tr class="hover:bg-surface-container/60 transition-colors">
+                        <td class="px-4 py-3 text-on-surface font-medium">{{ $candidate?->full_name ?? $application->user->name }}</td>
+                        <td class="px-4 py-3 text-on-surface-variant">{{ $application->user->email }}</td>
+                        <td class="px-4 py-3 text-on-surface-variant">{{ $candidate?->phone ?? '—' }}</td>
+                        <td class="px-4 py-3 text-on-surface">{{ $application->job->title }}</td>
+                        <td class="px-4 py-3 text-on-surface-variant">{{ $application->job->company_name }}</td>
+                        <td class="px-4 py-3 font-bold text-secondary">{{ $application->match_score ?? '—' }}@if($application->match_score)%@endif</td>
                         <td class="px-4 py-3">
                             @if ($candidate?->resume_path)
-                                <a href="{{ route('admin.job-applications.resume', $application) }}" class="text-[#06B6D4] hover:underline text-[12px]">Download</a>
+                                <a href="{{ route('admin.job-applications.resume', $application) }}" class="text-secondary hover:underline text-[12px]">Download</a>
                             @else
-                                <span class="text-[#475569]">—</span>
+                                <span class="text-on-surface-variant">—</span>
                             @endif
                         </td>
                         <td class="px-4 py-3">
@@ -81,7 +81,7 @@
                                 @endforeach
                             </select>
                         </td>
-                        <td class="px-4 py-3 text-[#94A3B8] whitespace-nowrap">{{ $application->applied_at->format('M j, Y') }}</td>
+                        <td class="px-4 py-3 text-on-surface-variant whitespace-nowrap">{{ $application->applied_at->format('M j, Y') }}</td>
                         <td class="px-4 py-3">
                             <a href="{{ route('admin.job-applications.show', $application) }}" class="btn-ghost py-1 px-3 text-[12px]">View</a>
                         </td>
@@ -90,8 +90,8 @@
                     <tr>
                         <td colspan="10" class="px-6 py-16 text-center">
                             <div class="flex flex-col items-center gap-3">
-                                <span class="material-symbols-outlined text-[48px] text-[#334155]">assignment</span>
-                                <p class="text-[#64748B]">No applications found.</p>
+                                <span class="material-symbols-outlined text-[48px] text-on-surface-variant">assignment</span>
+                                <p class="text-on-surface-variant">No applications found.</p>
                             </div>
                         </td>
                     </tr>
@@ -100,7 +100,7 @@
         </table>
     </div>
 
-    <div class="mt-6 text-[#94A3B8] text-[13px]">{{ $applications->links() }}</div>
+    <div class="mt-6 text-on-surface-variant text-[13px]">{{ $applications->links() }}</div>
 </section>
 </main>
 <div id="toast-root" aria-live="polite"></div>

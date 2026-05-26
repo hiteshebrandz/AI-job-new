@@ -1,32 +1,24 @@
-/* Applicant Management — dark overrides */
-.glass-sidebar {
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-right: 1px solid rgba(139, 92, 246, 0.15);
-}
-
+/* Applicant Management — light theme */
 .kanban-column {
     min-width: 300px;
     max-width: 300px;
-    background: rgba(30, 41, 59, 0.6);
-    border: 1px solid rgba(139, 92, 246, 0.12);
+    background: var(--bg-surface-low);
+    border: 1px solid var(--border-subtle);
     border-radius: 1rem;
 }
-
 .kanban-card {
-    background: rgba(15, 23, 42, 0.8);
-    border: 1px solid rgba(139, 92, 246, 0.1);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
     border-radius: 0.75rem;
+    box-shadow: var(--shadow-card);
     transition: all 0.2s ease;
 }
 .kanban-card:hover {
-    border-color: rgba(139, 92, 246, 0.35);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-color: rgba(70, 72, 212, 0.30);
+    box-shadow: var(--shadow-card-hover);
     transform: translateY(-1px);
 }
-
-.custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+.custom-scrollbar::-webkit-scrollbar       { width: 4px; height: 4px; }
 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.3); border-radius: 10px; }
-.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.5); }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(70, 72, 212, 0.22); border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(70, 72, 212, 0.42); }

@@ -1,54 +1,13 @@
-/* Resume Analytics Dashboard — theme-aware */
-
+/* Resume Analytics Dashboard — light theme */
 .gradient-text {
     background: var(--brand-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
-
-.progress-ring {
-    transform: rotate(-90deg);
-}
-
-/* Recommended jobs — last section before footer */
-.recommended-jobs-section {
-    margin-bottom: 0.5rem;
-}
-
-.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.progress-ring { transform: rotate(-90deg); }
+.recommended-jobs-section { margin-bottom: 0.5rem; }
+.custom-scrollbar::-webkit-scrollbar       { width: 4px; }
 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(99, 102, 241, 0.25);
-    border-radius: 10px;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(99, 102, 241, 0.45);
-}
-
-[data-theme="dark"] .glass-card {
-    background: rgba(30, 41, 59, 0.8);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(139, 92, 246, 0.15);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-}
-
-[data-theme="dark"] .radar-grid {
-    background-image: radial-gradient(circle, rgba(139, 92, 246, 0.3) 1px, transparent 1px);
-    background-size: 24px 24px;
-}
-
-[data-theme="dark"] .gradient-text {
-    background: linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-[data-theme="dark"] .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(139, 92, 246, 0.3);
-}
-[data-theme="dark"] .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(139, 92, 246, 0.5);
-}
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(70, 72, 212, 0.22); border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(70, 72, 212, 0.42); }

@@ -6,16 +6,6 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Elements HR | @yield('title')</title>
 
-    {{-- Flash guard — runs before first paint to prevent theme flicker --}}
-    <script>
-        (function () {
-            try {
-                var t = localStorage.getItem('elements-theme') || 'light';
-                document.documentElement.setAttribute('data-theme', t);
-            } catch (e) {}
-        })();
-    </script>
-
     {{-- Tailwind CDN --}}
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
@@ -26,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
 
-    {{-- Base + Design System (dark defaults) --}}
+    {{-- Base + Design System --}}
     <link rel="stylesheet" href="{{ asset('css/common.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/design-system.css') }}" />
 
@@ -54,7 +44,7 @@
     @yield('content')
     @stack('scripts')
 
-    {{-- Theme JS (sets up applyTheme / toggleTheme globals + syncs icons) --}}
+    {{-- Theme JS (light-only; no toggle) --}}
     <script src="{{ asset('js/theme.js') }}"></script>
 </body>
 

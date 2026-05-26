@@ -58,6 +58,11 @@ class Candidate extends Model
             ->withTimestamps();
     }
 
+    public function candidateMatches(): HasMany
+    {
+        return $this->hasMany(CandidateMatch::class);
+    }
+
     public static function generateCode(): string
     {
         do {

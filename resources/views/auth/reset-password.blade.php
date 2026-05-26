@@ -2,7 +2,7 @@
 
 @section('title', 'Reset Password')
 
-@section('body-class', 'bg-[#0F172A] text-[#E2E8F0] min-h-screen flex font-body-md')
+@section('body-class', 'bg-background text-on-surface min-h-screen flex font-body-md')
 
 @section('page-css', 'login_sign_up.css')
 
@@ -12,12 +12,12 @@
 <main class="flex w-full min-h-screen">
     @include('auth._panel')
 
-    <section class="w-full lg:w-[45%] flex items-center justify-center p-8 bg-[#0F172A]">
+    <section class="w-full lg:w-[45%] flex items-center justify-center p-8 bg-background">
         <div class="w-full max-w-[420px] animate-fade-in">
 
             <div class="mb-8">
-                <h2 class="text-[28px] font-bold text-[#E2E8F0] mb-2">Set New Password</h2>
-                <p class="text-[14px] text-[#64748B]">Choose a strong password for your account.</p>
+                <h2 class="text-[28px] font-bold text-on-surface mb-2">Set New Password</h2>
+                <p class="text-[14px] text-on-surface-variant">Choose a strong password for your account.</p>
             </div>
 
             <div class="glass-card p-8">
@@ -26,7 +26,7 @@
                     <input type="hidden" name="token" value="{{ $token }}">
 
                     <div>
-                        <label for="email" class="block text-[12px] font-semibold uppercase tracking-wider text-[#64748B] mb-2">Email Address</label>
+                        <label for="email" class="block text-[12px] font-semibold uppercase tracking-wider text-on-surface-variant mb-2">Email Address</label>
                         <input
                             id="email"
                             type="email"
@@ -43,7 +43,7 @@
                     </div>
 
                     <div>
-                        <label for="password" class="block text-[12px] font-semibold uppercase tracking-wider text-[#64748B] mb-2">New Password</label>
+                        <label for="password" class="block text-[12px] font-semibold uppercase tracking-wider text-on-surface-variant mb-2">New Password</label>
                         <div class="relative">
                             <input
                                 id="password"
@@ -53,7 +53,7 @@
                                 class="input-dark pr-11"
                                 placeholder="Min. 8 characters"
                             >
-                            <button type="button" onclick="togglePasswordVisibility('password', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#64748B] hover:text-[#94A3B8] transition-colors">
+                            <button type="button" onclick="togglePasswordVisibility('password', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface-variant transition-colors">
                                 <span class="material-symbols-outlined text-[18px]">visibility</span>
                             </button>
                         </div>
@@ -63,7 +63,7 @@
                     </div>
 
                     <div>
-                        <label for="password_confirmation" class="block text-[12px] font-semibold uppercase tracking-wider text-[#64748B] mb-2">Confirm Password</label>
+                        <label for="password_confirmation" class="block text-[12px] font-semibold uppercase tracking-wider text-on-surface-variant mb-2">Confirm Password</label>
                         <div class="relative">
                             <input
                                 id="password_confirmation"
@@ -73,7 +73,7 @@
                                 class="input-dark pr-11"
                                 placeholder="Repeat password"
                             >
-                            <button type="button" onclick="togglePasswordVisibility('password_confirmation', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#64748B] hover:text-[#94A3B8] transition-colors">
+                            <button type="button" onclick="togglePasswordVisibility('password_confirmation', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface-variant transition-colors">
                                 <span class="material-symbols-outlined text-[18px]">visibility</span>
                             </button>
                         </div>

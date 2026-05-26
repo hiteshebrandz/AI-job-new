@@ -257,15 +257,15 @@
                 <p class="text-[10px] text-on-surface-variant">Top Match</p>
             </div>
             <div class="glass-card px-4 py-2 text-center min-w-[76px]">
-                <p class="text-[20px] font-extrabold text-[#E2E8F0]">{{ $analytics->skill_count }}</p>
+                <p class="text-[20px] font-extrabold text-on-surface">{{ $analytics->skill_count }}</p>
                 <p class="text-[10px] text-on-surface-variant">Skills</p>
             </div>
             <div class="glass-card px-4 py-2 text-center min-w-[76px]">
-                <p class="text-[20px] font-extrabold text-[#E2E8F0]">{{ count($strengths) }}</p>
+                <p class="text-[20px] font-extrabold text-on-surface">{{ count($strengths) }}</p>
                 <p class="text-[10px] text-on-surface-variant">Strengths</p>
             </div>
             <div class="glass-card px-4 py-2 text-center min-w-[76px]">
-                <p class="text-[20px] font-extrabold text-[#E2E8F0]">{{ $analytics->application_count }}</p>
+                <p class="text-[20px] font-extrabold text-on-surface">{{ $analytics->application_count }}</p>
                 <p class="text-[10px] text-on-surface-variant">Applications</p>
             </div>
         </div>

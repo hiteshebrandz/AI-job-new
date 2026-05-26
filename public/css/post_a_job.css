@@ -1,22 +1,13 @@
-/* Post a Job — dark overrides */
-.glass-sidebar  { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-right: 1px solid rgba(139, 92, 246, 0.15); }
-.glass-topbar   { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(139, 92, 246, 0.15); }
-.gradient-primary { background: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 100%); }
+/* Post a Job — light theme */
+.gradient-primary { background: var(--brand-gradient); }
 
-.step-active   { border-color: #8B5CF6 !important; color: #8B5CF6 !important; background: rgba(139, 92, 246, 0.12) !important; }
-.step-inactive { border-color: #334155 !important; color: #64748B !important; }
-.step-complete { border-color: #06B6D4 !important; background: rgba(6, 182, 212, 0.15) !important; color: #06B6D4 !important; }
+.step-active   { border-color: var(--brand-primary)   !important; color: var(--brand-primary)   !important; background: rgba(70,72,212,0.08) !important; }
+.step-inactive { border-color: var(--border-default)  !important; color: var(--text-muted)       !important; }
+.step-complete { border-color: var(--brand-secondary) !important; background: rgba(96,99,238,0.10) !important; color: var(--brand-secondary) !important; }
 
-/* Rich-text editor dark theme */
-.ql-toolbar.ql-snow {
-    background: #1E293B;
-    border-color: #334155 !important;
-}
-.ql-container.ql-snow {
-    background: #0F172A;
-    border-color: #334155 !important;
-    color: #E2E8F0;
-}
-.ql-snow .ql-stroke { stroke: #94A3B8 !important; }
-.ql-snow .ql-fill  { fill:   #94A3B8 !important; }
-.ql-snow .ql-picker { color:  #94A3B8 !important; }
+/* Rich-text editor */
+.ql-toolbar.ql-snow   { background: var(--bg-surface-low); border-color: var(--border-default) !important; }
+.ql-container.ql-snow { background: var(--bg-surface); border-color: var(--border-default) !important; color: var(--text-primary); }
+.ql-snow .ql-stroke   { stroke: var(--text-muted) !important; }
+.ql-snow .ql-fill     { fill:   var(--text-muted) !important; }
+.ql-snow .ql-picker    { color:  var(--text-muted) !important; }

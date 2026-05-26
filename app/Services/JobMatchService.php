@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Candidate;
 use App\Models\Job;
 use App\Support\CandidateJobProfile;
+use App\Support\MatchableJobSpec;
 
 class JobMatchService
 {
@@ -42,6 +43,30 @@ class JobMatchService
         $score = (int) round(52 + ($raw * 47));
 
         return min(99, max(52, $score));
+    }
+
+    public function percentageForSpec(MatchableJobSpec $spec, ?CandidateJobProfile $profile): int
+    {
+        return $this->percentage($this->jobFromSpec($spec), null, $profile);
+    }
+
+    public function matchReasonForSpec(MatchableJobSpec $spec, CandidateJobProfile $profile): string
+    {
+        return $this->matchReason($this->jobFromSpec($spec), $profile);
+    }
+
+    private function jobFromSpec(MatchableJobSpec $spec): Job
+    {
+        $job = new Job([
+            'title' => $spec->title,
+            'description' => $spec->description,
+            'requirements' => $spec->requirements,
+            'experience_required' => $spec->experienceRequired,
+            'skills_required' => $spec->skillsRequired,
+        ]);
+        $job->id = 1;
+
+        return $job;
     }
 
     /**

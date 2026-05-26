@@ -1,24 +1,12 @@
-/* Admin Analytics Dashboard — dark overrides */
-.glass-card {
-    background: rgba(30, 41, 59, 0.8);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(139, 92, 246, 0.15);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-}
-
+/* Admin Analytics Dashboard — light theme */
 .gradient-text {
-    background: linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%);
+    background: var(--brand-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
-
-.bg-gradient-primary {
-    background: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 100%);
-}
-
-.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.bg-gradient-primary    { background: var(--brand-gradient); }
+.custom-scrollbar::-webkit-scrollbar       { width: 4px; }
 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.3); border-radius: 10px; }
-.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.5); }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(70, 72, 212, 0.25); border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(70, 72, 212, 0.45); }

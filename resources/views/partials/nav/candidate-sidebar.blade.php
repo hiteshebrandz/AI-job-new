@@ -52,6 +52,11 @@
             <span class="material-symbols-outlined text-[20px]">analytics</span>
             <span>Analytics</span>
         </a>
+        <a class="{{ $linkClass('messages') }}" href="{{ route('user.messages.index') }}">
+            <span class="material-symbols-outlined text-[20px]">forum</span>
+            <span>Messages</span>
+            <span id="user-messages-badge" class="ml-auto hidden text-[10px] px-2 py-0.5 rounded-full bg-secondary text-white font-bold"></span>
+        </a>
         <a class="{{ $linkClass('saved') }}" href="{{ route('user.saved-jobs') }}">
             <span class="material-symbols-outlined text-[20px]">bookmark</span>
             <span>Saved Jobs</span>
@@ -86,9 +91,6 @@
                 <p class="text-[13px] font-semibold truncate" style="color: var(--text-primary);">{{ auth()->user()->name }}</p>
                 <p class="text-[11px] truncate" style="color: var(--text-muted);">Candidate</p>
             </div>
-            <button type="button" onclick="event.preventDefault(); event.stopPropagation(); toggleTheme();" class="theme-toggle-btn p-1.5 text-[16px]" title="Toggle theme">
-                <span class="material-symbols-outlined text-[16px]" data-theme-icon>dark_mode</span>
-            </button>
         </a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf

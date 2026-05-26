@@ -14,7 +14,7 @@
 <!-- Main Content Canvas -->
 <main class="lg:ml-[280px] min-h-screen">
 <!-- Top Navigation Bar -->
-<header class="fixed top-0 right-0 lg:w-[calc(100%-280px)] w-full h-[64px] z-40 glass-panel border-b border-[#1E293B] flex justify-between items-center px-6 lg:px-8 max-w-[1440px] mx-auto">
+<header class="fixed top-0 right-0 lg:w-[calc(100%-280px)] w-full h-[64px] z-40 glass-panel border-b border-outline-variant flex justify-between items-center px-6 lg:px-8 max-w-[1440px] mx-auto">
 <div class="flex items-center gap-4 flex-1">
 <div class="relative w-full max-w-md group">
 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant opacity-60 group-focus-within:text-secondary transition-colors" data-icon="search">search</span>
@@ -220,7 +220,7 @@
 <p class="text-label-caps font-label-caps text-white/60">PREDICTION</p>
 <p class="font-body-md font-bold text-white">Scale +22% by Q4</p>
 </div>
-<button class="flex-1 py-3 bg-[#8B5CF6] text-white font-semibold text-[12px] rounded-lg hover:bg-[#7C3AED] transition-colors">
+<button class="flex-1 py-3 bg-secondary text-white font-semibold text-[12px] rounded-lg hover:opacity-90 transition-colors">
                                 View Strategic Roadmap
                             </button>
 </div>
@@ -296,10 +296,10 @@
 </div>
 </section>
 <!-- Footer -->
-<footer class="w-full py-8 border-t border-outline-variant dark:border-outline bg-surface dark:bg-inverse-surface mt-12">
+<footer class="w-full py-8 border-t border-outline-variant bg-surface mt-12">
 <div class="flex flex-col md:flex-row justify-between items-center px-container-margin max-w-7xl mx-auto">
 <div class="mb-4 md:mb-0">
-<p class="font-title-md text-title-md font-bold text-primary dark:text-on-primary-fixed">Elements HR</p>
+<p class="font-title-md text-title-md font-bold text-primary">Elements HR</p>
 <p class="font-body-sm text-body-sm text-on-surface-variant opacity-70">© 2024 Elements HR Services. All rights reserved.</p>
 </div>
 <div class="flex gap-8">

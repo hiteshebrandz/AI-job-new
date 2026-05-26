@@ -1,5 +1,4 @@
 tailwind.config = {
-    darkMode: "class",
     theme: {
         extend: {
             "colors": {
@@ -19,6 +18,7 @@ tailwind.config = {
                 "primary-fixed-dim":            "var(--tw-primary-fixed-dim)",
                 "on-primary-fixed":             "var(--tw-on-primary-fixed)",
                 "on-primary-fixed-variant":     "var(--tw-on-primary-fixed-variant)",
+                "inverse-primary":              "var(--tw-inverse-primary)",
                 "tertiary":                     "var(--tw-tertiary)",
                 "on-tertiary":                  "var(--tw-on-tertiary)",
                 "tertiary-container":           "var(--tw-tertiary-container)",
@@ -44,7 +44,6 @@ tailwind.config = {
                 "on-background":                "var(--tw-on-background)",
                 "inverse-surface":              "var(--tw-inverse-surface)",
                 "inverse-on-surface":           "var(--tw-inverse-on-surface)",
-                "inverse-primary":              "var(--tw-inverse-primary)",
                 "error":                        "var(--tw-error)",
                 "on-error":                     "var(--tw-on-error)",
                 "error-container":              "var(--tw-error-container)",
@@ -68,28 +67,28 @@ tailwind.config = {
                 "gutter": "24px"
             },
             "fontFamily": {
-                "headline-lg": ["Inter", "Plus Jakarta Sans"],
-                "body-sm": ["Inter"],
-                "title-md": ["Inter", "Plus Jakarta Sans"],
-                "headline-lg-mobile": ["Inter", "Plus Jakarta Sans"],
-                "display-lg": ["Inter", "Plus Jakarta Sans"],
-                "label-caps": ["Inter"],
-                "body-md": ["Inter"]
+                "display-lg": ["Plus Jakarta Sans", "Inter", "sans-serif"],
+                "headline-lg": ["Plus Jakarta Sans", "Inter", "sans-serif"],
+                "headline-lg-mobile": ["Plus Jakarta Sans", "Inter", "sans-serif"],
+                "title-md": ["Plus Jakarta Sans", "Inter", "sans-serif"],
+                "body-md": ["Inter", "sans-serif"],
+                "body-sm": ["Inter", "sans-serif"],
+                "label-caps": ["Inter", "sans-serif"]
             },
             "fontSize": {
-                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
-                "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "display-lg": ["48px", {"lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
                 "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
-                "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.03em", "fontWeight": "800"}],
-                "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "600"}],
-                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
             },
             "boxShadow": {
-                "glow-violet": "0 0 20px rgba(139,92,246,0.35)",
-                "glow-cyan": "0 0 20px rgba(6,182,212,0.35)",
-                "card": "0 4px 24px rgba(0,0,0,0.4)",
-                "card-hover": "0 8px 40px rgba(0,0,0,0.5)"
+                "glow-violet": "0 0 20px rgba(70,72,212,0.18)",
+                "glow-cyan": "0 0 20px rgba(96,99,238,0.15)",
+                "card": "0 1px 2px rgba(27,27,29,0.04), 0 4px 6px -1px rgba(27,27,29,0.05), 0 0 32px rgba(70,72,212,0.06)",
+                "card-hover": "0 8px 32px rgba(70,72,212,0.12), 0 4px 12px rgba(27,27,29,0.06)"
             }
         }
     }

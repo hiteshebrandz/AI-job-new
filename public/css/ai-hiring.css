@@ -1,0 +1,47 @@
+/* AI Hiring — light theme */
+.ai-match-score-ring {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: conic-gradient(var(--brand-primary) calc(var(--score, 70) * 1%), var(--bg-surface-high) 0);
+    position: relative;
+}
+.ai-match-score-ring::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: var(--bg-surface);
+}
+.ai-match-score-ring-lg { width: 72px; height: 72px; }
+.ai-match-score-value {
+    position: relative;
+    z-index: 1;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--brand-primary);
+}
+.ai-match-score-ring-lg .ai-match-score-value { font-size: 13px; }
+
+.chat-bubble {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 16px;
+}
+.chat-bubble-mine {
+    margin-left: auto;
+    background: var(--brand-gradient);
+    color: #fff;
+    border-bottom-right-radius: 4px;
+}
+.chat-bubble-theirs {
+    margin-right: auto;
+    background: var(--bg-surface-low);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+    border-bottom-left-radius: 4px;
+}
