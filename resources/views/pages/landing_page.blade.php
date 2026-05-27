@@ -53,9 +53,9 @@
                 {{-- Audience badges --}}
                 <div class="flex flex-wrap gap-3">
                     @foreach ([
-                        ['person_search', 'For Job Seekers',  'rgba(70,72,212,0.08)', 'rgba(70,72,212,0.22)', '#4648d4'],
-                        ['corporate_fare','For HR Teams',     'rgba(96,99,238,0.08)', 'rgba(96,99,238,0.22)', '#6063ee'],
-                        ['manage_accounts','For Admins',      'rgba(4,120,87,0.08)',  'rgba(4,120,87,0.22)',  '#047857'],
+                        ['person_search', 'For Job Seekers',  'rgba(70,72,212,0.06)', 'rgba(70,72,212,0.18)', '#575acb'],
+                        ['corporate_fare','For HR Teams',     'rgba(96,99,238,0.06)', 'rgba(96,99,238,0.18)', '#6669db'],
+                        ['manage_accounts','For Admins',      'rgba(4,120,87,0.06)',  'rgba(4,120,87,0.18)',  '#0b7a5d'],
                     ] as $b)
                     <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-semibold" style="background:{{ $b[2] }}; border:1px solid {{ $b[3] }}; color:{{ $b[4] }};">
                         <span class="material-symbols-outlined text-[14px]">{{ $b[0] }}</span>{{ $b[1] }}
@@ -220,7 +220,7 @@
                         </div>
                     </div>
 
-                    <a href="{{ route('register') }}" class="btn-primary py-3 px-6 text-[14px] font-semibold w-full justify-center">
+                    <a href="{{ route('tools.guest', ['tool' => 'resume']) }}" class="btn-primary py-3 px-6 text-[14px] font-semibold w-full justify-center">
                         <span class="material-symbols-outlined">upload_file</span>
                         Test Your Resume Now
                     </a>
@@ -263,7 +263,7 @@
                         </div>
                     </div>
 
-                    <a href="{{ route('register') }}" class="btn-secondary py-3 px-6 text-[14px] font-semibold w-full justify-center">
+                    <a href="{{ route('tools.guest', ['tool' => 'ats']) }}" class="btn-secondary py-3 px-6 text-[14px] font-semibold w-full justify-center">
                         <span class="material-symbols-outlined">fact_check</span>
                         Check ATS Compatibility
                     </a>
@@ -754,7 +754,7 @@
 <section class="py-24 relative overflow-hidden" style="background: var(--brand-gradient);">
     <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,255,255,0.10) 0%, transparent 60%);"></div>
 
-    <div class="relative z-10 max-w-4xl mx-auto text-center px-6">
+    <div class="relative z-10 max-w-7xl mx-auto text-center px-6 lg:px-8">
         <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6" style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.30);">
             <span class="material-symbols-outlined text-white text-[14px]">rocket_launch</span>
             <span class="text-[11px] font-bold uppercase tracking-widest text-white">Start Today</span>
@@ -763,14 +763,14 @@
         <h2 class="text-[46px] font-extrabold text-white tracking-tight mb-6" style="font-family:'Plus Jakarta Sans',sans-serif;">
             Ready to Transform<br>Your Hiring Process?
         </h2>
-        <p class="text-[17px] mb-10 leading-relaxed max-w-2xl mx-auto" style="color:rgba(255,255,255,0.82);">Join thousands of HR professionals and job seekers using Elements HR to accelerate careers and build high-performing teams.</p>
+        <p class="text-[17px] mb-10 leading-relaxed max-w-2xl mx-auto" style="color:rgba(255,255,255,0.84);">Join thousands of HR professionals and job seekers using Elements HR to accelerate careers and build high-performing teams.</p>
 
         <div class="flex flex-col sm:flex-row gap-4 justify-center mb-10">
-            <a href="{{ route('register') }}" class="inline-flex items-center justify-content gap-2 py-4 px-10 text-[16px] font-semibold rounded-xl transition-all" style="background:#ffffff; color:var(--brand-primary); box-shadow:0 4px 20px rgba(0,0,0,0.15);" onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 28px rgba(0,0,0,0.22)'" onmouseout="this.style.transform=''; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.15)'">
+                <a href="{{ route('register') }}" class="inline-flex items-center justify-content gap-2 py-4 px-10 text-[16px] font-semibold rounded-xl transition-all" style="background:#ffffff; color:var(--brand-primary); box-shadow:0 8px 24px rgba(15,23,42,0.12);" onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 12px 30px rgba(15,23,42,0.18)'" onmouseout="this.style.transform=''; this.style.boxShadow='0 8px 24px rgba(15,23,42,0.12)'">
                 <span class="material-symbols-outlined">rocket_launch</span>
                 Get Started Free
             </a>
-            <a href="{{ route('register') }}?role=hr" class="inline-flex items-center justify-center gap-2 py-4 px-10 text-[16px] font-semibold text-white rounded-xl transition-all" style="background:rgba(255,255,255,0.15); border:1.5px solid rgba(255,255,255,0.45);" onmouseover="this.style.background='rgba(255,255,255,0.22)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+            <a href="{{ route('register') }}?role=hr" class="inline-flex items-center justify-center gap-2 py-4 px-10 text-[16px] font-semibold text-white rounded-xl transition-all" style="background:rgba(255,255,255,0.14); border:1.5px solid rgba(255,255,255,0.36);" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.14)'">
                 <span class="material-symbols-outlined">business_center</span>
                 Post a Job
             </a>
@@ -784,7 +784,7 @@
                 ['Job Board',    'work'],
                 ['Analytics',    'insights'],
             ] as $link)
-            <a href="{{ route('register') }}" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-[12px] font-medium transition-all" style="color:rgba(255,255,255,0.75); border:1px solid rgba(255,255,255,0.30); background:rgba(255,255,255,0.10);" onmouseover="this.style.color='#fff'; this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.color='rgba(255,255,255,0.75)'; this.style.background='rgba(255,255,255,0.10)'">
+            <a href="{{ route('register') }}" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-[12px] font-medium transition-all" style="color:rgba(255,255,255,0.78); border:1px solid rgba(255,255,255,0.26); background:rgba(255,255,255,0.09);" onmouseover="this.style.color='#fff'; this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.color='rgba(255,255,255,0.78)'; this.style.background='rgba(255,255,255,0.09)'">
                 <span class="material-symbols-outlined text-[14px]">{{ $link[1] }}</span>{{ $link[0] }}
             </a>
             @endforeach

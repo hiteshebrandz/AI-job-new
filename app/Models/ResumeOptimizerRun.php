@@ -16,6 +16,7 @@ class ResumeOptimizerRun extends Model
 
     protected $fillable = [
         'user_id',
+        'guest_session_id',
         'original_file_name',
         'original_file_path',
         'file_type',

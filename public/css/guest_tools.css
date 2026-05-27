@@ -1,0 +1,83 @@
+.guest-hero {
+    background: linear-gradient(135deg, rgba(70, 72, 212, 0.06) 0%, rgba(96, 99, 238, 0.04) 50%, rgba(4, 120, 87, 0.04) 100%);
+}
+
+.guest-tab {
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+}
+
+.guest-tab.active {
+    border-color: rgba(70, 72, 212, 0.35);
+    background: rgba(70, 72, 212, 0.08);
+    color: var(--brand-primary);
+    box-shadow: 0 4px 16px rgba(70, 72, 212, 0.12);
+}
+
+.guest-panel {
+    display: none;
+}
+
+.guest-panel.active {
+    display: block;
+}
+
+.guest-attempt-badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface-low);
+    color: var(--text-muted);
+}
+
+.guest-attempt-badge.warning {
+    border-color: rgba(180, 83, 9, 0.35);
+    background: rgba(180, 83, 9, 0.08);
+    color: #b45309;
+}
+
+.guest-attempt-badge.locked {
+    border-color: rgba(185, 28, 28, 0.35);
+    background: rgba(185, 28, 28, 0.08);
+    color: #b91c1c;
+}
+
+.guest-drop-zone {
+    border: 2px dashed var(--border-subtle);
+    border-radius: 1rem;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.guest-drop-zone:hover,
+.guest-drop-zone.dragover {
+    border-color: var(--brand-secondary);
+    background: rgba(96, 99, 238, 0.04);
+}
+
+.guest-drop-zone.locked {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.guest-result-card {
+    border: 1px solid var(--border-subtle);
+    border-radius: 1rem;
+    background: var(--bg-surface-low);
+}
+
+.guest-score-ring {
+    width: 88px;
+    height: 88px;
+}
+
+.guest-login-banner {
+    border: 1px solid rgba(70, 72, 212, 0.25);
+    background: linear-gradient(135deg, rgba(70, 72, 212, 0.08), rgba(96, 99, 238, 0.06));
+    border-radius: 1rem;
+}

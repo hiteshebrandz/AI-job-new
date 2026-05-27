@@ -5,9 +5,9 @@
    ===================================================== */
 .hero-gradient {
   background:
-    radial-gradient(ellipse 80% 60% at 10% 0%,  rgba(70, 72, 212, 0.10) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 50% at 90% 100%, rgba(96, 99, 238, 0.07) 0%, transparent 55%),
-    linear-gradient(180deg, #fcf8fa 0%, #f6f3f5 100%);
+    radial-gradient(ellipse 78% 58% at 12% 4%, rgba(93, 96, 214, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 58% 48% at 88% 96%, rgba(126, 129, 230, 0.06) 0%, transparent 60%),
+    linear-gradient(180deg, #fcfbfd 0%, #f7f5f8 100%);
 }
 
 /* Section alternating backgrounds */
@@ -18,9 +18,9 @@
    Landing page glass-card override (higher contrast)
    ===================================================== */
 .glass-card {
-  background: rgba(255, 255, 255, 0.96) !important;
+  background: rgba(255, 255, 255, 0.97) !important;
   border: 1px solid var(--border-card) !important;
-  box-shadow: var(--shadow-card) !important;
+  box-shadow: 0 14px 38px rgba(17, 24, 39, 0.06), 0 3px 12px rgba(17, 24, 39, 0.04) !important;
 }
 
 /* =====================================================
@@ -43,27 +43,27 @@
    ===================================================== */
 .ai-tool-card {
   position: relative;
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.97);
   border: 1px solid var(--border-card);
   border-radius: 1.25rem;
   overflow: hidden;
   box-shadow: var(--shadow-card);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
 }
 .ai-tool-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-card-hover);
-  border-color: rgba(70, 72, 212, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(17, 24, 39, 0.08), 0 4px 14px rgba(17, 24, 39, 0.05);
+  border-color: rgba(70, 72, 212, 0.24);
 }
 .ai-tool-card-cyan:hover {
-  border-color: rgba(96, 99, 238, 0.35);
+  border-color: rgba(96, 99, 238, 0.24);
 }
 .ai-tool-glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(60px);
+  filter: blur(68px);
   pointer-events: none;
-  opacity: 0.12;
+  opacity: 0.09;
 }
 
 .feature-pill {
@@ -78,19 +78,19 @@
   border: 1px solid;
 }
 .feature-pill-violet {
-  background: rgba(70, 72, 212, 0.07);
-  border-color: rgba(70, 72, 212, 0.22);
-  color: #4648d4;
+  background: rgba(70, 72, 212, 0.06);
+  border-color: rgba(70, 72, 212, 0.18);
+  color: #575acb;
 }
 .feature-pill-cyan {
-  background: rgba(96, 99, 238, 0.07);
-  border-color: rgba(96, 99, 238, 0.22);
-  color: #6063ee;
+  background: rgba(96, 99, 238, 0.06);
+  border-color: rgba(96, 99, 238, 0.18);
+  color: #6669db;
 }
 .feature-pill-green {
-  background: rgba(4, 120, 87, 0.07);
-  border-color: rgba(4, 120, 87, 0.22);
-  color: #047857;
+  background: rgba(4, 120, 87, 0.06);
+  border-color: rgba(4, 120, 87, 0.18);
+  color: #0b7a5d;
 }
 
 /* =====================================================
@@ -98,7 +98,7 @@
    ===================================================== */
 .module-card {
   position: relative;
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.97);
   border: 1px solid var(--border-subtle);
   border-radius: 1rem;
   padding: 1.75rem;
@@ -117,19 +117,19 @@
   pointer-events: none;
 }
 .module-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(17, 24, 39, 0.07), 0 4px 12px rgba(17, 24, 39, 0.05);
 }
 .module-card:hover::before { opacity: 1; }
 .module-card:hover .module-icon { transform: scale(1.1); }
 .module-icon { transition: transform 0.2s ease; }
 
-.module-card-violet:hover  { border-color: rgba(70, 72, 212, 0.35); }
-.module-card-cyan:hover    { border-color: rgba(96, 99, 238, 0.35); }
-.module-card-green:hover   { border-color: rgba(4, 120, 87, 0.35); }
-.module-card-amber:hover   { border-color: rgba(180, 83, 9, 0.30); }
-.module-card-rose:hover    { border-color: rgba(186, 26, 26, 0.30); }
-.module-card-indigo:hover  { border-color: rgba(70, 72, 212, 0.35); }
+.module-card-violet:hover  { border-color: rgba(70, 72, 212, 0.24); }
+.module-card-cyan:hover    { border-color: rgba(96, 99, 238, 0.24); }
+.module-card-green:hover   { border-color: rgba(4, 120, 87, 0.24); }
+.module-card-amber:hover   { border-color: rgba(180, 83, 9, 0.22); }
+.module-card-rose:hover    { border-color: rgba(186, 26, 26, 0.22); }
+.module-card-indigo:hover  { border-color: rgba(70, 72, 212, 0.24); }
 
 /* =====================================================
    User Journey Steps
@@ -150,7 +150,7 @@
    Featured Jobs Grid
    ===================================================== */
 .job-card {
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.97);
   border: 1px solid var(--border-subtle);
   border-radius: 1rem;
   padding: 1.5rem;
@@ -161,9 +161,9 @@
   gap: 1rem;
 }
 .job-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-card-hover);
-  border-color: rgba(70, 72, 212, 0.28);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(17, 24, 39, 0.07), 0 4px 12px rgba(17, 24, 39, 0.05);
+  border-color: rgba(70, 72, 212, 0.22);
 }
 .job-type-badge {
   display: inline-flex;
@@ -206,19 +206,19 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  background: rgba(70, 72, 212, 0.08);
-  border: 1px solid rgba(70, 72, 212, 0.22);
-  color: #4648d4;
+  background: rgba(70, 72, 212, 0.06);
+  border: 1px solid rgba(70, 72, 212, 0.18);
+  color: #575acb;
 }
 .section-label-cyan {
-  background: rgba(96, 99, 238, 0.08);
-  border-color: rgba(96, 99, 238, 0.22);
-  color: #6063ee;
+  background: rgba(96, 99, 238, 0.06);
+  border-color: rgba(96, 99, 238, 0.18);
+  color: #6669db;
 }
 .section-label-green {
-  background: rgba(4, 120, 87, 0.07);
-  border-color: rgba(4, 120, 87, 0.22);
-  color: #047857;
+  background: rgba(4, 120, 87, 0.06);
+  border-color: rgba(4, 120, 87, 0.18);
+  color: #0b7a5d;
 }
 
 /* Empty jobs CTA */

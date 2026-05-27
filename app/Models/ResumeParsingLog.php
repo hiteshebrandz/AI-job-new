@@ -20,6 +20,7 @@ class ResumeParsingLog extends Model
 
     protected $fillable = [
         'user_id',
+        'guest_session_id',
         'candidate_id',
         'file_name',
         'file_path',

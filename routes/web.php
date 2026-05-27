@@ -19,6 +19,7 @@ use App\Http\Controllers\UserJobController;
 use App\Http\Controllers\UserNotificationController;
 use App\Http\Controllers\Api\AnalyticsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\GuestToolsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'landing'])->name('landing');
 Route::get('/sitemap', [PageController::class, 'sitemap'])->name('sitemap');
+
+Route::get('/tools/guest', [GuestToolsController::class, 'index'])->name('tools.guest');
+
+Route::prefix('tools/guest')->name('tools.guest.')->group(function () {
+    Route::post('/resume-test/upload', [GuestToolsController::class, 'uploadResumeTest'])
+        ->middleware('guest.tool.limit:resume_test')
+        ->name('resume.upload');
+    Route::get('/resume-test/status/{log}', [GuestToolsController::class, 'resumeTestStatus'])
+        ->name('resume.status');
+    Route::post('/ats-check/upload', [GuestToolsController::class, 'uploadAtsCheck'])
+        ->middleware('guest.tool.limit:ats_check')
+        ->name('ats.upload');
+    Route::get('/ats-check/status/{run}', [GuestToolsController::class, 'atsCheckStatus'])
+        ->name('ats.status');
+});
 
 Route::prefix('suite')->name('suite.')->group(function () {
     Route::get('/1', [PageController::class, 'executiveSuiteOne'])->name('one');
