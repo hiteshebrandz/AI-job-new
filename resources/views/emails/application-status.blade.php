@@ -59,7 +59,7 @@
     <a class="btn" href="{{ url('/user/applied-jobs') }}">View All Applications</a>
   </div>
   <div class="footer">
-    <p>&copy; {{ date('Y') }} Elements HR Services &middot; <a href="{{ url('/') }}">Visit Platform</a></p>
+    <p>&copy; {{ date('Y') }} {{ config('app.name') }} &middot; <a href="{{ url('/') }}">Visit Platform</a></p>
   </div>
 </div>
 </body>

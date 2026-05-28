@@ -4,7 +4,10 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Elements HR | @yield('title')</title>
+    <title>{{ config('app.name') }} | @yield('title')</title>
+    @if (file_exists(public_path('images/logo.webp')))
+        <link rel="icon" type="image/webp" href="{{ asset('images/logo.webp') }}">
+    @endif
 
     {{-- Tailwind CDN --}}
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>

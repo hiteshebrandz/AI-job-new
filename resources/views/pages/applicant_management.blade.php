@@ -266,7 +266,7 @@
 <!-- Footer (Shared Component) -->
 <footer class="w-full py-8 bg-surface border-t border-outline-variant mt-auto">
 <div class="flex flex-col md:flex-row justify-between items-center px-container-margin max-w-7xl mx-auto">
-<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 Elements HR Services. All rights reserved.</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">© {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
 <div class="flex gap-8 mt-4 md:mt-0">
 <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="{{ route('landing') }}">Privacy Policy</a>
 <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-opacity opacity-80 hover:opacity-100" href="{{ route('landing') }}">Terms of Service</a>

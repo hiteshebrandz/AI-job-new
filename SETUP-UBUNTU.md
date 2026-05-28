@@ -89,7 +89,7 @@ nano .env
 Minimum settings:
 
 ```env
-APP_NAME="AI Job Platform"
+APP_NAME="TalentSync AI"
 APP_URL=http://127.0.0.1:8000
 
 DB_CONNECTION=mysql

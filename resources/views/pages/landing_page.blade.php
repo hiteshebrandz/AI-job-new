@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Elements HR — AI-Powered HR Management Platform')
+@section('title', 'TalentSync AI — AI-Powered Talent & Hiring Platform')
 
 @section('body-class', 'bg-background text-on-surface font-body-md overflow-x-hidden')
 
@@ -14,7 +14,7 @@
 {{-- ================================================================
      HERO SECTION
      ================================================================ --}}
-<section class="relative min-h-screen flex items-center justify-center overflow-hidden hero-gradient pt-16">
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden hero-gradient pt-24">
     {{-- Soft gradient blobs --}}
     <div class="blob blob-violet w-[600px] h-[600px] -top-40 -left-32 animate-blob" style="opacity:0.06;"></div>
     <div class="blob blob-cyan w-[500px] h-[500px] -bottom-32 -right-32 animate-blob" style="opacity:0.05; animation-delay:3s;"></div>
@@ -36,7 +36,7 @@
                 </h1>
 
                 <p class="text-[17px] leading-relaxed mb-10 max-w-lg" style="color: var(--text-muted);">
-                    Elements HR brings together AI-powered resume analysis, intelligent candidate matching, job management, attendance, payroll, and performance tracking — all in one modern platform.
+                    {{ config('app.name') }} brings together AI-powered resume analysis, intelligent candidate matching, job management, attendance, payroll, and performance tracking — all in one modern platform.
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4 mb-10">
@@ -333,7 +333,7 @@
                     For Job Seekers
                 </span>
                 <h2 class="text-[38px] font-extrabold tracking-tight mt-4 mb-4" style="font-family:'Plus Jakarta Sans',sans-serif; color:var(--text-heading);">Your Path to the<br><span class="gradient-text-violet">Perfect Job</span></h2>
-                <p class="text-[15px] leading-relaxed mb-10" style="color:var(--text-muted);">Elements HR guides you from resume to offer letter with AI at every step.</p>
+                <p class="text-[15px] leading-relaxed mb-10" style="color:var(--text-muted);">{{ config('app.name') }} guides you from resume to offer letter with AI at every step.</p>
 
                 <div class="space-y-6">
                     @foreach ([
@@ -538,7 +538,7 @@
                     @if($stats['activeJobs'] > 0)
                         {{ number_format($stats['activeJobs']) }} active {{ Str::plural('position', $stats['activeJobs']) }} across all departments.
                     @else
-                        Be the first to post a position on Elements HR.
+                        Be the first to post a position on {{ config('app.name') }}.
                     @endif
                 </p>
             </div>
@@ -607,7 +607,7 @@
                     <span class="material-symbols-outlined text-[28px]" style="color:#047857; font-variation-settings:'FILL' 1;">work_outline</span>
                 </div>
                 <h3 class="text-[20px] font-bold mb-2" style="font-family:'Plus Jakarta Sans',sans-serif; color:var(--text-heading);">No Active Jobs Yet</h3>
-                <p class="text-[14px] mb-6 max-w-md mx-auto" style="color:var(--text-muted);">Be the first employer to post a job on Elements HR and connect with thousands of qualified candidates.</p>
+                <p class="text-[14px] mb-6 max-w-md mx-auto" style="color:var(--text-muted);">Be the first employer to post a job on {{ config('app.name') }} and connect with thousands of qualified candidates.</p>
                 <a href="{{ route('register') }}?role=hr" class="btn-primary py-3 px-7 text-[14px] font-semibold inline-flex">
                     <span class="material-symbols-outlined">add_circle</span>
                     Post the First Job
@@ -722,7 +722,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             @foreach ([
-                ['"Placing our CTO in under two weeks was unimaginable before Elements HR. The AI matching is genuinely remarkable."', 'Sarah K.', 'Chief People Officer, TechFlow', 'SK'],
+                ['"Placing our CTO in under two weeks was unimaginable before ' . config('app.name') . '. The AI matching is genuinely remarkable."', 'Sarah K.', 'Chief People Officer, TechFlow', 'SK'],
                 ['"The resume parsing accuracy eliminated 80% of our manual screening work. ROI was visible within the first month."',  'Marcus R.', 'Head of Talent, Quantix AI',    'MR'],
                 ['"I went from an unoptimised resume to multiple interviews in 3 days. The ATS checker and AI insights are transformative."', 'Priya M.', 'Senior Software Engineer', 'PM'],
             ] as $t)
@@ -763,7 +763,7 @@
         <h2 class="text-[46px] font-extrabold text-white tracking-tight mb-6" style="font-family:'Plus Jakarta Sans',sans-serif;">
             Ready to Transform<br>Your Hiring Process?
         </h2>
-        <p class="text-[17px] mb-10 leading-relaxed max-w-2xl mx-auto" style="color:rgba(255,255,255,0.84);">Join thousands of HR professionals and job seekers using Elements HR to accelerate careers and build high-performing teams.</p>
+        <p class="text-[17px] mb-10 leading-relaxed max-w-2xl mx-auto" style="color:rgba(255,255,255,0.84);">Join thousands of HR professionals and job seekers using {{ config('app.name') }} to accelerate careers and build high-performing teams.</p>
 
         <div class="flex flex-col sm:flex-row gap-4 justify-center mb-10">
                 <a href="{{ route('register') }}" class="inline-flex items-center justify-content gap-2 py-4 px-10 text-[16px] font-semibold rounded-xl transition-all" style="background:#ffffff; color:var(--brand-primary); box-shadow:0 8px 24px rgba(15,23,42,0.12);" onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 12px 30px rgba(15,23,42,0.18)'" onmouseout="this.style.transform=''; this.style.boxShadow='0 8px 24px rgba(15,23,42,0.12)'">

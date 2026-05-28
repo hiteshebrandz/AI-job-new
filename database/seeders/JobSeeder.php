@@ -28,7 +28,7 @@ class JobSeeder extends Seeder
             ],
             [
                 'title' => $title,
-                'company_name' => 'Elements HR',
+                'company_name' => 'TalentSync AI',
                 'location' => 'Remote / Hybrid',
                 'job_type' => 'Full-time',
                 'work_mode' => 'Hybrid',

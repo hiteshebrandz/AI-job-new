@@ -23,7 +23,7 @@
 <span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
 </button>
 <div class="h-8 w-[1px] bg-outline-variant"></div>
-<p class="font-label-caps text-label-caps text-secondary font-bold">ELEMENTS HR</p>
+<p class="font-label-caps text-label-caps text-secondary font-bold">{{ strtoupper(config('app.name')) }}</p>
 </div>
 </header>
 <!-- Main Content Canvas -->
@@ -270,7 +270,7 @@
 <!-- Footer Shell -->
 <footer class="ml-[280px] border-t border-outline-variant bg-surface py-8">
 <div class="max-w-7xl mx-auto px-container-margin flex flex-col md:flex-row justify-between items-center opacity-80 hover:opacity-100 transition-opacity">
-<p class="font-body-sm text-body-sm text-on-surface-variant mb-4 md:mb-0">© 2024 Elements HR Services. All rights reserved.</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4 md:mb-0">© {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
 <div class="flex gap-6">
 <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="{{ route('landing') }}">Privacy Policy</a>
 <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="{{ route('landing') }}">Terms of Service</a>

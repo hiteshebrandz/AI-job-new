@@ -24,7 +24,7 @@
 <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-lg">
 <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">dataset</span>
 </div>
-<span class="font-headline-lg text-headline-lg font-bold text-white tracking-tight">Elements HR</span>
+<span class="font-headline-lg text-headline-lg font-bold text-white tracking-tight">{{ config('app.name') }}</span>
 </a>
 <h1 class="font-display-lg text-display-lg text-white mb-8">
                     Redefining the <span class="text-secondary-fixed">Future of Hiring</span>
@@ -37,7 +37,7 @@
 <img alt="Profile" class="w-12 h-12 rounded-full border-2 border-white/20" data-alt="A professional headshot of a female executive in her late 40s, looking confidently at the camera. She is wearing a structured navy blazer in a high-end corporate office setting with soft, warm bokeh lighting. The overall mood is authoritative, trustworthy, and elegantly modern, fitting a premium SaaS platform aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMiUhqu6HY7rzM04wzfa9HR9okfW5qL3_olIaGBxA3kW_0neE8U_lA-0vyHsBHpKbIUBIjXCwEKtflCwsDxX_8BwOykpAm93maDkkWPf-Vs9LFwCtCHRXDomODiugAlYh4zhLzoa6w36TsxT1cKLePiMWWPCZFUixeHj4PPqttbGyXmgxBzcXXe7n8bslmFyZtYS3LGf-t0jP0L5ecifKbdAe-aI5t6qtCooPzuKa9j43V7YliLkeq5afrWYzPp14eBH54VFyRhlJf"/>
 <div>
 <p class="font-label-caps text-label-caps text-white">Chief Talent Officer</p>
-<p class="font-body-sm text-body-sm text-white/70">Executive Suite, Elements HR</p>
+<p class="font-body-sm text-body-sm text-white/70">Executive Suite, {{ config('app.name') }}</p>
 </div>
 </div>
 </div>
@@ -108,13 +108,13 @@
 <label class="font-body-sm text-body-sm text-on-surface-variant" for="remember">Keep me signed in for 30 days</label>
 </div>
 <a href="{{ route('user.dashboard') }}" class="w-full py-4 bg-gradient-to-r from-secondary to-[#6063ee] text-white rounded-xl font-title-md text-title-md shadow-lg shadow-secondary/20 hover:scale-[1.02] active:scale-[0.98] transition-all block text-center">
-                            Sign In to Elements
+                            Sign In to {{ config('app.name') }}
                         </a>
 </form>
 </div>
 <footer class="mt-12 text-center lg:text-left">
 <p class="font-body-sm text-body-sm text-on-surface-variant">
-                        By continuing, you agree to the Elements HR 
+                        By continuing, you agree to the {{ config('app.name') }} 
                         <a class="text-secondary hover:underline" href="{{ route('landing') }}">Terms of Service</a> and 
                         <a class="text-secondary hover:underline" href="{{ route('landing') }}">Privacy Policy</a>.
                     </p>

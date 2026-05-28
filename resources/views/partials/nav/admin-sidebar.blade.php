@@ -9,8 +9,23 @@
 <aside class="fixed left-0 top-0 h-screen w-[280px] bg-white/80 backdrop-blur-xl border-r border-outline-variant shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] z-50 flex flex-col py-8 px-4">
     <div class="mb-10 px-4">
         <a href="{{ route('admin.dashboard') }}" class="block hover:opacity-80 transition-opacity">
-            <h1 class="font-headline-lg text-headline-lg font-bold text-primary">Elements HR</h1>
-            <p class="font-body-sm text-body-sm text-on-surface-variant opacity-70">Admin Portal</p>
+            <div class="flex items-center gap-3 mb-1">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:var(--brand-gradient);">
+                    @if (file_exists(public_path('images/logo.webp')))
+                        <img
+                            src="{{ asset('images/logo.webp') }}"
+                            alt="{{ config('app.name') }} logo"
+                            class="w-[22px] h-[22px] brand-logo-img"
+                            loading="eager"
+                            decoding="async"
+                        >
+                    @else
+                        <span class="material-symbols-outlined text-white text-[18px]">admin_panel_settings</span>
+                    @endif
+                </div>
+                <h1 class="font-headline-lg text-headline-lg font-bold text-primary">{{ config('app.name') }}</h1>
+            </div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant opacity-70 pl-11">Admin Portal</p>
         </a>
     </div>
     <nav class="flex-1 space-y-1">

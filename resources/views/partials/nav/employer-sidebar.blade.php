@@ -13,9 +13,19 @@
         <a href="{{ route('hr.dashboard') }}" class="block group">
             <div class="flex items-center gap-3 mb-1">
                 <div class="w-8 h-8 rounded-lg gradient-cyan-violet flex items-center justify-center flex-shrink-0">
-                    <span class="material-symbols-outlined text-white text-[18px]">business_center</span>
+                    @if (file_exists(public_path('images/logo.webp')))
+                        <img
+                            src="{{ asset('images/logo.webp') }}"
+                            alt="{{ config('app.name') }} logo"
+                            class="w-[22px] h-[22px] brand-logo-img"
+                            loading="eager"
+                            decoding="async"
+                        >
+                    @else
+                        <span class="material-symbols-outlined text-white text-[18px]">business_center</span>
+                    @endif
                 </div>
-                <span class="font-bold text-xl tracking-tight gradient-text-violet">Elements HR</span>
+                <span class="font-bold text-xl tracking-tight gradient-text-violet">{{ config('app.name') }}</span>
                 <span class="ai-pulse-dot ml-auto"></span>
             </div>
             <p class="font-body-sm text-[12px] text-on-surface-variant pl-11">Employer Portal</p>

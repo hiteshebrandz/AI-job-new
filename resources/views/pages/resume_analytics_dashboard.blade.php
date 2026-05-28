@@ -1,4 +1,4 @@
-﻿@extends('layouts.candidate', ['activeNav' => 'analytics'])
+@extends('layouts.candidate', ['activeNav' => 'analytics'])
 
 @section('title', 'Resume Analytics')
 
@@ -718,7 +718,7 @@
 {{-- ── Footer ─────────────────────────────────────────────────────────────── --}}
 <footer class="w-full py-8 mt-12 bg-surface border-t border-outline-variant">
     <div class="flex flex-col md:flex-row justify-between items-center px-8 max-w-7xl mx-auto gap-4">
-        <p class="text-xs text-on-surface-variant">© {{ date('Y') }} Elements HR Services. All rights reserved.</p>
+        <p class="text-xs text-on-surface-variant">© {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
         <div class="flex gap-6">
             <a class="text-[11px] uppercase tracking-wider text-on-surface-variant hover:text-secondary transition-colors"
                href="{{ route('landing') }}">Privacy Policy</a>

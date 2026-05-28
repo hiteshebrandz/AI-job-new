@@ -14,9 +14,19 @@
         <!-- Brand -->
         <a href="{{ route('landing') }}" class="flex items-center gap-3 mb-12">
             <div class="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg" style="background:rgba(255,255,255,0.20); border:1px solid rgba(255,255,255,0.35);">
-                <span class="material-symbols-outlined text-white text-[22px]" style="font-variation-settings:'FILL' 1;">auto_awesome</span>
+                @if (file_exists(public_path('images/logo.webp')))
+                    <img
+                        src="{{ asset('images/logo.webp') }}"
+                        alt="{{ config('app.name') }} logo"
+                        class="w-[26px] h-[26px] brand-logo-img"
+                        loading="eager"
+                        decoding="async"
+                    >
+                @else
+                    <span class="material-symbols-outlined text-white text-[22px]" style="font-variation-settings:'FILL' 1;">auto_awesome</span>
+                @endif
             </div>
-            <span class="text-xl font-bold tracking-tight text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">Elements HR</span>
+            <span class="text-xl font-bold tracking-tight text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">{{ config('app.name') }}</span>
         </a>
 
         <!-- Heading -->
@@ -36,10 +46,10 @@
             </p>
             <div class="flex items-center gap-3">
                 <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background:rgba(255,255,255,0.20);">
-                    <span class="text-white font-bold text-[11px]">EH</span>
+                    <span class="text-white font-bold text-[11px]">TS</span>
                 </div>
                 <div>
-                    <p class="text-[12px] font-semibold text-white">Elements HR Team</p>
+                    <p class="text-[12px] font-semibold text-white">TalentSync AI Team</p>
                     <p class="text-[11px]" style="color:rgba(255,255,255,0.65);">Platform Intelligence</p>
                 </div>
             </div>

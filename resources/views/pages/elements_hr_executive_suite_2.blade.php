@@ -19,7 +19,7 @@
 <span class="text-white font-label-caps text-label-caps uppercase tracking-widest">Next-Gen HR Tech</span>
 </div>
 <h1 class="font-display-lg text-display-lg text-white max-w-xl">Precision Engineering for Modern Talent.</h1>
-<p class="font-body-md text-body-md text-white/80 max-w-md">Elements HR uses advanced AI-driven logic to bridge the gap between world-class talent and global executive opportunities.</p>
+<p class="font-body-md text-body-md text-white/80 max-w-md">{{ config('app.name') }} uses advanced AI-driven logic to bridge the gap between world-class talent and global executive opportunities.</p>
 <div class="flex flex-col sm:flex-row gap-4">
 <button class="px-8 py-4 bg-white text-secondary font-title-md text-title-md rounded-xl hover:shadow-lg transition-all active:scale-[0.98]">
                         Find your Dream Job
@@ -158,7 +158,7 @@
 </div>
 </div>
 <div class="space-y-8">
-<h2 class="font-headline-lg text-headline-lg text-primary">Why Industry Leaders Choose Elements.</h2>
+<h2 class="font-headline-lg text-headline-lg text-primary">Why Industry Leaders Choose {{ config('app.name') }}.</h2>
 <p class="font-body-md text-body-md text-on-surface-variant">We don't just find employees; we engineer success. Our platform combines deep-learning algorithms with human-centric design to deliver talent that sticks.</p>
 <ul class="space-y-6">
 <li class="flex items-start gap-4">

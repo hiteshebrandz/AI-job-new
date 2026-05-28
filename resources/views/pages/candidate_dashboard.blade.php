@@ -183,8 +183,8 @@
 <!-- Footer (Shared Component) -->
 <footer class="mt-16 w-full py-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center px-4">
 <div class="mb-4 md:mb-0">
-<p class="font-title-md text-title-md font-bold text-primary">Elements HR</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant opacity-70">© 2024 Elements HR Services. All rights reserved.</p>
+<p class="font-title-md text-title-md font-bold text-primary">{{ config('app.name') }}</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant opacity-70">© {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
 </div>
 <div class="flex gap-8">
 <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="{{ route('landing') }}">Privacy Policy</a>

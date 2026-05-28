@@ -80,7 +80,7 @@
                     <!-- Submit -->
                     <button type="submit" class="btn-primary w-full py-3.5 text-[15px] font-semibold">
                         <span class="material-symbols-outlined text-[18px]">login</span>
-                        Sign In to Elements
+                        Sign In to {{ config('app.name') }}
                     </button>
                 </form>
 

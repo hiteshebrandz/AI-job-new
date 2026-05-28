@@ -22,7 +22,7 @@ class CandidateWelcomeMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Welcome to Elements HR Services',
+            subject: 'Welcome to ' . config('app.name'),
         );
     }
 

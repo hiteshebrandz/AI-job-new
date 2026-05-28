@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Welcome to Elements HR</title>
+<title>Welcome to {{ config('app.name') }}</title>
 <style>
   body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fcf8fa; color: #1b1b1d; margin: 0; padding: 0; }
   .wrapper { max-width: 600px; margin: 40px auto; background: #ffffff; border-radius: 16px; overflow: hidden; border: 1px solid #e4e2e4; box-shadow: 0 4px 6px -1px rgba(27,27,29,0.05); }
@@ -23,12 +23,12 @@
 <body>
 <div class="wrapper">
   <div class="header">
-    <h1>Welcome to Elements HR</h1>
+    <h1>Welcome to {{ config('app.name') }}</h1>
     <p>Your AI-powered career journey starts here</p>
   </div>
   <div class="body">
     <p>Hi <strong>{{ $candidate->full_name }}</strong>,</p>
-    <p>Your candidate profile has been created on Elements HR Services. Our AI engine has analyzed your resume and is now matching you with the best opportunities.</p>
+    <p>Your candidate profile has been created on {{ config('app.name') }}. Our AI engine has analyzed your resume and is now matching you with the best opportunities.</p>
 
     @if($isNewAccount && $plainPassword)
     <div class="highlight">
@@ -50,7 +50,7 @@
     <a class="btn" href="{{ url('/user/jobs/recommendations') }}">Browse AI-Matched Jobs</a>
   </div>
   <div class="footer">
-    <p>&copy; {{ date('Y') }} Elements HR Services &middot; <a href="{{ url('/') }}">Visit Platform</a></p>
+    <p>&copy; {{ date('Y') }} {{ config('app.name') }} &middot; <a href="{{ url('/') }}">Visit Platform</a></p>
   </div>
 </div>
 </body>

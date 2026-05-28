@@ -15,7 +15,7 @@
         <span class="badge-violet text-[11px]">Settings</span>
     </div>
     <h2 class="text-[28px] font-extrabold text-on-surface">Notification Preferences</h2>
-    <p class="text-[14px] text-on-surface-variant mt-1 max-w-2xl">Manage how and when you receive updates from the Elements HR platform.</p>
+    <p class="text-[14px] text-on-surface-variant mt-1 max-w-2xl">Manage how and when you receive updates from the {{ config('app.name') }} platform.</p>
 </div>
 @include('partials.settings.notification-preferences')
 @include('partials.nav.dashboard-footer')
@@ -34,7 +34,7 @@
         <span class="badge-violet text-[11px]">Settings</span>
     </div>
     <h2 class="text-[28px] font-extrabold text-on-surface">Notification Preferences</h2>
-    <p class="text-[14px] text-on-surface-variant mt-1 max-w-2xl">Manage how and when you receive updates from the Elements HR platform. Customize alerts for your job search.</p>
+    <p class="text-[14px] text-on-surface-variant mt-1 max-w-2xl">Manage how and when you receive updates from the {{ config('app.name') }} platform. Customize alerts for your job search.</p>
 </div>
 @include('partials.settings.notification-preferences')
 @include('partials.nav.dashboard-footer')

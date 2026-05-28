@@ -4,10 +4,20 @@
             {{-- Brand --}}
             <div>
                 <a href="{{ route('landing') }}" class="flex items-center gap-2.5 mb-4">
-                    <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:var(--brand-gradient);">
-                        <span class="material-symbols-outlined text-white text-[18px]">auto_awesome</span>
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:var(--brand-gradient);">
+                        @if (file_exists(public_path('images/logo.webp')))
+                            <img
+                                src="{{ asset('images/logo.webp') }}"
+                                alt="{{ config('app.name') }} logo"
+                                class="w-[22px] h-[22px] object-contain"
+                                loading="lazy"
+                                decoding="async"
+                            >
+                        @else
+                            <span class="material-symbols-outlined text-white text-[18px]">auto_awesome</span>
+                        @endif
                     </div>
-                    <span class="font-bold text-xl tracking-tight gradient-text-violet" style="font-family:'Plus Jakarta Sans',sans-serif;">Elements HR</span>
+                    <span class="font-bold text-xl tracking-tight gradient-text-violet" style="font-family:'Plus Jakarta Sans',sans-serif;">{{ config('app.name') }}</span>
                 </a>
                 <p class="text-[14px] leading-relaxed max-w-xs" style="color:var(--text-muted);">The executive suite for modern human resource management and AI-powered talent matching.</p>
             </div>
@@ -51,7 +61,7 @@
         <div class="divider mb-8"></div>
 
         <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p class="text-[13px]" style="color:var(--text-muted);">© {{ date('Y') }} Elements HR Services. All rights reserved.</p>
+            <p class="text-[13px]" style="color:var(--text-muted);">© {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
             <div class="flex gap-6 flex-wrap">
                 <a class="text-[12px] transition-colors hover:text-secondary" style="color:var(--text-muted);" href="{{ route('landing') }}">Privacy Policy</a>
                 <a class="text-[12px] transition-colors hover:text-secondary" style="color:var(--text-muted);" href="{{ route('landing') }}">Terms of Service</a>

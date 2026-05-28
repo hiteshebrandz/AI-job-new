@@ -202,23 +202,32 @@ class PythonResumeOptimizerService
 
     private function resolvePythonBinary(): string
     {
-        $configured = env('PYTHON_BIN');
-        if (is_string($configured) && $configured !== '') {
-            $path = $configured;
+        $candidates = [];
+
+        foreach (array_filter([
+            env('PYTHON_BIN'),
+            config('resume.python_path'),
+        ]) as $configured) {
+            if (! is_string($configured) || trim($configured) === '') {
+                continue;
+            }
+            $path = trim($configured);
             if (! str_starts_with($path, '/') && ! preg_match('/^[A-Za-z]:[\\\\\\/]/', $path)) {
                 $path = base_path($path);
             }
+            $candidates[] = $path;
+        }
+
+        $candidates[] = base_path('scripts/resume_analyzer/venv/Scripts/python.exe');
+        $candidates[] = base_path('scripts/resume_analyzer/venv/bin/python3');
+
+        foreach ($candidates as $path) {
             if (is_executable($path)) {
                 return $path;
             }
         }
 
-        $venvPython = base_path('scripts/resume_analyzer/venv/bin/python3');
-        if (is_executable($venvPython)) {
-            return $venvPython;
-        }
-
-        return 'python3';
+        return PHP_OS_FAMILY === 'Windows' ? 'python' : 'python3';
     }
 
     private function buildProcessEnv(): array

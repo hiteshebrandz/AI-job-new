@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Resume parser for Elements HR.
+Resume parser for TalentSync AI.
 Reads a resume file path from argv[1], outputs JSON to stdout.
 """
 import json

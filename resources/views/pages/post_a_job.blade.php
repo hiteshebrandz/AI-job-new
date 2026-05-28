@@ -1,4 +1,4 @@
-﻿@extends('layouts.employer', ['activeNav' => 'jobs'])
+@extends('layouts.employer', ['activeNav' => 'jobs'])
 
 @section('title', isset($job) ? 'Edit Job' : 'Post a Job')
 
@@ -406,8 +406,8 @@ Post a Job
 <footer class="py-8 border-t border-outline-variant bg-surface mt-12 -mx-8 px-8">
     <div class="flex flex-col md:flex-row justify-between items-center px-container-margin max-w-7xl mx-auto">
         <div class="flex items-center gap-6 mb-4 md:mb-0">
-            <span class="font-title-md text-title-md font-bold text-primary">Elements HR</span>
-            <p class="font-body-sm text-body-sm text-on-surface-variant opacity-80">© 2024 Elements HR Services. All rights reserved.</p>
+            <span class="font-title-md text-title-md font-bold text-primary">{{ config('app.name') }}</span>
+            <p class="font-body-sm text-body-sm text-on-surface-variant opacity-80">© {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
         </div>
         <div class="flex gap-8">
             <a class="font-label-caps text-on-surface-variant hover:text-primary transition-colors" href="{{ route('landing') }}">Privacy Policy</a>

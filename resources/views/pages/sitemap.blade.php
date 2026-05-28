@@ -10,7 +10,7 @@
 @include('partials.nav.public-header')
 
 <main class="pt-28 pb-16 max-w-4xl mx-auto px-container-margin">
-    <h1 class="font-headline-lg text-headline-lg text-primary mb-2">Elements HR — All Pages</h1>
+    <h1 class="font-headline-lg text-headline-lg text-primary mb-2">{{ config('app.name') }} — All Pages</h1>
     <p class="font-body-md text-on-surface-variant mb-10">Requires login for role-protected areas.</p>
 
     <div class="grid md:grid-cols-2 gap-8">
